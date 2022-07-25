@@ -4,6 +4,7 @@ package com.woniu.web.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,9 +14,10 @@ import org.springframework.stereotype.Controller;
  * @author lh
  * @since 2022-07-23
  */
-@Controller
+@RestController
 @RequestMapping("/register")
 public class RegisterController {
+
 
 }
 

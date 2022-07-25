@@ -3,7 +3,7 @@
     <el-row type="flex" justify="center" align=middle>
       <el-col :span="8">
 
-        <h1>K15后台管理系统</h1><br />
+        <h1>HIS管理系统</h1><br />
         <el-form :model="user" status-icon :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
 
           <el-form-item label="用户名" prop="username">

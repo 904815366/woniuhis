@@ -21,9 +21,12 @@ const routes = [
     path: "/home",
     name: "home",
     component: Home,
+
     children: [
       { path: "/doctor/patient", name: "patient", component: Patient },
+      {path:'/charge/enter',name: '/charge/enter',component: () => import('../components/charge/enter.vue')},
     ],
+
   },
 
   // {

@@ -4,4 +4,5 @@
   </div>
 </template>
 
-<style></style>
+<style scoped lang="less">
+</style>
