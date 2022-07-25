@@ -1,4 +1,4 @@
-package com.example.swaggerdemo.config;
+package com.woniu.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +17,8 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         ApiInfo apiInfo = new ApiInfoBuilder()
-                .title("XXX 项目接口文挡") //  可以用来自定义API的主标题
-                .description("XXX Project Swagger3 UserService Interface") // 可以用来描述整体的API
+                .title("his 项目接口文挡") //  可以用来自定义API的主标题
+                .description("......") // 可以用来描述整体的API
                 .termsOfServiceUrl("http://localhost:8080/swagger-ui/index.html") // 用于定义服务的域名
                 .version("1.0") // 可以用来定义版本。
                 .build();
@@ -29,7 +29,7 @@ public class SwaggerConfig {
                 .select()
 //      .apis(RequestHandlerSelectors.any())    // 扫描所有所有路径
 //      .apis(RequestHandlerSelectors.none())   // 所有路径都不扫描
-                .apis(RequestHandlerSelectors.basePackage("com.example.swaggerdemo.web.controller")) // 扫描指定包路径
+                .apis(RequestHandlerSelectors.basePackage("com.woniu.web.controller")) // 扫描指定包路径
                 .paths(PathSelectors.any())     // 过滤器：对外暴露所有 uri
 //      .paths(PathSelectors.none())    // 过滤器：一个 uri 都不对外暴露
 //      .paths(PathSelectors.ant())     // 过滤器：对外暴露符合 ant 风格正则表达式的 uri
