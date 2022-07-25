@@ -3,6 +3,7 @@ package com.woniu.mapper.mysql;
 import com.woniu.entity.dto.PermsDto;
 import com.woniu.entity.po.PermsPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author lh
  * @since 2022-07-23
  */
+@Mapper
 public interface PermsMapper extends BaseMapper<PermsPo> {
 
     @Select("SELECT * from " +
