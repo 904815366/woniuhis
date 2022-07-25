@@ -75,8 +75,9 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            myLoginFailHandler.onAuthenticationFailure(request, response,
-                    new MyTokenIsInvalidException("Token is Invalid!"));
+//            myLoginFailHandler.onAuthenticationFailure(request, response,
+//                    new MyTokenIsInvalidException("Token is Invalid!"));
+            filterChain.doFilter(request, response);
         }
     }
 }

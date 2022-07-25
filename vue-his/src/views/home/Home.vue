@@ -7,7 +7,7 @@
           <h1>his管理系统</h1>
         </el-col>
         <el-col :span="8" class="col_r">
-          <span style="color: blud">您好 , {{ name }} </span>&nbsp;&nbsp;
+          <span style="color: blud">您好,{{ name }} !</span>&nbsp;&nbsp;
           <el-button type="danger" size="small" @click="logout()">退出</el-button>
         </el-col>
       </el-row>
@@ -19,16 +19,19 @@
             <el-menu :default-active="$route.path" class="el-menu-vertical-demo" background-color="#545c64"
               text-color="#fff" active-text-color="#ffd04b" :router="true">
               <el-menu-item index="/home">
-                <!-- <i class="el-icon-s-home"></i> -->
+                <i class="el-icon-s-home"></i>
                 <span slot="title">首页</span>
               </el-menu-item>
 
-              <el-submenu index="1">
+              <el-submenu v-for="menu in menuData" :key="menu.id" :index="'/' + menu.link">
                 <template slot="title">
-                  <!-- <i class="el-icon-s-custom"></i> -->
-                  <span>XXX</span>
+                  <i :class="menu.fonticon"></i>
+                  <span>{{ menu.modulename }}</span>
                 </template>
-
+                <el-menu-item :index="'/' + item.link" v-for="item in menu.children" :key="item.id">
+                  <i :class="item.fonticon"></i>
+                  <span slot="title">{{ item.modulename }}</span>
+                </el-menu-item>
               </el-submenu>
             </el-menu>
           </el-col>
