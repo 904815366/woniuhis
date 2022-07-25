@@ -54,9 +54,15 @@ const routes = [
         name: 'homeContent',
         component: HomeContent,
         children:[]
-      }
-    ],
+      },
 
+      {
+        path:'/nurse/register',
+      name:'nurse/register',
+      component: ()=> import(//不需要先导入，注册时导入，新语法
+        '../components/nurse/Register.vue')
+      },
+    ],
   },
 ];
 
