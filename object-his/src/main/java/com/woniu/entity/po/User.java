@@ -37,7 +37,7 @@ public class User implements Serializable {
 
     private String phone;
 
-    private Integer roldid;
+    private Integer roleid;
 
 
     private String level;

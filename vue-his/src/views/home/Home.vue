@@ -7,7 +7,7 @@
           <h1>his管理系统</h1>
         </el-col>
         <el-col :span="8" class="col_r">
-          <span style="color: blud">您好 , {{ username }} </span>&nbsp;&nbsp;
+          <span style="color: blud">您好 , {{ name }} </span>&nbsp;&nbsp;
           <el-button type="danger" size="small" @click="logout()">退出</el-button>
         </el-col>
       </el-row>
@@ -45,7 +45,11 @@
 export default {
   name: "Home",
   data() {
-    return {};
+    return {
+      name: '', //右上角显示的用户名字
+      username: '', //用户当前登录的账号
+      menuData: [],
+    };
   },
   methods: {
     logout() {
@@ -66,10 +70,27 @@ export default {
           window.sessionStorage.clear();
           this.$router.push("/login");
         })
-        .catch(() => { });
+        .catch(() => {
+
+        });
     },
   },
-  created() { },
+  created() {
+    this.name = window.sessionStorage.getItem('name');
+    this.username = window.sessionStorage.getItem("username");
+    this.$nextTick(() => {
+      this.$axios
+        .get("/api/perms/menu?username=" + this.username)
+        .then((res) => {
+          console.log(res.data);
+          this.menuData = res.data.data;
+          console.log(this.menuData);
+        })
+        .catch((e) => {
+          console.log(res.data.msg);
+        });
+    });
+  },
 };
 </script>
 

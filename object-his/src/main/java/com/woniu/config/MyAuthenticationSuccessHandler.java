@@ -39,6 +39,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 //            opsForList.leftPush(, )
             String authoritiesStr = authorities.toString();
             template.opsForValue().set(username,authoritiesStr);
+            String loginSuccessOfName = template.opsForValue().get("loginSuccessOfName");
 //            String authoritiesStr = "";
 //            for (GrantedAuthority authority : authorities) {
 //                authoritiesStr +=authority+",";
@@ -47,7 +48,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 //            System.out.println(newAuthoritiesStr);
 
 
-            ResponseResult<String> result = new ResponseResult<>(strToken,"ok",200);
+            ResponseResult<String> result = new ResponseResult<>(strToken,loginSuccessOfName,200);
 
             response.setContentType("application/json;charset=utf-8");
             PrintWriter out = response.getWriter();

@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //需要放行的url在这里配置,必须要放行/login和/login.html,不然会报错
-        http.authorizeRequests().antMatchers("/login", "/login.html")
+        http.authorizeRequests().antMatchers("/login", "/login.html","/swagger-ui/index.html")
                 .permitAll().anyRequest().authenticated().and().
                 // 设置登陆页、登录表单form中action的地址，也就是处理认证请求的路径
                         formLogin().loginPage("/login.html").loginProcessingUrl("/login")

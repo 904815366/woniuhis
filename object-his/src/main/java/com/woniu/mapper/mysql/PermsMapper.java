@@ -1,7 +1,11 @@
 package com.woniu.mapper.mysql;
 
-import com.woniu.entity.po.Perms;
+import com.woniu.entity.dto.PermsDto;
+import com.woniu.entity.po.PermsPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -11,6 +15,21 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author lh
  * @since 2022-07-23
  */
-public interface PermsMapper extends BaseMapper<Perms> {
+public interface PermsMapper extends BaseMapper<PermsPo> {
 
+    @Select("SELECT * from " +
+            "perms p,role r,role_perms rp,user u " +
+            "where u.roleid=r.id " +
+            "and r.id=rp.roleid " +
+            "and rp.permsid=p.id " +
+            "and u.username=#{username}")
+    List<PermsDto> getPermsListByUsername(String username);
+
+    @Select("SELECT p.percode from " +
+            "perms p,role r,role_perms rp,user u " +
+            "where u.roleid=r.id " +
+            "and r.id=rp.roleid " +
+            "and rp.permsid=p.id " +
+            "and u.username=#{username}")
+    List<String> getPermsPercodeByUsername(String username);
 }

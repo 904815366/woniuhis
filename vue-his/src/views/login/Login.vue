@@ -27,6 +27,7 @@
 export default {
   data() {
     return {
+      name: '',
       user: {
         username: '',
         password: '',
@@ -60,9 +61,10 @@ export default {
                 type: 'success',
                 center: true,
               });
-
+              this.name = res.data.msg;
               window.localStorage.setItem("strToken", res.data.data);
               window.sessionStorage.setItem('username', this.user.username);
+              window.sessionStorage.setItem('name', this.name);
               this.$router.push("/home");
 
 

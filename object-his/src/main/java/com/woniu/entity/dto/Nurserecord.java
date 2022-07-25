@@ -1,14 +1,12 @@
-package com.woniu.entity.po;
+package com.woniu.entity.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -20,16 +18,22 @@ import org.springframework.data.redis.core.RedisHash;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@RedisHash("bed")
-public class Bed implements Serializable {
+public class Nurserecord implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    @Id
     private Integer id;
 
-    private Integer wardid;
+    private Integer nursetypeid;
+
+    private String nursetext;
+
+    private LocalDateTime nursetime;
+
+    private Integer registerid;
+
+    private Integer userid;
 
     private String status;
 

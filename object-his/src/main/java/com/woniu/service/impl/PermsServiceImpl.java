@@ -1,6 +1,6 @@
 package com.woniu.service.impl;
 
-import com.woniu.entity.po.Perms;
+import com.woniu.entity.po.PermsPo;
 import com.woniu.mapper.mysql.PermsMapper;
 import com.woniu.service.PermsService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-07-23
  */
 @Service
-public class PermsServiceImpl extends ServiceImpl<PermsMapper, Perms> implements PermsService {
+public class PermsServiceImpl extends ServiceImpl<PermsMapper, PermsPo> implements PermsService {
 
 }

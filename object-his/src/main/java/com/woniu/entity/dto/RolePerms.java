@@ -1,10 +1,11 @@
-package com.woniu.entity.po;
+package com.woniu.entity.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
 
 /**
  * <p>
@@ -16,24 +17,16 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Perms implements Serializable {
+public class RolePerms implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private String modulename;
+    private Integer roleid;
 
-    private Integer parentid;
-
-    private String type;
-
-    private String link;
-
-    private String percode;
-
-    private String fonticon;
+    private Integer permsid;
 
 
 }

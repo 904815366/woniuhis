@@ -2,10 +2,12 @@ package com.woniu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.woniu.entity.po.User;
+import com.woniu.mapper.mysql.PermsMapper;
 import com.woniu.mapper.mysql.UserMapper;
 import com.woniu.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +33,8 @@ import java.util.List;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService, UserDetailsService {
 
     private final UserMapper userMapper;
-
+    private final StringRedisTemplate template;
+    private  final PermsMapper permsMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -55,8 +58,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             enabled = false;
         }
 
-//        List<String> percodes = userMapper.queryRolePerms(user.getUsername());
-        List<String> percodes = new ArrayList<>();
+        template.opsForValue().set("loginSuccessOfName", user.getName());
+        List<String> percodes = permsMapper.getPermsPercodeByUsername(user.getUsername());
+//        List<String> percodes = new ArrayList<>();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
