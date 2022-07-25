@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientFo {
+public class QueryPatientList {
     private String name;
 
     /**

@@ -23,4 +23,6 @@ public interface PatientMapper extends BaseMapper<Patient> {
      */
     List<PatientDto> getPatientList(String name);
 
+    PatientDto getByPatientId(Integer id);
+
 }

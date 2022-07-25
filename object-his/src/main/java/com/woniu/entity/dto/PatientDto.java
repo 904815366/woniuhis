@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -12,9 +14,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "查询在院患者时返回的信息")
+@RedisHash("PatientDto")
 public class PatientDto {
 
     @Schema(name = "id", description = "患者id")
+    @Id
     private Integer id;
     @Schema(name = "bedid", description = "床号")
     private Integer bedid;

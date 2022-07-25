@@ -5,7 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.PatientDto;
-import com.woniu.web.fo.PatientFo;
+import com.woniu.web.fo.QueryPatientById;
+import com.woniu.web.fo.QueryPatientList;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,9 +37,21 @@ public class PatientController {
                                                            @RequestParam(name = "pageSize",defaultValue ="5")Integer pageSize){
         try {
             PageHelper.startPage(pageNum, pageSize);
-            List<PatientDto> patientList = new PatientFo().getPatientList(name);
+            List<PatientDto> patientList = new QueryPatientList().getPatientList(name);
             PageInfo<PatientDto> pageInfo = new PageInfo<>(patientList);
             return new ResponseResult<>(pageInfo,"SUCCESS",200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null,"Internal Server Error",500);
+        }
+    }
+
+    @GetMapping("/getPatientById")
+    @Operation( summary = "根据id查询患者", description = "根据id查询患者", tags = {"患者管理"} )
+    public ResponseResult<PatientDto> getPatientById(Integer id){
+        try {
+            PatientDto patientById = new QueryPatientById().getPatientById(id);
+            return new ResponseResult<>(patientById,"SUCCESS",200);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseResult<>(null,"Internal Server Error",500);
