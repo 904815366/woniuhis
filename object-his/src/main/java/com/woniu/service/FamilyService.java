@@ -1,6 +1,6 @@
 package com.woniu.service;
 
-import com.woniu.entity.po.Family;
+import com.woniu.entity.po.FamilyPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lh
  * @since 2022-07-23
  */
-public interface FamilyService extends IService<Family> {
+public interface FamilyService extends IService<FamilyPo> {
 
 }

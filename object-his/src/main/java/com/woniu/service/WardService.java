@@ -1,6 +1,6 @@
 package com.woniu.service;
 
-import com.woniu.entity.po.Ward;
+import com.woniu.entity.po.WardPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lh
  * @since 2022-07-23
  */
-public interface WardService extends IService<Ward> {
+public interface WardService extends IService<WardPo> {
 
 }

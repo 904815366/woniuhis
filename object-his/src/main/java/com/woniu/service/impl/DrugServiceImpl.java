@@ -1,7 +1,7 @@
 package com.woniu.service.impl;
 
-import com.woniu.entity.po.Drug;
-import com.woniu.mapper.mysql.DrugMapper;
+import com.woniu.entity.po.DrugPo;
+import com.woniu.mapper.mysql.DrugMysqlDao;
 import com.woniu.service.DrugService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-07-23
  */
 @Service
-public class DrugServiceImpl extends ServiceImpl<DrugMapper, Drug> implements DrugService {
+public class DrugServiceImpl extends ServiceImpl<DrugMysqlDao, DrugPo> implements DrugService {
 
 }

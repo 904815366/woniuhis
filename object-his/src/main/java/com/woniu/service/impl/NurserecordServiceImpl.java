@@ -1,7 +1,7 @@
 package com.woniu.service.impl;
 
-import com.woniu.entity.po.Nurserecord;
-import com.woniu.mapper.mysql.NurserecordMapper;
+import com.woniu.entity.po.NurserecordPo;
+import com.woniu.mapper.mysql.NurserecordMysqlDao;
 import com.woniu.service.NurserecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-07-23
  */
 @Service
-public class NurserecordServiceImpl extends ServiceImpl<NurserecordMapper, Nurserecord> implements NurserecordService {
+public class NurserecordServiceImpl extends ServiceImpl<NurserecordMysqlDao, NurserecordPo> implements NurserecordService {
 
 }

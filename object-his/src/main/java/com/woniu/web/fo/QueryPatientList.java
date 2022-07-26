@@ -1,14 +1,12 @@
 package com.woniu.web.fo;
 
-import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.PatientDto;
-import com.woniu.mapper.mysql.PatientMapper;
+import com.woniu.mapper.mysql.PatientMysqlDao;
 import com.woniu.util.ApplicationContextHolder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -21,8 +19,8 @@ public class QueryPatientList {
      * 查询在院患者列表
      */
     public List<PatientDto> getPatientList(String name){
-        PatientMapper patientMapper =(PatientMapper)
-                ApplicationContextHolder.getApplicationContext().getBean(PatientMapper.class);
+        PatientMysqlDao patientMapper =(PatientMysqlDao)
+                ApplicationContextHolder.getApplicationContext().getBean(PatientMysqlDao.class);
         return patientMapper.getPatientList(name);
     }
 }

@@ -3,12 +3,11 @@ package com.woniu.web.controller;
 
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.PermsDto;
-import com.woniu.mapper.mysql.PermsMapper;
+import com.woniu.mapper.mysql.PermsMysqlDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PermsController {
 
-    private final PermsMapper permsMapper;
+    private final PermsMysqlDao permsMapper;
 
 
     @GetMapping("/menu")

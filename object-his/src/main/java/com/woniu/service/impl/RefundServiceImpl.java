@@ -1,7 +1,7 @@
 package com.woniu.service.impl;
 
-import com.woniu.entity.po.Refund;
-import com.woniu.mapper.mysql.RefundMapper;
+import com.woniu.entity.po.RefundPo;
+import com.woniu.mapper.mysql.RefundMysqlDao;
 import com.woniu.service.RefundService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-07-23
  */
 @Service
-public class RefundServiceImpl extends ServiceImpl<RefundMapper, Refund> implements RefundService {
+public class RefundServiceImpl extends ServiceImpl<RefundMysqlDao, RefundPo> implements RefundService {
 
 }

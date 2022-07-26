@@ -1,6 +1,6 @@
 package com.woniu.service;
 
-import com.woniu.entity.po.Register;
+import com.woniu.entity.po.RegisterPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lh
  * @since 2022-07-23
  */
-public interface RegisterService extends IService<Register> {
+public interface RegisterService extends IService<RegisterPo> {
 
 }

@@ -1,6 +1,6 @@
 package com.woniu.service;
 
-import com.woniu.entity.po.Role;
+import com.woniu.entity.po.RolePoPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lh
  * @since 2022-07-23
  */
-public interface RoleService extends IService<Role> {
+public interface RoleService extends IService<RolePoPo> {
 
 }

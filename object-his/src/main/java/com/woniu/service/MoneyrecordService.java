@@ -1,6 +1,6 @@
 package com.woniu.service;
 
-import com.woniu.entity.po.Moneyrecord;
+import com.woniu.entity.po.MoneyrecordPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lh
  * @since 2022-07-23
  */
-public interface MoneyrecordService extends IService<Moneyrecord> {
+public interface MoneyrecordService extends IService<MoneyrecordPo> {
 
 }

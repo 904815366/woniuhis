@@ -1,7 +1,7 @@
 package com.woniu.service.impl;
 
-import com.woniu.entity.po.Register;
-import com.woniu.mapper.mysql.RegisterMapper;
+import com.woniu.entity.po.RegisterPo;
+import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.service.RegisterService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-07-23
  */
 @Service
-public class RegisterServiceImpl extends ServiceImpl<RegisterMapper, Register> implements RegisterService {
+public class RegisterServiceImpl extends ServiceImpl<RegisterMysqlDao, RegisterPo> implements RegisterService {
 
 }

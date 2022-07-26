@@ -1,6 +1,6 @@
 package com.woniu.service;
 
-import com.woniu.entity.po.Consutants;
+import com.woniu.entity.po.ConsutantsPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lh
  * @since 2022-07-23
  */
-public interface ConsutantsService extends IService<Consutants> {
+public interface ConsutantsService extends IService<ConsutantsPo> {
 
 }

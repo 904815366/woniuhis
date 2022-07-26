@@ -1,7 +1,6 @@
 package com.woniu.web.fo;
 
 import com.woniu.entity.dto.PatientDto;
-import com.woniu.mapper.mysql.PatientMapper;
 import com.woniu.service.PatientService;
 import com.woniu.util.ApplicationContextHolder;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,7 @@
 package com.woniu.filter;
 
 import com.woniu.config.MyLoginFailHandler;
-import com.woniu.exception.MyTokenIsInvalidException;
-import com.woniu.mapper.mysql.UserMapper;
+import com.woniu.mapper.mysql.UserMysqlDao;
 import com.woniu.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -25,7 +24,7 @@ import java.util.List;
 @Component
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
-    private UserMapper userMapper;
+    private UserMysqlDao userMapper;
 
     @Autowired
     private MyLoginFailHandler myLoginFailHandler;

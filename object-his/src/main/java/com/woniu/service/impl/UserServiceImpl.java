@@ -1,9 +1,9 @@
 package com.woniu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.woniu.entity.po.User;
-import com.woniu.mapper.mysql.PermsMapper;
-import com.woniu.mapper.mysql.UserMapper;
+import com.woniu.entity.po.UserPo;
+import com.woniu.mapper.mysql.PermsMysqlDao;
+import com.woniu.mapper.mysql.UserMysqlDao;
 import com.woniu.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -30,17 +30,17 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService, UserDetailsService {
+public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implements UserService, UserDetailsService {
 
-    private final UserMapper userMapper;
+    private final UserMysqlDao userMapper;
     private final StringRedisTemplate template;
-    private  final PermsMapper permsMapper;
+    private  final PermsMysqlDao permsMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        QueryWrapper<User> wrapper = new QueryWrapper();
+        QueryWrapper<UserPo> wrapper = new QueryWrapper();
         wrapper.eq("username",username);
-        User user = userMapper.selectOne(wrapper);
+        UserPo user = userMapper.selectOne(wrapper);
 
 
         boolean enabled = true;

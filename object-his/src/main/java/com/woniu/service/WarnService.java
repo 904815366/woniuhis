@@ -1,6 +1,6 @@
 package com.woniu.service;
 
-import com.woniu.entity.po.Warn;
+import com.woniu.entity.po.WarnPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author lh
  * @since 2022-07-23
  */
-public interface WarnService extends IService<Warn> {
+public interface WarnService extends IService<WarnPo> {
 
 }
