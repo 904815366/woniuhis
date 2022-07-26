@@ -23,4 +23,12 @@ public class UserRepository {
         }
         return integer;
     }
+
+    public Integer deleteById(Integer id) {
+        Integer i = userMysqlDao.deleteById(id);
+        if (i!=0){
+            userRedisDao.deleteById(id);
+        }
+        return i;
+    }
 }

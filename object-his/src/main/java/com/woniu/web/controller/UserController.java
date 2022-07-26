@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -51,5 +52,16 @@ public class UserController {
         return responseResult;
     }
 
+    @RequestMapping("/delete")
+    public ResponseResult<Void> delUser(@RequestParam("id")Integer id){
+        ResponseResult<Void> responseResult = new ResponseResult<>();
+        try {
+            userService.deleteById(id);
+            responseResult = new ResponseResult<>(200,"ok");
+        }catch (Exception e){
+            responseResult = new ResponseResult<>(001,e.getMessage());
+        }
+        return responseResult;
+    }
 }
 

@@ -84,4 +84,15 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
                 getApplicationContext().getBean(UserRepository.class);
         return userRepository.modifyById(userModify);
     }
+
+    @Override
+    public Integer deleteById(Integer id) throws Exception {
+        UserRepository userRepository = ApplicationContextHolder.
+                getApplicationContext().getBean(UserRepository.class);
+        Integer deleteById = userRepository.deleteById(id);
+        if(deleteById==0){
+            throw new Exception("删除失败");
+        }
+        return null;
+    }
 }

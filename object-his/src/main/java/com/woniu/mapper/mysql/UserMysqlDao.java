@@ -21,8 +21,11 @@ public interface UserMysqlDao extends BaseMapper<UserPo> {
 //    @Select("select ue.aa from u_e ue, rbac_user u where ue.uid = u.id and  u.username=#{username}")
     List<String> queryRolePerms(String username);
 
-    @Select("select * from user where name like concat('%',#{name},'%')")
-    List<UserDto> selectByName(UserPo userPo);
+    @Select({"<script> select * from user where name like concat('%',#{name},'%') " +
+            "<if test='status != null and status !=\"\"'>" +
+            "and status=#{status}" +
+            "</if> </script>"})
+    List<UserDto> selectByNameAndStatus(UserPo userPo);
 
     @Update("update user set familyid=#{familyid},name=#{name},sex=#{sex},age=#{age}," +
             "card=#{card},phone=#{phone},roleid=#{roleid},level=#{level}," +

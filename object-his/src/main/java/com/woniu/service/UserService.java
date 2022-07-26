@@ -14,4 +14,6 @@ import com.woniu.web.fo.UserModify;
  */
 public interface UserService extends IService<UserPo> {
     Integer modifyById(UserPo userModify);
+
+    Integer deleteById(Integer id) throws Exception;
 }

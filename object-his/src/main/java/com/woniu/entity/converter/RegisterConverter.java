@@ -1,4 +1,4 @@
-package com.woniu.web.controller.converter;
+package com.woniu.entity.converter;
 
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.po.RegisterPo;

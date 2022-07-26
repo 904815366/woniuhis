@@ -21,7 +21,17 @@
           ></el-button>
         </el-input>
       </el-col>
-      <el-col :span="8"></el-col>
+      <el-col :span="8">
+        <el-select
+          @change="searchStatusChange"
+          v-model="searchStatus"
+          placeholder="请选择状态"
+        >
+          <el-option label="不限" value=""></el-option>
+          <el-option label="在职" value="0"></el-option>
+          <el-option label="离职" value="1"></el-option>
+        </el-select>
+      </el-col>
     </el-row>
     <!-- 讲师列表的数据表格
             :data动态绑定属性--数组
@@ -149,6 +159,7 @@ export default {
   data() {
     return {
       searchName: "",
+      searchStatus: "",
       userData: [],
       roleData: [],
       familyData: [],
@@ -174,7 +185,6 @@ export default {
       this.comName = "UpdateUser";
       console.log(row);
       this.user = row;
-      this.finduserList(this.currentPage);
     },
     //处理删除
     handleDelete(index, row) {
@@ -210,7 +220,12 @@ export default {
     finduserList(pno) {
       this.$axios
         .get("/api/user/list?", {
-          params: { searchName: this.searchName, pageNum: pno, pageSize: this.pageSize },
+          params: {
+            searchName: this.searchName,
+            searchStatus: this.searchStatus,
+            pageNum: pno,
+            pageSize: this.pageSize,
+          },
           //  headers: { strToken: window.localStorage.getItem("strToken") },
         })
         .then((res) => {
@@ -219,7 +234,7 @@ export default {
           this.userData = pageInfo.list;
           //使用pageInfo.属性
           this.currentPage = pageInfo.pageNum;
-          this.total = pageInfo.navigatePages;
+          this.total = pageInfo.total;
           this.pageSize = pageInfo.pageSize;
         })
         .catch((e) => {
@@ -282,6 +297,10 @@ export default {
     handleCurrentChange(cPage) {
       this.currentPage = cPage;
       this.finduserList(cPage);
+    },
+    //条件查询,在职状态改变
+    searchStatusChange() {
+      this.finduserList(1);
     },
   },
   created() {

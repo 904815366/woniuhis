@@ -17,6 +17,7 @@ public class UserList {
     private Integer pageNum;
     private Integer pageSize;
     private String searchName;
+    private String searchStatus;
 
 
     public PageInfo<UserDto> exec(){
@@ -37,8 +38,13 @@ public class UserList {
         }else {
             userPo.setName("");
         }
+        if (!StringUtils.isEmpty(searchStatus)){
+            userPo.setStatus(searchStatus);
+        }else {
+            userPo.setStatus("");
+        }
 //        List<com.woniu.entity.po.User> userList = userMapper.selectList(wrapper);
-        List<UserDto> userList = userMysqlDao.selectByName(userPo);
+        List<UserDto> userList = userMysqlDao.selectByNameAndStatus(userPo);
         PageInfo<UserDto> pageInfo = new PageInfo<>(userList);
         return pageInfo;
     }
