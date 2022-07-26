@@ -4,9 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.woniu.entity.po.UserPo;
 import com.woniu.mapper.mysql.PermsMysqlDao;
 import com.woniu.mapper.mysql.UserMysqlDao;
+import com.woniu.repository.UserRepository;
 import com.woniu.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.woniu.util.ApplicationContextHolder;
+import com.woniu.web.fo.UserModify;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -34,7 +38,7 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
 
     private final UserMysqlDao userMysqlDao;
     private final StringRedisTemplate template;
-    private  final PermsMysqlDao permsMapper;
+    private final PermsMysqlDao permsMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -68,10 +72,16 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
             authorities.add(new SimpleGrantedAuthority(percode));
         });
 
-
         UserDetails userDetails =
                 new org.springframework.security.core.userdetails.User(
                         userPo.getUsername(), userPo.getPassword(),enabled,accountNonExpired,credentialsNonExpired,accountNonLocked,authorities);
         return userDetails;
+    }
+
+    @Override
+    public Integer modifyById(UserPo userModify) {
+        UserRepository userRepository = ApplicationContextHolder.
+                getApplicationContext().getBean(UserRepository.class);
+        return userRepository.modifyById(userModify);
     }
 }

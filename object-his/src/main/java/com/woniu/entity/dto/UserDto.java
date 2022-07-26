@@ -24,6 +24,8 @@ public class UserDto implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    private Integer familyid;
+
     private String username;
 
     private String password;

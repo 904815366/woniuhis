@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-dialog
-      title="编辑讲师"
-      :visible.sync="editTeacherDialogFormVisible"
+      title="编辑用户"
+      :visible.sync="editUserDialogFormVisible"
       @close="cancelEdit"
     >
       <el-form :model="user">
@@ -31,6 +31,16 @@
             ></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="科室" :label-width="formLabelWidth">
+          <el-select v-model="user.familyid" placeholder="请选择科室">
+            <el-option
+              v-for="family in familyData"
+              :key="family.id"
+              :label="family.familyname"
+              :value="family.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="级别" :label-width="formLabelWidth">
           <el-input v-model="user.level" autocomplete="off"></el-input>
         </el-form-item>
@@ -54,15 +64,16 @@
 export default {
   data() {
     return {
-      editTeacherDialogFormVisible: true,
+      editUserDialogFormVisible: true,
       formLabelWidth: "120px",
       user: {},
     };
   },
-  props: ["roleData", "objuser"],
+  props: ["roleData", "objuser", "familyData"],
   created() {
     this.user = {
       id: this.objuser.id,
+      familyid: this.objuser.familyid,
       name: this.objuser.name,
       sex: this.objuser.sex,
       age: this.objuser.age,
@@ -76,7 +87,7 @@ export default {
   },
   methods: {
     cancelEdit() {
-      this.editTeacherDialogFormVisible = false;
+      this.editUserDialogFormVisible = false;
       //调用父组件传来的方法
       this.$emit("func");
     },
@@ -106,7 +117,7 @@ export default {
           }
         })
         .catch(() => {});
-      this.editTeacherDialogFormVisible = false;
+      this.editUserDialogFormVisible = false;
       //调用父组件传来的方法
       this.$emit("func");
     },

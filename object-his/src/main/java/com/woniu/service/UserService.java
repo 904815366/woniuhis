@@ -2,6 +2,7 @@ package com.woniu.service;
 
 import com.woniu.entity.po.UserPo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.woniu.web.fo.UserModify;
 
 /**
  * <p>
@@ -12,5 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-07-23
  */
 public interface UserService extends IService<UserPo> {
-
+    Integer modifyById(UserPo userModify);
 }

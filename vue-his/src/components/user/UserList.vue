@@ -32,25 +32,25 @@
         type="index"
         :index="indexMethod"
         label="序号"
-        width="80"
+        width="50"
         align="center"
       ></el-table-column>
       <el-table-column
         prop="name"
         label="姓名"
-        width="80"
+        width="70"
         align="center"
       ></el-table-column>
       <el-table-column
         prop="sex"
         label="性别"
-        width="80"
+        width="50"
         align="center"
       ></el-table-column>
       <el-table-column
         prop="age"
         label="年龄"
-        width="80"
+        width="70"
         align="center"
       ></el-table-column>
       <el-table-column
@@ -62,20 +62,27 @@
       <el-table-column
         prop="phone"
         label="联系电话"
-        width="120"
+        width="110"
         align="center"
       ></el-table-column>
-      <el-table-column label="岗位" width="130" align="center">
+      <el-table-column label="岗位" width="120" align="center">
         <template slot-scope="scope">
           <span v-for="role in roleData" :key="role.id">
             <span v-if="role.id === scope.row.roleid">{{ role.name }}</span>
           </span>
         </template>
       </el-table-column>
+      <el-table-column label="科室" width="120" align="center">
+        <template slot-scope="scope">
+          <span v-for="family in familyData" :key="family.id">
+            <span v-if="family.id === scope.row.familyid">{{ family.familyname }}</span>
+          </span>
+        </template>
+      </el-table-column>
       <el-table-column
         prop="level"
         label="级别"
-        width="80"
+        width="70"
         align="center"
       ></el-table-column>
       <el-table-column label="在职状态" width="100" align="center">
@@ -125,6 +132,7 @@ prev 上—页next下一页pager导航页码sizes每页记录数:total设置总�
     <component
       :is="comName"
       :roleData="roleData"
+      :familyData="familyData"
       :objuser="user"
       @func="handleShow"
     ></component>
@@ -143,6 +151,7 @@ export default {
       searchName: "",
       userData: [],
       roleData: [],
+      familyData: [],
       currentPage: 1,
       total: 0,
       pageSize: 5,
@@ -242,7 +251,28 @@ export default {
             duration: 1000, //显示的时间,ms
           });
         });
-    }, //页尺寸改变
+    },
+    //查询科室列表
+    findFamilyList() {
+      this.$axios
+        .get("/api/family/list", {
+          //  headers: { strToken: window.localStorage.getItem("strToken") },
+        })
+        .then((res) => {
+          console.log(res.data);
+          this.familyData = res.data.data;
+        })
+        .catch((e) => {
+          this.$message({
+            showClose: true,
+            message: "服务器跑不见了!",
+            type: "error",
+            offset: 550,
+            duration: 1000, //显示的时间,ms
+          });
+        });
+    },
+    //页尺寸改变
     handleSizeChange(pSize) {
       this.pageSize = pSize;
       this.currentPage = 1;
@@ -257,8 +287,10 @@ export default {
   created() {
     //发送axio请求，获取讲师数据
     this.finduserList(1);
-    //获取课程数据
+    //获取角色数据
     this.findRoleList();
+    //获取科室数据
+    this.findFamilyList();
   },
 };
 </script>

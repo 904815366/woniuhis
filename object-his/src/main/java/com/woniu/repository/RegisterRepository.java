@@ -15,7 +15,7 @@ public class RegisterRepository {
 
     private final RegisterMysqlDao registerMysqlDao;
 
-    private final RegisterRedis registerRedis;
+    private final RegisterRedis registerRedisDa;
 
 //    简单的增加办法
 
