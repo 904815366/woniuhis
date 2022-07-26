@@ -32,7 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implements UserService, UserDetailsService {
 
-    private final UserMysqlDao userMapper;
+    private final UserMysqlDao userMysqlDao;
     private final StringRedisTemplate template;
     private  final PermsMysqlDao permsMapper;
 
@@ -40,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         QueryWrapper<UserPo> wrapper = new QueryWrapper();
         wrapper.eq("username",username);
-        UserPo user = userMapper.selectOne(wrapper);
+        UserPo userPo = userMysqlDao.selectOne(wrapper);
 
 
         boolean enabled = true;
@@ -48,18 +48,18 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        if (user == null){
+        if (userPo == null){
             accountNonExpired = false;
         }
-        if (user.getStatus().equals("1")){
+        if (userPo.getStatus().equals("1")){
             accountNonLocked = false;
         }
-        if (user.getStatus().equals("2")){
+        if (userPo.getStatus().equals("2")){
             enabled = false;
         }
 
-        template.opsForValue().set("loginSuccessOfName", user.getName());
-        List<String> percodes = permsMapper.getPermsPercodeByUsername(user.getUsername());
+        template.opsForValue().set("loginSuccessOfName", userPo.getName());
+        List<String> percodes = permsMapper.getPermsPercodeByUsername(userPo.getUsername());
 //        List<String> percodes = new ArrayList<>();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -71,7 +71,7 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
 
         UserDetails userDetails =
                 new org.springframework.security.core.userdetails.User(
-                        user.getUsername(),user.getPassword(),enabled,accountNonExpired,credentialsNonExpired,accountNonLocked,authorities);
+                        userPo.getUsername(), userPo.getPassword(),enabled,accountNonExpired,credentialsNonExpired,accountNonLocked,authorities);
         return userDetails;
     }
 }

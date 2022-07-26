@@ -1,10 +1,16 @@
+
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/home/Home.vue";
 import Login from "../views/login/Login.vue";
 import Patient from "../components/doctor/Patient.vue";
+import AddUser from '../components/user/AddUser.vue'
+import UserInfo from '../components/user/UserInfo.vue'
+import UserList from '../components/user/UserList.vue'
+import UserTime from '../components/user/UserTime.vue'
+import HomeContent from '../components/user/HomeContent.vue'
+Vue.use(VueRouter)
 
-Vue.use(VueRouter);
 
 const routes = [
   {
@@ -25,18 +31,33 @@ const routes = [
     children: [
       { path: "/doctor/patient", name: "patient", component: Patient },
       {path:'/charge/enter',name: '/charge/enter',component: () => import('../components/charge/enter.vue')},
+      {path: '/user/add',
+      name: 'addUser',
+      component: AddUser,
+      children:[]},{
+        path: '/user/list',
+        name: 'userList',
+        component: UserList,
+        children:[]
+      },{
+        path: '/user/time',
+        name: 'userTime',
+        component: UserTime,
+        children:[]
+      },{
+        path: '/user/myself',
+        name: 'myself',
+        component: UserInfo,
+        children:[]
+      },{
+        path: '/user/homeContent',
+        name: 'homeContent',
+        component: HomeContent,
+        children:[]
+      }
     ],
 
   },
-
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
 ];
 
 const router = new VueRouter({

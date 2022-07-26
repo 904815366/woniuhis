@@ -1,0 +1,117 @@
+<template>
+  <div>
+    <el-dialog
+      title="编辑讲师"
+      :visible.sync="editTeacherDialogFormVisible"
+      @close="cancelEdit"
+    >
+      <el-form :model="user">
+        <el-form-item label="姓名" :label-width="formLabelWidth">
+          <el-input v-model="user.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="性别" :label-width="formLabelWidth">
+          <el-input v-model="user.sex" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="年龄" :label-width="formLabelWidth">
+          <el-input v-model="user.age" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="身份证号" :label-width="formLabelWidth">
+          <el-input v-model="user.card" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="联系电话" :label-width="formLabelWidth">
+          <el-input v-model="user.phone" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="岗位" :label-width="formLabelWidth">
+          <el-select v-model="user.roleid" placeholder="请选择岗位">
+            <el-option
+              v-for="role in roleData"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="级别" :label-width="formLabelWidth">
+          <el-input v-model="user.level" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="在职状态" :label-width="formLabelWidth">
+          <el-switch
+            v-model="user.status"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          ></el-switch>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="cancelEdit">取 消</el-button>
+        <el-button type="primary" @click="confirmEdit">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      editTeacherDialogFormVisible: true,
+      formLabelWidth: "120px",
+      user: {},
+    };
+  },
+  props: ["roleData", "objuser"],
+  created() {
+    this.user = {
+      id: this.objuser.id,
+      name: this.objuser.name,
+      sex: this.objuser.sex,
+      age: this.objuser.age,
+      card: this.objuser.card,
+      phone: this.objuser.phone,
+      roleid: this.objuser.roleid,
+      level: this.objuser.level,
+      status: this.objuser.status,
+    };
+    this.user.status = this.objuser.status == "0" ? true : false;
+  },
+  methods: {
+    cancelEdit() {
+      this.editTeacherDialogFormVisible = false;
+      //调用父组件传来的方法
+      this.$emit("func");
+    },
+    confirmEdit() {
+      this.user.status = this.user.status == true ? "0" : "1";
+      //发送axios请求
+      this.$axios
+        .post("/api/user/edit", this.user, {
+          headers: { strToken: window.localStorage.getItem("strToken") },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.status == 200) {
+            this.$message({
+              type: "success",
+              message: "修改成功!",
+              offset: 300,
+              duration: 1000,
+            });
+          } else {
+            this.$message({
+              type: "error",
+              message: "修改失败!",
+              offset: 300,
+              duration: 1000,
+            });
+          }
+        })
+        .catch(() => {});
+      this.editTeacherDialogFormVisible = false;
+      //调用父组件传来的方法
+      this.$emit("func");
+    },
+  },
+};
+</script>
+
+<style></style>

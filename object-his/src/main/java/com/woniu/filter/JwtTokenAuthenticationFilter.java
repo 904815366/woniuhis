@@ -24,7 +24,7 @@ import java.util.List;
 @Component
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
-    private UserMysqlDao userMapper;
+    private UserMysqlDao userMysqlDao;
 
     @Autowired
     private MyLoginFailHandler myLoginFailHandler;

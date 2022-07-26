@@ -18,7 +18,7 @@
           <el-col :span="12">
             <el-menu :default-active="$route.path" class="el-menu-vertical-demo" background-color="#545c64"
               text-color="#fff" active-text-color="#ffd04b" :router="true">
-              <el-menu-item index="/home">
+              <el-menu-item index="/user/homeContent">
                 <i class="el-icon-s-home"></i>
                 <span slot="title">首页</span>
               </el-menu-item>

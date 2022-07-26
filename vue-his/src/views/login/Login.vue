@@ -1,6 +1,6 @@
 <template>
-  <div style="height:100%">
-    <el-row type="flex" justify="center" align=middle>
+  <div style="height: 100%">
+    <el-row type="flex" justify="center" align="middle">
       <el-col :span="8">
 
         <h1>HIS管理系统</h1><br />
@@ -11,11 +11,15 @@
           </el-form-item>
 
           <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
+            <el-input
+              type="password"
+              v-model="user.password"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
-
-          <el-button type="primary" :plain="true" @click="submitForm()">登录</el-button>
-          <el-button @click="resetForm()">重置</el-button>
+          <el-form-item>
+            <el-button type="primary" :plain="true" @click="submitForm()">登录</el-button>
+            <el-button @click="resetForm()">重置</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -27,60 +31,53 @@
 export default {
   data() {
     return {
-      name: '',
+      name: "",
       user: {
-        username: '',
-        password: '',
+        username: "",
+        password: "",
       },
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 3, max: 10, message: "长度在 3 到 10 个字符", trigger: "blur" },
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 3, max: 10, message: "长度在 3 到 10 个字符", trigger: "blur" },
         ],
       },
     };
   },
 
-  created() { },
+  created() {},
   methods: {
     submitForm() {
-      this.$refs['loginForm'].validate((valid) => {
+      this.$refs["loginForm"].validate((valid) => {
         if (valid) {
           let data = this.$qs.stringify(this.user);
           console.log(data);
-          this.$axios.post("/api/login", data).then(res => {
+          this.$axios.post("/api/login", data).then((res) => {
             if (res.data.status === 200) {
-
               this.$message({
                 showClose: true,
-                message: '登陆成功',
-                type: 'success',
+                message: "登陆成功",
+                type: "success",
                 center: true,
               });
               this.name = res.data.msg;
               window.localStorage.setItem("strToken", res.data.data);
-              window.sessionStorage.setItem('username', this.user.username);
-              window.sessionStorage.setItem('name', this.name);
-              this.$router.push("/home");
-
-
+              window.sessionStorage.setItem("username", this.user.username);
+              window.sessionStorage.setItem("name", this.name);
+              this.$router.push("/user/homeContent");
             } else {
-
               this.$message({
                 showClose: true,
                 message: res.data.msg,
-                type: 'error',
+                type: "error",
                 center: true,
-
               });
-
-
             }
-          })
+          });
         } else {
           console.log("进来了");
 
@@ -89,22 +86,21 @@ export default {
       });
     },
     resetForm() {
-      this.$refs['loginForm'].resetFields();
-    }
+      this.$refs["loginForm"].resetFields();
+    },
   },
-}
+};
 </script>
 
 <style scoped>
 .el-row {
   height: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
   text-align: center;
-
 }
 
 .el-col {
-  background: #FFFFFF;
+  background: #ffffff;
   padding: 20px 30px;
   border-radius: 4px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);

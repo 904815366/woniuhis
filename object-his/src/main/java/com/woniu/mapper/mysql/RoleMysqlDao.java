@@ -1,6 +1,6 @@
 package com.woniu.mapper.mysql;
 
-import com.woniu.entity.po.RolePoPo;
+import com.woniu.entity.po.RolePo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author lh
  * @since 2022-07-23
  */
-public interface RoleMysqlDao extends BaseMapper<RolePoPo> {
+public interface RoleMysqlDao extends BaseMapper<RolePo> {
 
 }
