@@ -15,7 +15,7 @@
     </resultMap>
     <select id="getPatientList" resultMap="patientList">
         select a.id,b.bedid,a.name,a.sex,a.age,b.area,c.familyname,b.entertime
-        from patient a INNER JOIN register b INNER JOIN family c
+        from patient a INNER JOIN registerPo b INNER JOIN family c
         on a.id=b.patientid and b.familyid=c.id
     <where>
         and b.outtime is null
