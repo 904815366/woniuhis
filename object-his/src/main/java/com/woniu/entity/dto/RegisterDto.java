@@ -27,6 +27,16 @@ public class RegisterDto implements Serializable {
 
     private Integer patientid;
 
+    private String name;
+
+    private String sex;
+
+    private Integer age;
+
+    private String phone;
+
+    private String card;
+
     private String area;
 
     private String diagnose;

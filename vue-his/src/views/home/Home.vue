@@ -85,9 +85,9 @@ export default {
       this.$axios
         .get("/api/perms/menu?username=" + this.username)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.menuData = res.data.data;
-          console.log(this.menuData);
+          // console.log(this.menuData);
         })
         .catch((e) => {
           console.log(res.data.msg);

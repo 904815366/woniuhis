@@ -11,11 +11,7 @@
           </el-form-item>
 
           <el-form-item label="密码" prop="password">
-            <el-input
-              type="password"
-              v-model="user.password"
-              autocomplete="off"
-            ></el-input>
+            <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" :plain="true" @click="submitForm()">登录</el-button>
@@ -49,13 +45,13 @@ export default {
     };
   },
 
-  created() {},
+  created() { },
   methods: {
     submitForm() {
       this.$refs["loginForm"].validate((valid) => {
         if (valid) {
           let data = this.$qs.stringify(this.user);
-          console.log(data);
+          // console.log(data);
           this.$axios.post("/api/login", data).then((res) => {
             if (res.data.status === 200) {
               this.$message({
@@ -79,7 +75,7 @@ export default {
             }
           });
         } else {
-          console.log("进来了");
+          // console.log("进来了");
 
           return false;
         }

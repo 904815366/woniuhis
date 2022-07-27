@@ -1,5 +1,6 @@
 package com.woniu.mapper.mysql;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.woniu.entity.po.RegisterPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,5 +25,6 @@ public interface RegisterMysqlDao extends BaseMapper<RegisterPo> {
 
     @Select("select * from register where patientid=#{patientid}")
     RegisterPo queryRegisterByPatientid(Integer patientid);
+
 
 }

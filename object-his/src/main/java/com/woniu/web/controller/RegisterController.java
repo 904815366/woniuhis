@@ -2,7 +2,11 @@ package com.woniu.web.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.RegisterDto;
+import com.woniu.entity.dto.UserDto;
+import com.woniu.web.fo.QueryPageInfo;
+import com.woniu.web.fo.QueryUserListByRoleId;
 import com.woniu.entity.po.RegisterPo;
 import com.woniu.repository.RegisterRepository;
 import com.woniu.service.RegisterService;
@@ -38,6 +42,8 @@ public class RegisterController {
     @Resource
     private RegisterConverter registerConverter;
 
+
+
 //    分页查询所有
     @GetMapping("/gotoRegisters")
     public PageInfo<RegisterDto> getRegisters(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
@@ -48,6 +54,33 @@ public class RegisterController {
         List<RegisterDto> dtos = registerConverter.from(list);
         return new PageInfo<>(dtos);
     }
+
+
+    /**
+     * 罗虎
+     * @return 入院登记表列表
+     */
+    @GetMapping("/queryPageInfo")
+    public ResponseResult<PageInfo<RegisterDto>> queryPageInfo(QueryPageInfo queryPageInfo){
+        PageInfo<RegisterDto> dtoPageInfo = queryPageInfo.exec();
+        return new ResponseResult<>(dtoPageInfo,"ok",2000);
+    }
+
+
+    /**
+     * 罗虎
+     * @return 角色ID为收费人员的用户列表
+     */
+    @GetMapping("/queryUserListByRoleId")
+    public ResponseResult<List<UserDto>> queryUserListByRoleId(){
+        List<UserDto> dtos = new QueryUserListByRoleId().exec();
+        return new ResponseResult<>(dtos,"ok",2000);
+    }
+
+
+
+
+
 
 }
 
