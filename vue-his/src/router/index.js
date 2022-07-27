@@ -11,6 +11,7 @@ import UserList from '../components/user/UserList.vue'
 import UserTime from '../components/user/UserTime.vue'
 import HomeContent from '../components/user/HomeContent.vue'
 import DrugList from '../components/drug/Drug.vue'
+import DrugEdit from '../components/drug/DrugEdit.vue'
 Vue.use(VueRouter)
 
 
@@ -73,7 +74,9 @@ const routes = [
         path:'/drug/list',
         name:'drugList',
         component:DrugList,
-        children:[]
+        children:[
+          { path: "/drug/drugedit", name: "drugedit", component: DrugEdit }
+        ]
       }
     ],
   },

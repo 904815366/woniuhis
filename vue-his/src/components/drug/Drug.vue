@@ -21,15 +21,33 @@
       </el-col>
     </el-row>
     <el-table :data="tableData" style="width: 100%; margin-top: 10px" max-height="100%">
-      <el-table-column prop="id" label="药品id" width="120"> </el-table-column>
+      <el-table-column prop="id" label="药品id" width="80" align="center">
+      </el-table-column>
       <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
-      <el-table-column prop="batch" label="批次" width="120"> </el-table-column>
-      <el-table-column prop="type" label="类型" width="120"> </el-table-column>
-      <el-table-column prop="price" label="价格" width="120"> </el-table-column>
-      <el-table-column prop="num" label="库存" width="120"> </el-table-column>
-      <el-table-column prop="alarmnum" label="报警库存" width="120"> </el-table-column>
-      <el-table-column prop="producer" label="厂商" width="120"> </el-table-column>
-      <el-table-column prop="producing" label="产地" width="120"> </el-table-column>
+      <el-table-column prop="batch" label="批次" width="120" align="center">
+      </el-table-column>
+      <el-table-column prop="type" label="类型" width="80" align="center">
+      </el-table-column>
+      <el-table-column prop="price" label="价格" width="80" align="center">
+      </el-table-column>
+      <el-table-column
+        prop="num"
+        label="库存"
+        width="80"
+        align="center"
+      ></el-table-column>
+      <el-table-column prop="alarmnum" label="报警库存" width="120">
+        <template slot-scope="scope"
+          >{{ scope.row.alarmnum }}
+          <el-button
+            size="mini"
+            icon="el-icon-edit"
+            @click="handleEdit(scope.row)"
+          ></el-button>
+        </template>
+      </el-table-column>
+      <el-table-column prop="producer" label="厂商" width="150"> </el-table-column>
+      <el-table-column prop="producing" label="产地" width="80"> </el-table-column>
       <el-table-column prop="mdfunction" label="功效" width="120"> </el-table-column>
       <el-table-column prop="date" label="生产时间" width="120">
         <template slot-scope="scope">
@@ -62,11 +80,26 @@
       style="margin-top: 10px"
     >
     </el-pagination>
+
+    <!-- 显示子组件 -->
+    <component
+      :is="comName"
+      :objDrug="drug"
+      @func="handleShow"
+      @reload="reload"
+      :pageNum="pageNum"
+    ></component>
   </div>
 </template>
 
 <script>
+//导入子组件
+import DrugEdit from "./DrugEdit.vue";
 export default {
+  components: {
+    //注册子组件
+    DrugEdit,
+  },
   data() {
     return {
       tableData: [],
@@ -76,13 +109,24 @@ export default {
       pageSize: 5,
       totalCount: 0,
       pageSizes: [5, 10, 15, 20],
+      comName: "",
+      drug: {}, //用于存放要编辑的drug
     };
   },
   created() {
     this.getDrugList(1);
   },
   methods: {
+    reload() {
+      console.log("执行reload");
+      this.getDrugList(this.pageNum);
+    },
+    handleShow() {
+      console.log("执行handleShow");
+      this.comName = "";
+    },
     getDrugList(pNum) {
+      console.log("执行getDrugList");
       console.log(this.searchName);
       this.$axios
         .get(
@@ -122,6 +166,10 @@ export default {
     handleCurrentChange(pNo) {
       this.pageNum = pNo;
       this.getDrugList(pNo); //翻页
+    },
+    handleEdit(row) {
+      this.drug = row;
+      this.comName = DrugEdit;
     },
   },
 };

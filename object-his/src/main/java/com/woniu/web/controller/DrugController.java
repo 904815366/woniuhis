@@ -6,16 +6,14 @@ import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.DrugDto;
 import com.woniu.entity.dto.PatientDto;
 import com.woniu.service.DrugService;
+import com.woniu.web.fo.DrugEdit;
 import com.woniu.web.fo.DrugList;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -33,7 +31,7 @@ public class DrugController {
     private DrugService drugService;
 
     @GetMapping("/list")
-    @Operation( summary = "查询药品", description = "条件查询", tags = {"患者管理"} )
+    @Operation( summary = "查询药品", description = "条件查询", tags = {"药房管理"} )
     public ResponseResult<PageInfo> getDrugList(DrugList drugList){
         try {
             System.out.println("到达druglist");
@@ -43,7 +41,18 @@ public class DrugController {
             e.printStackTrace();
             return null;
         }
+    }
 
+    @RequestMapping("/edit")
+    @Operation( summary = "修改报警库存", description = "修改报警库存", tags = {"药房管理"} )
+    public ResponseResult<String> DrugEdit(@RequestBody DrugEdit drugEdit){
+        try {
+            drugEdit.exac();
+            return new ResponseResult<>("修改成功","OK",200);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }
 
