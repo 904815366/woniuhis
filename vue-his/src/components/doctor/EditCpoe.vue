@@ -57,7 +57,7 @@ export default {
             value: ''
         }
     },
-    props: ['patient','cpoe'],//接收父组件传来的属性值
+    props: ['patient', 'cpoe'],//接收父组件传来的属性值
     created() {
         console.log(this.cpoe);
     },
@@ -71,8 +71,22 @@ export default {
             this.editDialogFormVisible = false;
             //调用父组件传来的方法
             this.$emit('func');
-            this.$axios.post("/api/warn/modifyCpoe",this.cpoe).then(res=>{
-                console.log(res.data);
+            this.$axios.post("/api/warn/modifyCpoe", this.cpoe).then(res => {
+                if (res.data.status == 200) {
+                    this.$message({
+                        showClose: true,
+                        message: "修改成功",
+                        type: "success",
+                        center: true,
+                    });
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '服务异常!',
+                        type: 'error',
+                        duration: 1000  //显示的时间,ms
+                    });
+                }
             })
         }
     }

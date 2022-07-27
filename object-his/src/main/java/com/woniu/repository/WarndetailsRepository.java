@@ -14,4 +14,8 @@ public class WarndetailsRepository {
     public void updateWarndetailsByWarnid(WarndetailsPo warndetailsPo){
         warndetailsMysqlDao.updateWarndetailsByWarnid(warndetailsPo);
     }
+
+    public void deleteByWarnid(Integer Warnid){
+        warndetailsMysqlDao.deleteByWarnid(Warnid);
+    }
 }

@@ -26,5 +26,22 @@ public interface WarnMysqlDao extends BaseMapper<WarnPo> {
      */
     List<WarnDto> selectAllByPatientId(Integer id);
 
+    /**
+     * 修改医嘱
+     * @param registerid
+     * @param warntime
+     */
     void updateWarnById(@Param("registerid") Integer registerid,@Param("warntime") Date warntime);
+
+    /**
+     * 删除医嘱
+     * @param id
+     */
+    void deleteWarnById(Integer id);
+
+    /**
+     * 更改医嘱状态
+     * @param ids
+     */
+    void updateWarnStatus(@Param("ids") String[] ids);
 }

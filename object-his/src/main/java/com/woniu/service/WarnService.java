@@ -16,4 +16,8 @@ import java.util.Date;
  */
 public interface WarnService extends IService<WarnPo> {
     void updateWarn(Integer registerid, Date warntime, WarndetailsPo warndetailsPo);
+
+    void deleteWarn(Integer id);
+
+    void updatestatus(String[] ids);
 }

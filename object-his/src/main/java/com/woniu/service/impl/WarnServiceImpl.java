@@ -33,4 +33,15 @@ public class WarnServiceImpl extends ServiceImpl<WarnMysqlDao, WarnPo> implement
         warnRepository.updateWarn(registerid, warntime);
         warndetailsRepository.updateWarndetailsByWarnid(warndetailsPo);
     }
+
+    @Override
+    public void deleteWarn(Integer id) {
+        warnRepository.deleteWarnById(id);
+        warndetailsRepository.deleteByWarnid(id);
+    }
+
+    @Override
+    public void updatestatus(String[] ids) {
+        warnRepository.updateWarnStatus(ids);
+    }
 }

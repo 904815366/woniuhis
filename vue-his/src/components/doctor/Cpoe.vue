@@ -5,7 +5,7 @@
                 <el-button type="success" round size="mini" @click="comName = 'addCpoe'">新增</el-button>
             </template>
             <template slot="extra">
-                <el-button type="warning" round size="mini">提交</el-button>
+                <el-button type="warning" round size="mini" @click="updateStatus">提交</el-button>
             </template>
             <el-descriptions-item>
                 <template slot="label">
@@ -59,8 +59,10 @@
                 {{ patient.entertime }}
             </el-descriptions-item>
         </el-descriptions>
-        <el-table :data="tableData" style="width: 100%;margin-top: 10px;" max-height="100%">
-            <el-table-column type="selection" width="55"> </el-table-column>
+        <el-table :data="tableData" style="width: 100%;margin-top: 10px;" max-height="100%"
+            @selection-change="handleSelectionChange">
+            <el-table-column type="selection" width="55" :selectable="selectHandle">
+            </el-table-column>
             <el-table-column prop="date" label="开立时间" width="180">
                 <template slot-scope="scope">
                     <i class="el-icon-time"></i>
@@ -94,7 +96,8 @@
                 <template slot-scope="scope">
                     <el-button type="primary" icon="el-icon-edit" @click="comName = 'editCpoe', handleEdit(scope.row)"
                         circle v-if="scope.row.status == '0'"></el-button>
-                    <el-button type="danger" icon="el-icon-delete" circle v-if="scope.row.status != '2'"></el-button>
+                    <el-button type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)" circle
+                        v-if="scope.row.status != '2'"></el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -125,7 +128,8 @@ export default {
             totalCount: 0,
             pageSizes: [5, 10, 15, 20],
             comName: '',
-            cpoe: {}
+            cpoe: {},
+            ids: []
         }
     }, components: {
         addCpoe, editCpoe
@@ -182,10 +186,72 @@ export default {
         },
         handleShow() {
             this.comName = '';
-
         }, handleEdit(cp) {
             this.cpoe = cp;
         },
+        handleDelete(id) {
+            this.$axios.get("/api/warn/delCpoeById?id=" + id).then(res => {
+                console.log(res.data)
+                if (res.data.status == 200) {
+                    this.$message({
+                        showClose: true,
+                        message: "删除成功",
+                        type: "success",
+                        center: true,
+                    });
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '服务异常!',
+                        type: 'error',
+                        duration: 1000  //显示的时间,ms
+                    });
+                }
+            })
+        },
+        handleSelectionChange(val) {
+            for (let i = 0; i < val.length; i++) {
+                this.ids[i] = val[i].id;
+            }
+            console.log(this.ids);
+        },
+        selectHandle(row) {
+            if (row.status != '0') {
+                return false
+            } else {
+                return true
+            }
+        },
+        updateStatus() {
+            if (this.ids == null) {
+                this.$message({
+                    showClose: true,
+                    message: '请先选择要提交的医嘱!',
+                    type: 'error',
+                    duration: 1000  //显示的时间,ms
+                });
+            } else {
+                let result = this.ids.join(",");
+                this.$axios.get("/api/warn/updateCpoeStatus?ids=" + result)
+                    .then(res => {
+                        if (res.data.status == 200) {
+                            this.$message({
+                                showClose: true,
+                                message: "提交成功",
+                                type: "success",
+                                center: true,
+                            });
+                        } else {
+                            this.$message({
+                                showClose: true,
+                                message: '服务异常!',
+                                type: 'error',
+                                duration: 1000  //显示的时间,ms
+                            });
+                        }
+                    })
+            }
+        }
     }
 }
 </script>

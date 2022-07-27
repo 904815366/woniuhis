@@ -8,4 +8,8 @@
         set drugid=#{drugid},num=#{num},measure=#{measure},directions=#{directions}
         where warnid=#{warnid}
     </update>
+    <delete id="deleteByWarnid">
+        delete from warndetails where warnid=#{warnid}
+    </delete>
+
 </mapper>

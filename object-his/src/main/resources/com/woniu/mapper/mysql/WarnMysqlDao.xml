@@ -14,34 +14,47 @@
         <result property="measure" column="measure"></result>
         <result property="directions" column="directions"></result>
     </resultMap>
-<!--查询患者医嘱-->
+    <!--查询患者医嘱-->
     <select id="selectAllByPatientId" resultMap="wardList">
-        SELECT
-            c.id,
-            a.id as patientid,
-            c.warntime,
-            f.name as doctorname,
-            c.status,
-            e.name as drugname,
-            d.num,
-            d.measure,
-            d.directions
-        FROM
-            register a,
-            patient b,
-            warn c,
-            warndetails d,
-            drug e ,
-            user f
-        WHERE
-            a.patientid = b.id
+        SELECT c.id,
+               a.id   as patientid,
+               c.warntime,
+               f.name as doctorname,
+               c.status,
+               e.name as drugname,
+               d.num,
+               d.measure,
+               d.directions
+        FROM register a,
+             patient b,
+             warn c,
+             warndetails d,
+             drug e,
+             user f
+        WHERE a.patientid = b.id
           AND a.id = c.registerid
           AND c.id = d.warnid
           AND d.drugid = e.id
-          and f.id=c.doctorid
-          and a.patientid=#{id}
+          and f.id = c.doctorid
+          and a.patientid = #{id}
     </select>
+    <!--修改医嘱-->
     <update id="updateWarnById">
-        update warn set warntime=#{warntime} where registerid=#{registerid}
+        update warn
+        set warntime=#{warntime}
+        where registerid = #{registerid}
+    </update>
+    <!--删除医嘱-->
+    <delete id="deleteWarnById">
+        delete
+        from warn
+        where id = #{id}
+    </delete>
+    <!--更新医嘱状态-->
+    <update id="updateWarnStatus">
+        update warn set status=1 where id in
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </update>
 </mapper>

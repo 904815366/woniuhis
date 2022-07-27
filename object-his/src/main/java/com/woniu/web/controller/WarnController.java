@@ -5,10 +5,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.WarnDto;
+import com.woniu.service.WarnService;
 import com.woniu.web.fo.ModifyCpoe;
 import com.woniu.web.fo.QueryWarnList;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,8 @@ import java.util.List;
 @RequestMapping("/warn")
 @Api( tags = {"医嘱管理"} )
 public class WarnController {
+    @Autowired
+    private WarnService warnService;
     @GetMapping("/getWarnList")
     @Operation( summary = "查询患者医嘱", description = "查询患者医嘱", tags = {"医嘱管理"} )
     public ResponseResult<PageInfo<WarnDto>> getWarnListById(@RequestParam(name = "patientid") Integer patientid,
@@ -51,6 +55,31 @@ public class WarnController {
             System.out.println(cpoe);
             ModifyCpoe modifyCpoe = new ModifyCpoe();
             modifyCpoe.modifyCpoe(cpoe);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+        return new ResponseResult<>(null, "SUCCESS", 200);
+    }
+
+    @GetMapping("/delCpoeById")
+    @Operation( summary = "删除医嘱", description = "删除医嘱", tags = {"医嘱管理"} )
+    public ResponseResult<Void> removeCpoe(Integer id){
+        try {
+            warnService.deleteWarn(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+        return new ResponseResult<>(null, "SUCCESS", 200);
+    }
+
+    @GetMapping("/updateCpoeStatus")
+    @Operation( summary = "更新医嘱状态", description = "更新医嘱状态", tags = {"医嘱管理"} )
+    public ResponseResult<Void> updateCpoeStatus(String ids){
+        try {
+            String[] idArr = ids.split(",");
+            warnService.updatestatus(idArr);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseResult<>(null, "Internal Server Error", 500);
