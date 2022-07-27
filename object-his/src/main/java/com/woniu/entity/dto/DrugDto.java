@@ -2,14 +2,17 @@ package com.woniu.entity.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -57,11 +60,17 @@ public class DrugDto implements Serializable {
     private String memo;
 
     @Schema(name = "protime", description = "生产时间")
-    private LocalDateTime protime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date protime;
 
     @Schema(name = "validtime", description = "过期时间")
-    private LocalDateTime validtime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date validtime;
 
+    @Schema(name = "batch", description = "批次")
+    private String batch;
 
+    @Schema(name = "alarmnum", description = "报警库存")
+    private Integer alarmnum;
 
 }

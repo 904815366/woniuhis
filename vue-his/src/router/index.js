@@ -10,6 +10,7 @@ import UserInfo from '../components/user/UserInfo.vue'
 import UserList from '../components/user/UserList.vue'
 import UserTime from '../components/user/UserTime.vue'
 import HomeContent from '../components/user/HomeContent.vue'
+import DrugList from '../components/drug/Drug.vue'
 Vue.use(VueRouter)
 
 
@@ -36,34 +37,44 @@ const routes = [
       {path: '/user/add',
       name: 'addUser',
       component: AddUser,
-      children:[]},{
+      children:[]
+      },
+      {
         path: '/user/list',
         name: 'userList',
         component: UserList,
         children:[]
-      },{
+      },
+      {
         path: '/user/time',
         name: 'userTime',
         component: UserTime,
         children:[]
-      },{
+      },
+      {
         path: '/user/myself',
         name: 'myself',
         component: UserInfo,
         children:[]
-      },{
+      },
+      {
         path: '/user/homeContent',
         name: 'homeContent',
         component: HomeContent,
         children:[]
       },
-
       {
         path:'/nurse/register',
-      name:'nurse/register',
-      component: ()=> import(//不需要先导入，注册时导入，新语法
+        name:'nurse/register',
+        component: ()=> import(//不需要先导入，注册时导入，新语法
         '../components/nurse/Register.vue')
       },
+      {
+        path:'/drug/list',
+        name:'drugList',
+        component:DrugList,
+        children:[]
+      }
     ],
   },
 ];

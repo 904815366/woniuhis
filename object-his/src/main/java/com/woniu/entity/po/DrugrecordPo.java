@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -29,7 +32,8 @@ public class DrugrecordPo implements Serializable {
 
     private Integer num;
 
-    private LocalDateTime returntime;
+    @DateTimeFormat(style = "yyyy-MM-dd")
+    private Date returntime;
 
     private Integer userid;
 

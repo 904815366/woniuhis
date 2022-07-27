@@ -3,11 +3,14 @@ package com.woniu.entity.dto;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -30,7 +33,8 @@ public class DrugrecordDto implements Serializable {
 
     private Integer num;
 
-    private LocalDateTime returntime;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date returntime;
 
     private Integer userid;
 

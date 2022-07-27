@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -22,6 +25,7 @@ import org.springframework.data.redis.core.RedisHash;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @RedisHash("drug")
+@TableName("drug")
 public class DrugPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,10 +50,14 @@ public class DrugPo implements Serializable {
 
     private String memo;
 
-    private LocalDateTime protime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date protime;
 
-    private LocalDateTime validtime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date validtime;
 
+    private Integer alarmnum;
 
+    private String batch;
 
 }

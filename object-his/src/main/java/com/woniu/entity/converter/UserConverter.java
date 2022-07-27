@@ -20,6 +20,7 @@ public interface UserConverter {
     @Mapping(source = "roleid",target = "roleid")
     @Mapping(source = "level",target = "level")
     @Mapping(source = "status",target = "status")
+    @Mapping(source = "familyid",target = "familyid")
     List<UserDto> listFrom (List<UserPo> userPoList);
 
 }
