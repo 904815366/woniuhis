@@ -42,7 +42,6 @@ public class UserDto implements Serializable {
 
     private Integer roleid;
 
-
     private String level;
 
     private String status;

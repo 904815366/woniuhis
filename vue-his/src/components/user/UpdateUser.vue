@@ -42,7 +42,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="级别" :label-width="formLabelWidth">
-          <el-input v-model="user.level" autocomplete="off"></el-input>
+          <el-select v-model="user.level" placeholder="请选择级别">
+            <el-option label="专家" value="专家"></el-option>
+            <el-option label="主治医师" value="主治医师"></el-option>
+            <el-option label="主任" value="主任"></el-option>
+            <el-option label="副主任" value="副主任"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="在职状态" :label-width="formLabelWidth">
           <el-switch
@@ -117,9 +122,9 @@ export default {
           }
         })
         .catch(() => {});
-      this.editUserDialogFormVisible = false;
-      //调用父组件传来的方法
       this.$emit("func");
+      console.log("func-ok");
+      this.editUserDialogFormVisible = false;
     },
   },
 };

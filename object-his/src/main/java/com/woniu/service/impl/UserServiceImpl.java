@@ -1,6 +1,7 @@
 package com.woniu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.po.UserPo;
 import com.woniu.mapper.mysql.PermsMysqlDao;
 import com.woniu.mapper.mysql.UserMysqlDao;
@@ -93,6 +94,20 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
         if(deleteById==0){
             throw new Exception("删除失败");
         }
-        return null;
+        return deleteById;
+    }
+
+    @Override
+    public UserDto getUserByUsername(String searchUsername){
+        UserRepository userRepository = ApplicationContextHolder.
+                getApplicationContext().getBean(UserRepository.class);
+        return userRepository.getUserByUsername(searchUsername);
+    }
+
+    @Override
+    public Integer addUser(UserPo userPo) {
+        UserRepository userRepository = ApplicationContextHolder.
+                getApplicationContext().getBean(UserRepository.class);
+        return userRepository.addUser(userPo);
     }
 }

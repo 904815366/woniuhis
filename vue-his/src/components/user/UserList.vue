@@ -92,10 +92,10 @@
       <el-table-column
         prop="level"
         label="级别"
-        width="70"
+        width="90"
         align="center"
       ></el-table-column>
-      <el-table-column label="在职状态" width="100" align="center">
+      <el-table-column label="在职状态" width="80" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status == '0' ? 'success' : 'danger'">
             <span>{{ scope.row.status == "0" ? "在职" : "离职" }}</span>
@@ -108,12 +108,14 @@
             size="mini"
             type="primary"
             @click="handleEdit(scope.$index, scope.row)"
+            icon="el-icon-edit"
             >编辑</el-button
           >
           <el-button
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
+            icon="el-icon-delete"
             >删除</el-button
           >
         </template>
@@ -183,19 +185,16 @@ export default {
     //处理编辑
     handleEdit(index, row) {
       this.comName = "UpdateUser";
-      console.log(row);
       this.user = row;
     },
     //处理删除
     handleDelete(index, row) {
-      console.log(row);
       this.$axios
         .get("/api/user/delete", {
           params: { id: row.id },
           headers: { strToken: window.localStorage.getItem("strToken") },
         })
         .then((res) => {
-          console.log(res.data.msg);
           if (res.data.status == 200) {
             this.$message({
               type: "success",
@@ -203,18 +202,17 @@ export default {
               offset: 300,
               duration: 1000,
             });
-            this.finduserList(this.currentPage);
           } else {
             this.$message({
               type: "error",
-              message: "权限不足!",
+              message: res.data.msg,
               offset: 300,
               duration: 1000,
             });
           }
         })
         .catch(() => {});
-      this.finduserList(this.currentPage);
+      this.finduserList(1);
     },
     //获取用户列表数据
     finduserList(pno) {

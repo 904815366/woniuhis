@@ -51,6 +51,4 @@ public class UserPo implements Serializable {
     private String level;
 
     private String status;
-
-
 }

@@ -4,6 +4,7 @@ import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.po.UserPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.woniu.web.fo.UserModify;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -31,4 +32,7 @@ public interface UserMysqlDao extends BaseMapper<UserPo> {
             "card=#{card},phone=#{phone},roleid=#{roleid},level=#{level}," +
             "status=#{status} where id=#{id}")
     Integer modifyById(UserPo userModify);
+
+    @Select("select * from user where username = #{searchUsername}")
+    UserDto getUserByUsername(@Param("searchUsername") String searchUsername);
 }
