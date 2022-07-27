@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Schema(description = "排班表")
+@Schema(description = "首页排班信息")
 @RedisHash("arrange")
 public class ArrangeDto implements Serializable {
 
@@ -31,18 +32,35 @@ public class ArrangeDto implements Serializable {
     @Id
     @Schema(name = "id", description = "排班ID")
     private Integer id;
-
     @Schema(name = "dutyuserid", description = "值班人员ID")
     private Integer dutyuserid;
-
-    @Schema(name = "dutytime", description = "值班时间")
+    @Schema(name = "dutytime", description = "值班星期")
     private Integer dutytime;
+    @Schema(name = "name", description = "员工姓名")
+    private String name;
+    @Schema(name = "familyid", description = "科室id")
+    private Integer familyid;
+    @Schema(name = "familyname", description = "科室名")
+    private String familyname;
+    @Schema(name = "roleid", description = "岗位id")
+    private Integer roleid;
+    @Schema(name = "rolename", description = "岗位名")
+    private String rolename;
 
-    @Schema(name = "createtime", description = "排版时间")
-    private LocalDateTime createtime;
-
-    @Schema(name = "createuserid", description = "人事管理员ID")
-    private Integer createuserid;
-
-
+    @Schema(name = "monday", description = "周一")
+    private String monday;
+    @Schema(name = "tuesday", description = "周二")
+    private String tuesday;
+    @Schema(name = "wednesday", description = "周三")
+    private String wednesday;
+    @Schema(name = "thursday", description = "周四")
+    private String thursday;
+    @Schema(name = "friday", description = "周五")
+    private String friday;
+    @Schema(name = "saturday", description = "周六")
+    private String saturday;
+    @Schema(name = "sunday", description = "周日")
+    private String sunday;
+//    @Schema(name = "arrangeInfoDtoList", description = "信息列表")
+//    private List<ArrangeInfoDto> arrangeInfoDtoList;
 }

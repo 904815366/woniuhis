@@ -6,15 +6,15 @@ import Patient from "../components/doctor/Patient.vue";
 import Cpoe from "../components/doctor/Cpoe.vue";
 import Emr from "../components/doctor/Emr.vue";
 import Notification from "../components/doctor/Notification.vue";
-import AddUser from "../components/user/AddUser.vue";
-import UserInfo from "../components/user/UserInfo.vue";
-import UserList from "../components/user/UserList.vue";
-import UserTime from "../components/user/UserTime.vue";
-import HomeContent from "../components/user/HomeContent.vue";
-import DrugList from "../components/drug/Drug.vue";
-import DrugEdit from "../components/drug/DrugEdit.vue";
-import DrugOut from '../components/drug/DrugOut.vue'
-import DrugDetail from '../components/drug/DrugDetail.vue'
+import AddUser from '../components/user/AddUser.vue'
+import UserInfo from '../components/user/UserInfo.vue'
+import UserList from '../components/user/UserList.vue'
+import UserTime from '../components/user/UserTime.vue'
+import HomeContent from '../components/user/HomeContent.vue'
+import DrugList from '../components/drug/Drug.vue'
+import DrugEdit from '../components/drug/DrugEdit.vue'
+import UserTimeThis from '../components/user/UserTimeThis.vue'
+import UserTimeNext from '../components/user/UserTimeNext.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -57,7 +57,22 @@ const routes = [
         path: "/user/time",
         name: "userTime",
         component: UserTime,
-        children: [],
+        children:[
+          {
+            path: '/user/time/usertimethis',
+            name: 'userTimeThis',
+            component: UserTimeThis,
+            children:[
+            ]
+          },
+          {
+            path: '/user/time/usertimenext',
+            name: 'userTimeNext',
+            component: UserTimeNext,
+            children:[
+            ]
+          }
+        ]
       },
       {
         path: "/user/myself",

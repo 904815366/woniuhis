@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>本周人员排信息</h1>
+    <!-- <h1>本周人员排信息</h1> -->
     <!-- 搜索栏 -->
     <el-row style="margin-top: 10px">
       <el-col :span="6">
@@ -111,6 +111,17 @@
           <el-tag v-if="scope.row.sunday !== null" circle>
             <span style="color: #409eff" class="el-icon-check"></span>
           </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" width="180">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="primary"
+            @click="handleEdit(scope.$index, scope.row)"
+            icon="el-icon-edit"
+            >排班</el-button
+          >
         </template>
       </el-table-column>
     </el-table>

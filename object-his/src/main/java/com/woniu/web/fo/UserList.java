@@ -43,7 +43,6 @@ public class UserList {
         }else {
             userPo.setStatus("");
         }
-//        List<com.woniu.entity.po.User> userList = userMapper.selectList(wrapper);
         List<UserDto> userList = userMysqlDao.selectByNameAndStatus(userPo);
         PageInfo<UserDto> pageInfo = new PageInfo<>(userList);
         return pageInfo;

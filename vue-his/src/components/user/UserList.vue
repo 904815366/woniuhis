@@ -4,7 +4,7 @@
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/user/homeContent' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>
-        <router-link to="/user">人员管理</router-link>
+        <router-link to="#">人员管理</router-link>
       </el-breadcrumb-item>
       <el-breadcrumb-item>人员列表</el-breadcrumb-item>
     </el-breadcrumb>
@@ -33,10 +33,7 @@
         </el-select>
       </el-col>
     </el-row>
-    <!-- 讲师列表的数据表格
-            :data动态绑定属性--数组
-            el-table-column 表列
-         -->
+    <!-- 数据表格 -->
     <el-table :data="userData" style="width: 100%; margin-top: 10px">
       <el-table-column
         type="index"
@@ -217,7 +214,7 @@ export default {
     //获取用户列表数据
     finduserList(pno) {
       this.$axios
-        .get("/api/user/list?", {
+        .get("/api/user/list", {
           params: {
             searchName: this.searchName,
             searchStatus: this.searchStatus,

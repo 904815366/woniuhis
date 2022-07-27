@@ -1,7 +1,11 @@
 package com.woniu.mapper.mysql;
 
+import com.woniu.entity.dto.ArrangeDto;
 import com.woniu.entity.po.ArrangePo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,23 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface ArrangeMysqlDao extends BaseMapper<ArrangePo> {
 
+    @Select({"<script> " +
+            "select arrange.id,arrange.dutyuserid,arrange.dutytime," +
+            "user.name,user.familyid,user.roleid," +
+            "role.name rolename , family.familyname " +
+            "from arrange , user , role ,family " +
+            "where user.roleid = role.id and user.familyid = family.id " +
+            "and user.id = arrange.dutyuserid " +
+            "and createtime <![CDATA[ <= ]]> (date_sub(curdate(),interval weekday(curdate()) - 6 DAY)) " +
+            "and createtime <![CDATA[ >= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + 0 DAY)) " +
+            "and user.name like concat('%',#{name},'%') " +
+            "<if test='roleid != null and roleid !=\"\"'>" +
+            "and roleid=#{roleid} " +
+            "</if>" +
+            "<if test='familyid != null and familyid !=\"\"'>" +
+            "and familyid=#{familyid} " +
+            "</if>" +
+            "order by dutyuserid" +
+            "</script>"})
+    List<ArrangeDto> getArrangeList(ArrangeDto arrangeDto);
 }
