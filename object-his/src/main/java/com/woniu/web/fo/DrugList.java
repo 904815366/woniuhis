@@ -19,6 +19,7 @@ public class DrugList {
     private Integer pageNum;
     private Integer pageSize;
     private String searchName;
+    private String searchBatch;
 
     public PageInfo<DrugDto> exac(){
         ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
@@ -29,6 +30,9 @@ public class DrugList {
         QueryWrapper<DrugPo> wrapper = new QueryWrapper<>();
         if(!StringUtils.isEmpty(searchName)){
             wrapper.like("name", searchName);
+        }
+        if(!StringUtils.isEmpty(searchBatch)){
+            wrapper.like("batch", searchBatch);
         }
         List<DrugPo> drugPoList =drugMysqlDao.selectList(wrapper);
         PageInfo<DrugPo> pagePoInfo = new PageInfo<>(drugPoList);

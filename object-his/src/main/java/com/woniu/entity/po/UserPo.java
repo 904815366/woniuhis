@@ -52,6 +52,5 @@ public class UserPo implements Serializable {
 
     private String status;
 
-    private Integer familyid;
 
 }

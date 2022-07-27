@@ -7,17 +7,15 @@
       </el-breadcrumb-item>
     </el-breadcrumb>
     <el-row style="margin-top: 10px">
-      <el-col :span="8">
-        <el-input placeholder="请输入查询药品的名字" v-model="searchName">
-          <i slot="prefix" class="el-input__icon el-icon-search"></i>
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="getDrugList(1)"
-          ></el-button>
-        </el-input>
+      <el-col :span="6">
+        <el-input placeholder="请输入查询药品的名字" v-model="searchName"> </el-input>
+        <i slot="prefix" class="el-input__icon el-icon-search"></i>
+        <el-button
+          slot="append"
+          icon="el-icon-search"
+          @click="getDrugList(1)"
+        ></el-button>
       </el-col>
-      <el-col :span="8"> </el-col>
     </el-row>
     <el-table :data="tableData" style="width: 100%; margin-top: 10px" max-height="100%">
       <el-table-column prop="id" label="药品id" width="120"> </el-table-column>
@@ -70,6 +68,7 @@ export default {
     return {
       tableData: [],
       searchName: "",
+      searchBatch: "",
       pageNum: 1,
       pageSize: 5,
       totalCount: 0,
@@ -89,7 +88,9 @@ export default {
             "&pageNum=" +
             pNum +
             "&pageSize=" +
-            this.pageSize
+            this.pageSize +
+            "&searchBatch=" +
+            this.searchBatch
         )
         .then((res) => {
           console.log(res.data);
