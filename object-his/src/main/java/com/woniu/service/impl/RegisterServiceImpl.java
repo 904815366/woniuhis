@@ -9,6 +9,7 @@ import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.service.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * @since 2022-07-23
  */
 @Service
+@Transactional
 public class RegisterServiceImpl extends ServiceImpl<RegisterMysqlDao, RegisterPo> implements RegisterService {
 
     @Autowired
@@ -30,6 +32,11 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMysqlDao, RegisterP
         PageHelper.startPage(pageNum,pageSize);
         List<RegisterPo> registerPos = registerRepository.getRegisters(pid);
         return new PageInfo<>(registerPos);
+    }
+
+    @Override
+    public boolean addRegister(RegisterPo po) {
+        return registerRepository.addRegister(po);
     }
 
 

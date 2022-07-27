@@ -50,8 +50,8 @@ public class AppointmentDto implements Serializable {
     @Schema(name = "card", description = "身份证")
     private String card;
 
-    @Schema(name = "pathogeny", description = "病因")
-    private String pathogeny;
+    @Schema(name = "diagnose", description = "门诊诊断")
+    private String diagnose;
 
     @Schema(name = "entertime", description = "入院时间")
     private LocalDateTime entertime;

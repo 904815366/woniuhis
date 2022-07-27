@@ -27,7 +27,7 @@
 export default {
   data() {
     return {
-      name: "",
+      nameAndId: [],
       user: {
         username: "",
         password: "",
@@ -60,10 +60,12 @@ export default {
                 type: "success",
                 center: true,
               });
-              this.name = res.data.msg;
+              this.nameAndId = res.data.msg.split("-");
+
               window.localStorage.setItem("strToken", res.data.data);
               window.sessionStorage.setItem("username", this.user.username);
-              window.sessionStorage.setItem("name", this.name);
+              window.sessionStorage.setItem("currentUser", this.nameAndId[0]);
+              window.sessionStorage.setItem("currentUserId", this.nameAndId[1]);
               this.$router.push("/user/homeContent");
             } else {
               this.$message({

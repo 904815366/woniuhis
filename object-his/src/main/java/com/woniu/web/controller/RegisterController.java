@@ -3,8 +3,11 @@ package com.woniu.web.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
+import com.woniu.config.ResultCode;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.dto.UserDto;
+import com.woniu.web.anon.IdempotentToken;
+import com.woniu.web.fo.AddRegister;
 import com.woniu.web.fo.QueryPageInfo;
 import com.woniu.web.fo.QueryUserListByRoleId;
 import com.woniu.entity.po.RegisterPo;
@@ -12,13 +15,13 @@ import com.woniu.repository.RegisterRepository;
 import com.woniu.service.RegisterService;
 import com.woniu.entity.converter.RegisterConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -78,7 +81,20 @@ public class RegisterController {
     }
 
 
+    /**
+     * 罗虎
+     * @return
+     */
+    @PostMapping("/publish")
+    @IdempotentToken
+    public ResponseResult<Void> addRegister(@RequestBody AddRegister addRegister , HttpServletRequest request ){
+//        System.out.println(addRegister);
+//        String idempotentToken = request.getHeader("addRegister");
+//        System.out.println(idempotentToken);
+        return addRegister.exec();
 
+
+    }
 
 
 

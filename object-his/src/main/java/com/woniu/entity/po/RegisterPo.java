@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * <p>
@@ -20,6 +19,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("register")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterPo implements Serializable {
 
     private static final long serialVersionUID = 1L;

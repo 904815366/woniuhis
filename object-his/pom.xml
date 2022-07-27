@@ -123,7 +123,21 @@
             <artifactId>jedis</artifactId>
         </dependency>
 
-<!--&lt;!&ndash;        mybatisPlus 自动生成器&ndash;&gt;-->
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.8.1</version> <!-- minio 依赖于 okhttp 且版本较高。注意，spring-boot-dependencies 中的不够高 -->
+        </dependency>
+
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.3.9</version>
+        </dependency>
+
+
+        <!--&lt;!&ndash;        mybatisPlus 自动生成器&ndash;&gt;-->
 <!--                <dependency>-->
 <!--                    <groupId>com.baomidou</groupId>-->
 <!--                    <artifactId>mybatis-plus-generator</artifactId>-->

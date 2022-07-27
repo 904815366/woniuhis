@@ -24,20 +24,112 @@
           <el-option value="已入院">已入院</el-option>
         </el-select>
 
+
         <!-- 添加入院登记信息 -->
-        <el-button @click="drawer = true" type="primary" style="margin-left: 16px;" class="el-icon-circle-plus">
+        <el-button @click="drawerOpen()" type="primary" style="margin-left: 16px;" class="el-icon-circle-plus">
         </el-button>
       </el-col>
 
 
-
-      <el-drawer title="我是外面的 Drawer" :visible.sync="drawer" size="50%">
+      <!-- 添加入院登记信息框 -->
+      <el-drawer title="入院信息登记" :visible.sync="drawer" size="60%">
         <div>
-          <el-button @click="innerDrawer = true">打开里面的!</el-button>
-          <el-drawer title="我是里面的" :append-to-body="true" :before-close="handleClose" :visible.sync="innerDrawer">
-            <p>_(:зゝ∠)_</p>
+
+          <!-- 预约列表按钮 -->
+          <el-button @click="innerDrawerOpen()" style="margin-left:100px;margin-bottom: 10px;">打开预约列表</el-button>
+
+          <!-- 预约列表框 -->
+          <el-drawer title="病人预约列表" :append-to-body="true" :before-close="handleClose" :visible.sync="innerDrawer">
+            <el-table :data="appointmentList" :fit="false">
+              <el-table-column prop="patientid" label="编号" width="80" align="center">
+              </el-table-column>
+
+              <el-table-column prop="name" label="姓名" width="80" align="center">
+              </el-table-column>
+
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="optionAppointment(scope.row)">选择</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </el-drawer>
+
+          <!-- 入院登记列表 -->
+          <el-form ref="form" :model="addregister" label-width="100px">
+            <el-form-item label="病人编号:">
+              <el-input disabled v-model="addregister.patientid" autocomplete="off" style="width: 50px;">
+              </el-input>
+
+            </el-form-item>
+
+            <el-form-item label="姓名:" style="display:inline-block">
+              <el-input v-model="addregister.name" autocomplete="off" style="width: 300px" placeholder="请输入姓名">
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="性别:" style="display:inline-block">
+              <el-radio v-model="addregister.sex" label="男" border size="medium">男</el-radio>
+              <el-radio v-model="addregister.sex" label="女" border size="medium">女</el-radio>
+            </el-form-item>
+
+            <el-form-item label="联系方式:" style="display:inline-block">
+              <el-input autocomplete="off" style="width: 300px;" v-model="addregister.phone" placeholder="请输入联系方式">
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="年龄:" style="display:inline-block">
+              <el-input autocomplete="off" style="width: 120px;" v-model="addregister.age" placeholder="请输入年龄">
+              </el-input>
+            </el-form-item>
+
+
+
+            <el-form-item label="身份证号码:" style="display:inline-block">
+              <el-input autocomplete="off" style="width: 300px;" v-model="addregister.card" placeholder="请输入身份证号码">
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="住址:" style="display:inline-block">
+              <el-input autocomplete="off" style="width: 300px; " v-model="addregister.area" placeholder="请输入住址">
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="门诊诊断:" style="display:inline-block">
+              <el-input autocomplete="off" style="width: 300px; " v-model="addregister.diagnose" placeholder="请输入门诊诊断">
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="预缴金额:" style="display:inline-block">
+              <el-input autocomplete="off" style="width: 300px; " v-model="addregister.money" placeholder="请输入预缴金额">
+              </el-input>
+            </el-form-item>
+
+            <el-form-item label="状态:">
+              <el-select style="width: 300px; " v-model="addregister.status" placeholder="请输入状态">
+                <el-option value="未缴费">未缴费</el-option>
+                <el-option value="已缴费">已缴费</el-option>
+                <!-- <el-option value="已入院">已入院</el-option> -->
+              </el-select>
+
+
+
+            </el-form-item>
+            <el-popover placement="top" width="160" v-model="visible">
+              <p>确定要添加登录信息码？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+                <el-button type="primary" size="mini" @click="addRegisterForm">确定</el-button>
+              </div>
+              <el-button slot="reference" type="primary" style="margin-left:100px;">确 定
+              </el-button>
+            </el-popover>
+
+          </el-form>
+
+
         </div>
+
       </el-drawer>
     </div>
 
@@ -89,6 +181,7 @@
     <el-pagination small layout="prev, pager, next , total " :total="tableData.total" next-text="下一页" prev-text="上一页"
       :page-size="pageSize" @current-change="queryPageInfo" :current-page="pageNum">
     </el-pagination>
+
   </div>
 </template>
 
@@ -96,14 +189,35 @@
 export default {
   data() {
     return {
+      // 分页属性
       pageNum: 1,
       pageSize: 5,
       searchName: '',
       searchStatus: "",
       tableData: {},
       userList: [],
+
+      //添加窗口的打开和关闭属性
       drawer: false,
       innerDrawer: false,
+
+      //表单添加的信息
+      addregister: {
+        sex: '男',
+      },
+
+      //幂等Token
+      idempotentToken: '',
+
+      //预约的列表
+      appointmentList: [],
+
+      //预约列表中点击选择后绑定的对象
+      appointment: {},
+
+      //确认添加框
+      visible: false,
+
     }
   },
   created() {
@@ -111,18 +225,11 @@ export default {
     this.queryUserListByRoleId();
   },
   methods: {
+    //分页列表
     queryPageInfo(pageNum) {
       this.pageNum = pageNum;
-      let searchStatus = '';
-      if (this.searchStatus == '查询所有') {
-        searchStatus = -1
-      } else if (this.searchStatus == '未缴费') {
-        searchStatus = 0
-      } else if (this.searchStatus == '已缴费') {
-        searchStatus = 1
-      } else if (this.searchStatus == '已入院') {
-        searchStatus = 2
-      }
+      let searchStatus = this.statusTransition(this.searchStatus);
+
       this.$axios.get("/api/register/queryPageInfo", {
         params: {
           pageNum: this.pageNum,
@@ -147,16 +254,99 @@ export default {
         this.userList = res.data.data;
         console.log(this.userList);
       })
+    },
+
+    addRegisterForm() {
+      if (this.addregister.patientid == "" || this.addregister.patientid == null) {
+        this.$message.error('请先在预约列表中进行选择!');
+        return;
+      }
+      this.visible = false;
+      this.addregister.status = this.statusTransition(this.addregister.status);
+      this.addregister.chargeid = window.sessionStorage.getItem('currentUserId');
+      this.$axios({
+        url: '/api/register/publish',
+        method: 'post',
+        headers: { 'addRegister': this.idempotentToken },
+        data: this.addregister
+      }).then(res => {
+        if (res.data.status === 200) {
+          this.$message({
+            message: '添加消息',
+            type: 'success'
+          });
+        } else {
+          console.log(res.data);
+        }
+      }).catch(e => {
+        this.$message({
+          message: e.message,
+          type: 'error'
+        });
+      })
+    },
+
+
+    //类型转换方法
+    statusTransition(obj) {
+      let searchStatus = '';
+      if (obj == '查询所有') {
+        searchStatus = -1
+      } else if (obj == '未缴费') {
+        searchStatus = 0
+      } else if (obj == '已缴费') {
+        searchStatus = 1
+      } else if (obj == '已入院') {
+        searchStatus = 2
+      }
+      return searchStatus;
+    },
+
+
+    //关闭入院登记窗口
+    handleClose(done) {
+      this.$confirm('还有未保存的工作哦确定关闭吗？')
+        .then(_ => {
+          done();
+        })
+        .catch(_ => { });
+    },
+
+
+    //打开入院登记窗口
+    drawerOpen() {
+      this.drawer = true;
+      this.$axios.get("/api/getIdempotentToken").then(res => {
+        this.idempotentToken = res;
+      });
+    },
+
+
+    //打开预约列表窗口
+    innerDrawerOpen() {
+      this.$axios.get("/api/appointment/list/status?status=0").then(res => {
+        this.appointmentList = res.data.data;
+        console.log(this.appointmentList);
+      });
+      this.innerDrawer = true
+    },
+
+
+    //预约列表点击选择
+    optionAppointment(obj) {
+      obj.status = '';
+      this.addregister = obj;
+      this.innerDrawer = false;
     }
+
+
+
   },
 
-  handleClose(done) {
-    this.$confirm('还有未保存的工作哦确定关闭吗？')
-      .then(_ => {
-        done();
-      })
-      .catch(_ => { });
-  }
+
+
+
+
 
 }
 </script>

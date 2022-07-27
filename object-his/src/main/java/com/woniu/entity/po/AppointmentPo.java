@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
@@ -24,6 +25,7 @@ import org.springframework.data.redis.core.RedisHash;
 @EqualsAndHashCode(callSuper = false)
 @RedisHash("appointment")
 @TableName("appointment")
+@Builder
 public class AppointmentPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +47,7 @@ public class AppointmentPo implements Serializable {
 
     private String card;
 
-    private String pathogeny;
+    private String diagnose;
 
 
     private LocalDateTime entertime;

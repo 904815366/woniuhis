@@ -62,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
             enabled = false;
         }
 
-        template.opsForValue().set("loginSuccessOfName", userPo.getName());
+        template.opsForValue().set("loginSuccessOfNameAndId", userPo.getName()+"-"+userPo.getId());
         List<String> percodes = permsMapper.getPermsPercodeByUsername(userPo.getUsername());
 //        List<String> percodes = new ArrayList<>();
 

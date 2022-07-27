@@ -79,7 +79,7 @@ export default {
     },
   },
   created() {
-    this.name = window.sessionStorage.getItem('name');
+    this.name = window.sessionStorage.getItem('currentUser');
     this.username = window.sessionStorage.getItem("username");
     this.$nextTick(() => {
       this.$axios

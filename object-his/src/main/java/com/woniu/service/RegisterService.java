@@ -14,4 +14,6 @@ import com.github.pagehelper.PageInfo;
  */
 public interface RegisterService  {
     PageInfo<RegisterPo> getRegisters(Integer pageNum, Integer pageSize, Integer pid);
+
+    boolean addRegister(RegisterPo po);
 }
