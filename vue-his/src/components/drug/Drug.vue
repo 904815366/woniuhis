@@ -6,15 +6,18 @@
         <router-link to="/drug/list">药品列表</router-link>
       </el-breadcrumb-item>
     </el-breadcrumb>
-    <el-row style="margin-top: 10px">
+    <el-row style="margin-top: 20px">
+      <el-col :span="5">
+        <el-input placeholder="请输入查询药品的批次" v-model="searchBatch"> </el-input>
+      </el-col>
       <el-col :span="6">
-        <el-input placeholder="请输入查询药品的名字" v-model="searchName"> </el-input>
-        <i slot="prefix" class="el-input__icon el-icon-search"></i>
-        <el-button
-          slot="append"
-          icon="el-icon-search"
-          @click="getDrugList(1)"
-        ></el-button>
+        <el-input placeholder="请输入查询药品的名字" v-model="searchName">
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="getDrugList(1)"
+          ></el-button>
+        </el-input>
       </el-col>
     </el-row>
     <el-table :data="tableData" style="width: 100%; margin-top: 10px" max-height="100%">
