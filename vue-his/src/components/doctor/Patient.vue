@@ -3,7 +3,7 @@
         <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item>
-                <router-link to="/teacher">患者列表</router-link>
+                <router-link to="/doctor/patient">患者列表</router-link>
             </el-breadcrumb-item>
         </el-breadcrumb>
         <el-row style="margin-top: 10px;">
@@ -16,7 +16,7 @@
             <el-col :span="8">
             </el-col>
         </el-row>
-        <el-table :data="tableData" style="width: 100%;margin-top: 10px;" max-height="100%">
+        <el-table :data="tableData" style="width: 100%;margin-top: 10px;" max-height="100%" @cell-dblclick="dbclick">
             <el-table-column prop="bedid" label="床号" width="120">
             </el-table-column>
             <el-table-column prop="name" label="姓名" width="120">
@@ -96,6 +96,10 @@ export default {
         handleCurrentChange(pNo) {
             this.pageNum = pNo;
             this.getPatientList(pNo);//翻页
+        },
+        dbclick(row,column) {
+            console.log(row);
+            this.$router.push({name:'cpoe',query: {id:row.id}})
         }
     }
 }

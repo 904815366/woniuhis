@@ -12,5 +12,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2022-07-23
  */
 public interface WarndetailsMysqlDao extends BaseMapper<WarndetailsPo> {
-
+    void updateWarndetailsByWarnid(WarndetailsPo warndetailsPo);
 }

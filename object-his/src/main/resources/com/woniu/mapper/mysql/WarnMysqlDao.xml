@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.mysql.WarnMysqlDao">
+    <resultMap id="wardList" type="com.woniu.entity.dto.WarnDto">
+        <id property="id" column="id"></id>
+        <result property="patientid" column="patientid"></result>
+        <result property="warntime" column="warntime"></result>
+        <result property="doctorname" column="doctorname"></result>
+        <result property="status" column="status"></result>
+        <result property="drugname" column="drugname"></result>
+        <result property="num" column="num"></result>
+        <result property="measure" column="measure"></result>
+        <result property="directions" column="directions"></result>
+    </resultMap>
+<!--查询患者医嘱-->
+    <select id="selectAllByPatientId" resultMap="wardList">
+        SELECT
+            c.id,
+            a.id as patientid,
+            c.warntime,
+            f.name as doctorname,
+            c.status,
+            e.name as drugname,
+            d.num,
+            d.measure,
+            d.directions
+        FROM
+            register a,
+            patient b,
+            warn c,
+            warndetails d,
+            drug e ,
+            user f
+        WHERE
+            a.patientid = b.id
+          AND a.id = c.registerid
+          AND c.id = d.warnid
+          AND d.drugid = e.id
+          and f.id=c.doctorid
+          and a.patientid=#{id}
+    </select>
+    <update id="updateWarnById">
+        update warn set warntime=#{warntime} where registerid=#{registerid}
+    </update>
+</mapper>

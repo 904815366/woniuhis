@@ -15,17 +15,17 @@
     </resultMap>
     <select id="getPatientList" resultMap="patientList">
         select a.id,b.bedid,a.name,a.sex,a.age,b.area,c.familyname,b.entertime
-        from patient a INNER JOIN registerPo b INNER JOIN family c
+        from patient a INNER JOIN register b INNER JOIN family c
         on a.id=b.patientid and b.familyid=c.id
     <where>
         and b.outtime is null
         <if test="name != '' and name != null">
-            and name like concat('%',#{name},'%')
+            and a.name like concat('%',#{name},'%')
         </if>
     </where>
     </select>
     <select id="getByPatientId" resultMap="patientList">
-        select a.id,b.bedid,a.name,a.sex,a.age,b.area,c.familyname,b.entertime
+        select a.id,b.bedid,a.name,a.sex,a.age,b.diagnose,b.area,c.familyname,b.entertime
         from patient a INNER JOIN register b INNER JOIN family c
         on a.id=b.patientid and b.familyid=c.id and a.id=#{id}
     </select>

@@ -28,6 +28,8 @@ public class PatientDto {
     private String sex;
     @Schema(name = "age", description = "年龄")
     private Integer age;
+    @Schema(name="diagnose",description="诊断")
+    private String diagnose;
     @Schema(name = "area", description = "现住址")
     private String area;
     @Schema(name = "familyname", description = "科室")

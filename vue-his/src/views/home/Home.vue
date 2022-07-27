@@ -13,7 +13,7 @@
       </el-row>
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="201px">
         <el-row class="tac">
           <el-col :span="12">
             <el-menu :default-active="$route.path" class="el-menu-vertical-demo" background-color="#545c64"
@@ -98,10 +98,6 @@ export default {
 </script>
 
 <style scoped lang="less">
-.el-container {
-  height: 100%;
-}
-
 .el-header {
   background: #fff;
   padding: 0;

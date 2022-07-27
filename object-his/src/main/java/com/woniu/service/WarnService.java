@@ -2,6 +2,9 @@ package com.woniu.service;
 
 import com.woniu.entity.po.WarnPo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.woniu.entity.po.WarndetailsPo;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -12,5 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-07-23
  */
 public interface WarnService extends IService<WarnPo> {
-
+    void updateWarn(Integer registerid, Date warntime, WarndetailsPo warndetailsPo);
 }

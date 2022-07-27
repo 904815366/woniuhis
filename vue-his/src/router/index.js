@@ -4,6 +4,7 @@ import VueRouter from "vue-router";
 import Home from "../views/home/Home.vue";
 import Login from "../views/login/Login.vue";
 import Patient from "../components/doctor/Patient.vue";
+import Cpoe from "../components/doctor/Cpoe.vue";
 import AddUser from '../components/user/AddUser.vue'
 import UserInfo from '../components/user/UserInfo.vue'
 import UserList from '../components/user/UserList.vue'
@@ -30,6 +31,7 @@ const routes = [
 
     children: [
       { path: "/doctor/patient", name: "patient", component: Patient },
+      {path:"/doctor/cpoe",name:"cpoe",component:Cpoe},
       {path:'/charge/enter',name: '/charge/enter',component: () => import('../components/charge/enter.vue')},
       {path: '/user/add',
       name: 'addUser',
