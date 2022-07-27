@@ -13,6 +13,8 @@ import UserTime from '../components/user/UserTime.vue'
 import HomeContent from '../components/user/HomeContent.vue'
 import DrugList from '../components/drug/Drug.vue'
 import DrugEdit from '../components/drug/DrugEdit.vue'
+import DrugOut from '../components/drug/DrugOut.vue'
+import DrugDetail from '../components/drug/DrugDetail.vue'
 import UserTimeThis from '../components/user/UserTimeThis.vue'
 import UserTimeNext from '../components/user/UserTimeNext.vue'
 Vue.use(VueRouter)
