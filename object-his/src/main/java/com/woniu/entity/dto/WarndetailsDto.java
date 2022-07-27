@@ -34,6 +34,5 @@ public class WarndetailsDto implements Serializable {
 
     private Integer warnid;
 
-    private String status;
 
 }

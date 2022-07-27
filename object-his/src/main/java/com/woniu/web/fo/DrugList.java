@@ -21,10 +21,11 @@ public class DrugList {
     private String searchName;
     private String searchBatch;
 
+    ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
+    DrugMysqlDao drugMysqlDao = applicationContext.getBean(DrugMysqlDao.class);
+    DrugConverter drugConverter = applicationContext.getBean(DrugConverter.class);
     public PageInfo<DrugDto> exac(){
-        ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
-        DrugMysqlDao drugMysqlDao = applicationContext.getBean(DrugMysqlDao.class);
-        DrugConverter drugConverter = applicationContext.getBean(DrugConverter.class);
+
         PageHelper.startPage(pageNum,pageSize);
         //条件查询
         QueryWrapper<DrugPo> wrapper = new QueryWrapper<>();
@@ -39,5 +40,11 @@ public class DrugList {
         PageInfo<DrugDto> pageInfo = drugConverter.pageInfoFrom(pagePoInfo);
         System.out.println(pageInfo);
         return pageInfo;
+    }
+    public List<DrugDto> getDrugList(){
+        QueryWrapper<DrugPo> wrapper = new QueryWrapper<>();
+        List<DrugPo> drugPoList =drugMysqlDao.selectList(wrapper);
+        List<DrugDto> drugDtoList = drugConverter.listFrom(drugPoList);
+        return drugDtoList;
     }
 }

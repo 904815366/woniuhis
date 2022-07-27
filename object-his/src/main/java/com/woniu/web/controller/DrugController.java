@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -31,12 +33,25 @@ public class DrugController {
     private DrugService drugService;
 
     @GetMapping("/list")
-    @Operation( summary = "查询药品", description = "条件查询", tags = {"药房管理"} )
+    @Operation( summary = "查询药品", description = "条件查询(带分页)", tags = {"药房管理"} )
     public ResponseResult<PageInfo> getDrugList(DrugList drugList){
         try {
             System.out.println("到达druglist");
             PageInfo<DrugDto> pageInfo = drugList.exac();
             return new ResponseResult<>(pageInfo,"OK",200);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("/druglist")
+    @Operation( summary = "查询药品", description = "查询(不带分页)", tags = {"药房管理"} )
+    public ResponseResult<List<DrugDto>> queryDrugList(DrugList drugList){
+        try {
+            System.out.println("到达druglist");
+            List<DrugDto> list = drugList.getDrugList();
+            return new ResponseResult<>(list,"OK",200);
         }catch (Exception e){
             e.printStackTrace();
             return null;

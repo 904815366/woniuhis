@@ -33,5 +33,4 @@ public class WarndetailsPo implements Serializable {
 
     private Integer warnid;
 
-    private String status;
 }
