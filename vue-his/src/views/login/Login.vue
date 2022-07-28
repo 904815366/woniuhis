@@ -29,8 +29,8 @@ export default {
     return {
       nameAndId: [],
       user: {
-        username: "",
-        password: "",
+        username: "xuke",
+        password: "123",
       },
       rules: {
         username: [

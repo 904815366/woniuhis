@@ -67,6 +67,12 @@ const routes = [
         children:[]
       },
       {
+        path:'/nurse/register',
+        name:'nurse/register',
+        component: ()=> import(//不需要先导入，注册时导入，新语法
+        '../components/nurse/Register.vue')
+      },
+      {
         path:'/drug/list',
         name:'drugList',
         component:DrugList,
@@ -74,36 +80,6 @@ const routes = [
           { path: "/drug/drugedit", name: "drugedit", component: DrugEdit }
         ]
       }
-      ,
-      {
-       path: '/nurse/register',
-      name:'nurse/register',
-      component: ()=> import(//不需要先导入，注册时导入，新语法
-        '../components/nurse/Register.vue'),
-        children:[
-          {
-            path:'/bed',
-          name:'bed',
-          component: ()=> import(//不需要先导入，注册时导入，新语法
-            '../components/nurse/Bed.vue')
-          },
-        ]
-      },
-      {
-        path: '/nurse/nur',//xk的护理记录路由
-      name: 'nurserecord',
-     component: ()=> import(//不需要先导入，注册时导入，新语法
-        '../components/nurse/Nurserecord.vue'),
-    children:[//配置添加护理记录的孙子路由
-      {
-        path:'/addNurser',
-      name:'addNurser',
-      component: ()=> import(//不需要先导入，注册时导入，新语法
-        '../components/nurse/AddNurser.vue')
-      }
-    ]
-      }
-      ,
     ],
   },
 ];

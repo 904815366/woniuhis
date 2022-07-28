@@ -3,6 +3,7 @@ package com.woniu.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.po.RegisterPo;
 import com.woniu.repository.RegisterRepository;
 import com.woniu.mapper.mysql.RegisterMysqlDao;
@@ -40,4 +41,8 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMysqlDao, RegisterP
     }
 
 
+    @Override
+    public void upRegisterbyBad(RegisterDto registerDto) {//安排床位修改方法
+        registerRepository.upRegisterByBed(registerDto);
+    }
 }

@@ -1,5 +1,6 @@
 package com.woniu.service;
 
+import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.po.RegisterPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
@@ -16,4 +17,6 @@ public interface RegisterService  {
     PageInfo<RegisterPo> getRegisters(Integer pageNum, Integer pageSize, Integer pid);
 
     boolean addRegister(RegisterPo po);
+
+    void upRegisterbyBad(RegisterDto registerDto);
 }

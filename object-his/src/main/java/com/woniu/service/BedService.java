@@ -13,4 +13,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BedService extends IService<BedPo> {
 
+    void upBedByidStatus(Integer bid);
+
 }

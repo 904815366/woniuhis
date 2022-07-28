@@ -3,6 +3,7 @@ package com.woniu.repository;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.woniu.entity.po.AppointmentPo;
+import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.po.RegisterPo;
 import com.woniu.mapper.mysql.AppointmentMysqlDao;
 import com.woniu.mapper.mysql.RegisterMysqlDao;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import net.sf.jsqlparser.expression.operators.relational.ExistsExpression;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +31,11 @@ public class RegisterRepository {
 //    简单的删除方法
 
 //    简单的修改方法
+    public void upRegisterByBed(RegisterDto registerDto){
+        LocalDateTime loc = LocalDateTime.now();
+        registerDto.setEntertime(loc);//获取当前时间
+        registerMysqlDao.upRegister(registerDto);
+    }
 
 //    查询所有方法
     public List<RegisterPo> getRegisters(Integer pid){

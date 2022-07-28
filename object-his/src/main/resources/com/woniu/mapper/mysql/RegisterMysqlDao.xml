@@ -11,4 +11,10 @@
             </if>
         </where>
     </select>
+
+    <update id="upRegister">
+        update register set familyid=#{familyid},bedid=#{bedid}
+                            ,entertime=#{entertime},status='2'
+           where id=#{id}
+    </update>
 </mapper>

@@ -98,5 +98,17 @@ public class RegisterController {
 
 
 
+    @PostMapping("/upregister")
+    public ResponseResult<Void> upRegisterbyBad(@RequestBody RegisterDto registerDto){
+        try {
+            registerService.upRegisterbyBad(registerDto);
+            return new ResponseResult(200,"OK");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(400, "失败");
+        }
+
+    }
+
 }
 
