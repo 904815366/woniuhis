@@ -13,4 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface AppointmentService extends IService<AppointmentPo> {
 
+    void createAppointment(AppointmentPo appointmentPo);
+
+    void removeAppointment(Integer id);
 }

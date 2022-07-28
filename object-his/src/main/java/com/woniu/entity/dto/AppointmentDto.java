@@ -2,14 +2,17 @@ package com.woniu.entity.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -53,11 +56,16 @@ public class AppointmentDto implements Serializable {
     @Schema(name = "diagnose", description = "门诊诊断")
     private String diagnose;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @Schema(name = "entertime", description = "入院时间")
-    private LocalDateTime entertime;
+    private Date entertime;
 
     @Schema(name = "familyid", description = "科室ID")
     private Integer familyid;
+
+    @Schema(name = "familyname", description = "科室名称")
+    private String familyname;
 
     @Schema(name = "regtype", description = "挂号类型(专家/普通)")
     private String regtype;

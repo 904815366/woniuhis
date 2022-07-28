@@ -2,18 +2,19 @@ package com.woniu.web.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.AppointmentDto;
 import com.woniu.entity.po.AppointmentPo;
 import com.woniu.mapper.mysql.AppointmentMysqlDao;
+import com.woniu.web.fo.AddAppointment;
 import com.woniu.web.fo.AppointmentlistByStutas;
+import com.woniu.web.fo.RemoveAppointmentById;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.websocket.server.PathParam;
@@ -37,6 +38,43 @@ public class AppointmentController {
     @GetMapping("/list/status")
     public ResponseResult<List<AppointmentDto>> appointmentlistByStutas(AppointmentlistByStutas appointmentlistByStutas){
        return appointmentlistByStutas.exec();
+    }
+
+    @GetMapping("/queryListByName")
+    public ResponseResult<PageInfo<AppointmentDto>> queryAppByName(@RequestParam(name = "searchName",defaultValue = "")String name,
+                                                               @RequestParam(name = "pageNum",defaultValue = "1")Integer pageNum,
+                                                               @RequestParam(name = "pageSize",defaultValue ="5")Integer pageSize){
+        try {
+            PageHelper.startPage(pageNum, pageSize);
+            List<AppointmentDto> appointmentListByName = appointmentMysqlDao.getAppointmentListByName(name);
+            PageInfo<AppointmentDto> pageInfo = new PageInfo<>(appointmentListByName);
+            return new ResponseResult<>(pageInfo,"SUCCESS", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+    }
+
+    @PostMapping("/addAppointment")
+    public ResponseResult<Void> addAppointment(@RequestBody AddAppointment addAppointment){
+        try {
+            addAppointment.addAppointment();
+            return new ResponseResult<>(null,"SUCCESS", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+    }
+
+    @GetMapping("/delAppointment")
+    public ResponseResult<Void> delAppointment(Integer id){
+        try {
+            new RemoveAppointmentById().removeAppointment(id);
+            return new ResponseResult<>(null,"SUCCESS", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
     }
 }
 

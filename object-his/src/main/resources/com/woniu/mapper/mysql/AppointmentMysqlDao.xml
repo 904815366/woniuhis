@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.mysql.AppointmentMysqlDao">
+    <resultMap id="appListByName" type="com.woniu.entity.dto.AppointmentDto">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="sex" property="sex"></result>
+        <result column="age" property="age"></result>
+        <result column="phone" property="phone"></result>
+        <result column="card" property="card"></result>
+        <result column="diagnose" property="diagnose"></result>
+        <result column="entertime" property="entertime"></result>
+        <result column="familyname" property="familyname"></result>
+    </resultMap>
+    <select id="getAppointmentListByName" resultMap="appListByName">
+        SELECT
+        a.id,a.NAME,
+        a.sex,
+        a.age,
+        a.phone,
+        a.card,
+        a.diagnose,
+        a.entertime,
+        b.familyname,
+        a.status
+        FROM appointment a
+        INNER JOIN family b ON a.familyid = b.id
+        <where>
+            <if test="name != '' and name != null">
+                and a.name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="createAppointment">
+        INSERT INTO appointment(name, sex, age, phone, card, diagnose, entertime, familyid, status)
+            VALUE (#{name},#{sex},#{age},#{phone},#{card},#{diagnose},#{entertime},#{familyid},0)
+    </insert>
+    <delete id="removeAppointment">
+        DELETE from appointment where id=#{id}
+    </delete>
+</mapper>

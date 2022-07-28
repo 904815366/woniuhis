@@ -1,4 +1,3 @@
-
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/home/Home.vue";
@@ -6,15 +5,15 @@ import Login from "../views/login/Login.vue";
 import Patient from "../components/doctor/Patient.vue";
 import Cpoe from "../components/doctor/Cpoe.vue";
 import Emr from "../components/doctor/Emr.vue";
-import AddUser from '../components/user/AddUser.vue'
-import UserInfo from '../components/user/UserInfo.vue'
-import UserList from '../components/user/UserList.vue'
-import UserTime from '../components/user/UserTime.vue'
-import HomeContent from '../components/user/HomeContent.vue'
-import DrugList from '../components/drug/Drug.vue'
-import DrugEdit from '../components/drug/DrugEdit.vue'
-Vue.use(VueRouter)
-
+import Notification from "../components/doctor/Notification.vue";
+import AddUser from "../components/user/AddUser.vue";
+import UserInfo from "../components/user/UserInfo.vue";
+import UserList from "../components/user/UserList.vue";
+import UserTime from "../components/user/UserTime.vue";
+import HomeContent from "../components/user/HomeContent.vue";
+import DrugList from "../components/drug/Drug.vue";
+import DrugEdit from "../components/drug/DrugEdit.vue";
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -33,39 +32,51 @@ const routes = [
     component: Home,
 
     children: [
-      { path: "/doctor/patient", name: "patient", component: Patient },//患者列表
-      {path:"/doctor/cpoe",name:"cpoe",component:Cpoe},//医嘱管理
-      {path:"/doctor/emr",name:"emr",component:Emr},//入院记录
+      { path: "/doctor/cpoe", name: "cpoe", component: Cpoe }, //医嘱管理
       {path:'/charge/enter',name: '/charge/enter',component: () => import('../components/charge/enter.vue')},//入院登记
       {path:'/charge/delivery',name: '/charge/delivery',component: () => import('../components/charge/delivery.vue')},//预交缴费
-      {path: '/user/add',
-      name: 'addUser',
-      component: AddUser,
-      children:[]
-      },
+      { path: "/doctor/patient", name: "patient", component: Patient }, //患者列表
+      { path: "/doctor/emr", name: "emr", component: Emr }, //入院记录
       {
-        path: '/user/list',
-        name: 'userList',
+        path: "/doctor/notification",
+        name: "notification",
+        component: Notification,
+      }, //住院通知单
+      {
+        name: "/charge/enter",
+        path: "/charge/enter",
+        component: () => import("../components/charge/enter.vue"),
+      },
+      { path: "/user/add", name: "addUser", component: AddUser, children: [] },
+      {
+        path: "/user/list",
+        name: "userList",
         component: UserList,
-        children:[]
+        children: [],
       },
       {
-        path: '/user/time',
-        name: 'userTime',
+        path: "/user/time",
+        name: "userTime",
         component: UserTime,
-        children:[]
+        children: [],
       },
       {
-        path: '/user/myself',
-        name: 'myself',
+        path: "/user/myself",
+        name: "myself",
         component: UserInfo,
-        children:[]
+        children: [],
       },
       {
-        path: '/user/homeContent',
-        name: 'homeContent',
+        path: "/user/homeContent",
+        name: "homeContent",
         component: HomeContent,
-        children:[]
+        children: [],
+      },
+      {
+        path:'/nurse/register',
+        name:'nurse/register',
+        component: ()=> import(//不需要先导入，注册时导入，新语法
+        '../components/nurse/Register.vue')
       },
       {
         path:'/drug/list',
@@ -75,36 +86,6 @@ const routes = [
           { path: "/drug/drugedit", name: "drugedit", component: DrugEdit }
         ]
       }
-      ,
-      {
-       path: '/nurse/register',
-      name:'nurse/register',
-      component: ()=> import(//不需要先导入，注册时导入，新语法
-        '../components/nurse/Register.vue'),
-        children:[
-          {
-            path:'/bed',
-          name:'bed',
-          component: ()=> import(//不需要先导入，注册时导入，新语法
-            '../components/nurse/Bed.vue')
-          },
-        ]
-      },
-      {
-        path: '/nurse/nur',//xk的护理记录路由
-      name: 'nurserecord',
-     component: ()=> import(//不需要先导入，注册时导入，新语法
-        '../components/nurse/Nurserecord.vue'),
-    children:[//配置添加护理记录的孙子路由
-      {
-        path:'/addNurser',
-      name:'addNurser',
-      component: ()=> import(//不需要先导入，注册时导入，新语法
-        '../components/nurse/AddNurser.vue')
-      }
-    ]
-      }
-      ,
     ],
   },
 ];

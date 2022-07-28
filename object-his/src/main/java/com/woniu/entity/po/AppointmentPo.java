@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,8 +25,8 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash("appointmentPo")
 @TableName("appointment")
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class AppointmentPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +51,7 @@ public class AppointmentPo implements Serializable {
     private String diagnose;
 
 
-    private LocalDateTime entertime;
+    private Date entertime;
 
     private Integer familyid;
 

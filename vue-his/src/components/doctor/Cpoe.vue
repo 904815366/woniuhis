@@ -2,6 +2,12 @@
     <div>
         <el-descriptions class="margin-top" title="医嘱录入" :column="8" border>
             <template slot="extra">
+                <el-select v-model="pid" filterable placeholder="请选择患者" @change="changePatient()">
+                    <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
+                </el-select>
+            </template>
+            <template slot="extra">
                 <el-button type="success" round size="mini" @click="comName = 'addCpoe'">新增</el-button>
             </template>
             <template slot="extra">
@@ -129,7 +135,10 @@ export default {
             pageSizes: [5, 10, 15, 20],
             comName: '',
             cpoe: {},
-            ids: []
+            ids: [],
+            options: [],
+            value: '',
+            pid:''
         }
     }, components: {
         addCpoe, editCpoe
@@ -148,6 +157,7 @@ export default {
             this.getPatientById(id);
             this.getWarnListById(id, 1);
         }
+        this.getPatientListAll();
     },
     methods: {
         getPatientById(id) {
@@ -175,16 +185,26 @@ export default {
         },
         //页码尺寸改变
         handleSizeChange(pSize) {
-            let id = this.$route.query.id;
+            let id;
+            if(this.$route.query.id==null){
+                id=this.pid;
+            }else{
+                id=this.$route.query.id;
+            }
             this.pageSize = pSize;
             this.pageNum = 1;//默认为第一页
-            this.getWarnListById(id,1);//初始化为第一页
+            this.getWarnListById(id, 1);//初始化为第一页
         },
         // 当前页码改变
         handleCurrentChange(pNo) {
-            let id = this.$route.query.id;
+            let id;
+            if(this.$route.query.id==null){
+                id=this.pid;
+            }else{
+                id=this.$route.query.id;
+            }
             this.pageNum = pNo;
-            this.getWarnListById(id,pNo);//翻页
+            this.getWarnListById(id, pNo);//翻页
         },
         handleShow() {
             this.comName = '';
@@ -253,6 +273,16 @@ export default {
                         }
                     })
             }
+        },
+        getPatientListAll(){
+            this.$axios.get("/api/patient/listAll").then(res=>{
+                console.log(res.data)
+                this.options=res.data.data;
+            })
+        },
+        changePatient(){
+            this.getPatientById(this.pid);
+            this.getWarnListById(this.pid, 1);
         }
     }
 }

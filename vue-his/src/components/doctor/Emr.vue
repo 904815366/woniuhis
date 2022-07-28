@@ -2,10 +2,13 @@
     <div>
         <el-descriptions class="margin-top" title="入院记录" :column="8" border>
             <template slot="extra">
-                <el-button type="success" round size="mini" @click="comName = 'addCpoe'">新增</el-button>
+                <el-select v-model="pid" filterable placeholder="请选择患者" @change="changePatient()">
+                        <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
+                        </el-option>
+                </el-select>
             </template>
             <template slot="extra">
-                <el-button type="warning" round size="mini" @click="updateStatus">提交</el-button>
+                <el-button type="success" round size="mini">保存病历</el-button>
             </template>
             <el-descriptions-item>
                 <template slot="label">
@@ -69,13 +72,16 @@ export default {
     data() {
         return {
             patient: {},//患者信息
+            options: [],
+            value: '',
+            pid:''
         }
     },
     components: {
     // MyEditor,
     },
     created() {
-        this.getPatientById(id);
+        this.getPatientListAll();
     },
     methods: {
         getPatientById(id) {
@@ -83,6 +89,15 @@ export default {
                 this.patient = res.data.data;
             })
         },
+        getPatientListAll(){
+            this.$axios.get("/api/patient/listAll").then(res=>{
+                console.log(res.data)
+                this.options=res.data.data;
+            })
+        },
+        changePatient(){
+            this.getPatientById(this.pid);
+        }
     }
 }
 </script>

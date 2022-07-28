@@ -43,6 +43,17 @@ public class PatientController {
             return new ResponseResult<>(null,"Internal Server Error",500);
         }
     }
+    @GetMapping("/listAll")
+    @Operation( summary = "查询在院患者不分页", description = "查询在院患者不分页", tags = {"患者管理"} )
+    public ResponseResult<List<PatientDto>> getPatientListAll(@RequestParam(name = "searchName",defaultValue = "")String name){
+        try {
+            List<PatientDto> patientList = new QueryPatientList().getPatientList(name);
+            return new ResponseResult<>(patientList,"SUCCESS",200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null,"Internal Server Error",500);
+        }
+    }
 
     @GetMapping("/getPatientById")
     @Operation( summary = "根据id查询患者", description = "根据id查询患者", tags = {"患者管理"} )
