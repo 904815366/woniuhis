@@ -4,6 +4,7 @@ import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.po.RegisterPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
+import com.woniu.entity.po.RolePerms;
 
 /**
  * <p>
@@ -13,10 +14,12 @@ import com.github.pagehelper.PageInfo;
  * @author lh
  * @since 2022-07-23
  */
-public interface RegisterService  {
+public interface RegisterService  extends IService<RegisterPo>  {
     PageInfo<RegisterPo> getRegisters(Integer pageNum, Integer pageSize, Integer pid);
 
     boolean addRegister(RegisterPo po);
 
     void upRegisterbyBad(RegisterDto registerDto);
+
+    boolean modifyRegister(RegisterPo po);
 }

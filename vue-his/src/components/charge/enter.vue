@@ -30,108 +30,190 @@
         </el-button>
       </el-col>
 
-
-      <!-- 添加入院登记信息框 -->
-      <el-drawer title="入院信息登记" :visible.sync="drawer" size="60%">
-        <div>
-
-          <!-- 预约列表按钮 -->
-          <el-button @click="innerDrawerOpen()" style="margin-left:100px;margin-bottom: 10px;">打开预约列表</el-button>
-
-          <!-- 预约列表框 -->
-          <el-drawer title="病人预约列表" :append-to-body="true" :before-close="handleClose" :visible.sync="innerDrawer">
-            <el-table :data="appointmentList" :fit="false">
-              <el-table-column prop="patientid" label="编号" width="80" align="center">
-              </el-table-column>
-
-              <el-table-column prop="name" label="姓名" width="80" align="center">
-              </el-table-column>
-
-              <el-table-column label="操作">
-                <template slot-scope="scope">
-                  <el-button size="mini" @click="optionAppointment(scope.row)">选择</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-drawer>
-
-          <!-- 入院登记列表 -->
-          <el-form ref="form" :model="addregister" label-width="100px">
-            <el-form-item label="病人编号:">
-              <el-input disabled v-model="addregister.patientid" autocomplete="off" style="width: 50px;">
-              </el-input>
-
-            </el-form-item>
-
-            <el-form-item label="姓名:" style="display:inline-block">
-              <el-input v-model="addregister.name" autocomplete="off" style="width: 300px" placeholder="请输入姓名">
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="性别:" style="display:inline-block">
-              <el-radio v-model="addregister.sex" label="男" border size="medium">男</el-radio>
-              <el-radio v-model="addregister.sex" label="女" border size="medium">女</el-radio>
-            </el-form-item>
-
-            <el-form-item label="联系方式:" style="display:inline-block">
-              <el-input autocomplete="off" style="width: 300px;" v-model="addregister.phone" placeholder="请输入联系方式">
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="年龄:" style="display:inline-block">
-              <el-input autocomplete="off" style="width: 120px;" v-model="addregister.age" placeholder="请输入年龄">
-              </el-input>
-            </el-form-item>
-
-
-
-            <el-form-item label="身份证号码:" style="display:inline-block">
-              <el-input autocomplete="off" style="width: 300px;" v-model="addregister.card" placeholder="请输入身份证号码">
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="住址:" style="display:inline-block">
-              <el-input autocomplete="off" style="width: 300px; " v-model="addregister.area" placeholder="请输入住址">
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="门诊诊断:" style="display:inline-block">
-              <el-input autocomplete="off" style="width: 300px; " v-model="addregister.diagnose" placeholder="请输入门诊诊断">
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="预缴金额:" style="display:inline-block">
-              <el-input autocomplete="off" style="width: 300px; " v-model="addregister.money" placeholder="请输入预缴金额">
-              </el-input>
-            </el-form-item>
-
-            <el-form-item label="状态:">
-              <el-select style="width: 300px; " v-model="addregister.status" placeholder="请输入状态">
-                <el-option value="未缴费">未缴费</el-option>
-                <el-option value="已缴费">已缴费</el-option>
-                <!-- <el-option value="已入院">已入院</el-option> -->
-              </el-select>
-
-
-
-            </el-form-item>
-            <el-popover placement="top" width="160" v-model="visible">
-              <p>确定要添加登录信息码？</p>
-              <div style="text-align: right; margin: 0">
-                <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-                <el-button type="primary" size="mini" @click="addRegisterForm">确定</el-button>
-              </div>
-              <el-button slot="reference" type="primary" style="margin-left:100px;">确 定
-              </el-button>
-            </el-popover>
-
-          </el-form>
-
-
-        </div>
-
-      </el-drawer>
     </div>
+
+
+    <!-- 添加入院登记信息框 -->
+    <el-drawer title="病人入院信息登记" :visible.sync="drawer" size="60%" :before-close="handleClose">
+      <div>
+
+        <!-- 预约列表按钮 -->
+        <el-button @click="innerDrawerOpen()" style="margin-left:100px;margin-bottom: 10px;">打开预约列表</el-button>
+
+        <!-- 预约列表框 -->
+        <el-drawer title="病人预约列表" :append-to-body="true" :before-close="handleClose" :visible.sync="innerDrawer">
+          <el-table :data="appointmentList" :fit="false">
+            <el-table-column prop="id" label="编号" width="80" align="center">
+            </el-table-column>
+
+            <el-table-column prop="name" label="姓名" width="80" align="center">
+            </el-table-column>
+
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button size="mini" @click="optionAppointment(scope.row)">选择</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-drawer>
+
+        <!-- 入院登记信息 -->
+        <el-form ref="form" :model="addregister" label-width="100px">
+          <el-form-item label="病人编号:">
+            <el-input disabled v-model="addregister.id" autocomplete="off" style="width: 50px;">
+            </el-input>
+
+          </el-form-item>
+
+          <el-form-item label="姓名:" style="display:inline-block">
+            <el-input v-model="addregister.name" autocomplete="off" style="width: 300px" placeholder="请输入姓名">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="性别:" style="display:inline-block">
+            <el-radio v-model="addregister.sex" label="男" border size="medium">男</el-radio>
+            <el-radio v-model="addregister.sex" label="女" border size="medium">女</el-radio>
+          </el-form-item>
+
+          <el-form-item label="联系方式:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px;" v-model="addregister.phone" placeholder="请输入联系方式">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="年龄:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 120px;" v-model="addregister.age" placeholder="请输入年龄">
+            </el-input>
+          </el-form-item>
+
+
+
+          <el-form-item label="身份证号码:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px;" v-model="addregister.card" placeholder="请输入身份证号码">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="住址:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.area" placeholder="请输入住址">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="门诊诊断:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.diagnose" placeholder="请输入门诊诊断">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="预缴金额:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.money" placeholder="请输入预缴金额">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="状态:">
+            <el-select style="width: 300px; " v-model="addregister.status" placeholder="请输入状态">
+              <el-option value="未缴费">未缴费</el-option>
+              <el-option value="已缴费">已缴费</el-option>
+              <!-- <el-option value="已入院">已入院</el-option> -->
+            </el-select>
+
+
+
+          </el-form-item>
+          <el-popover placement="top" width="160" v-model="visible">
+            <p>确定要添加登录信息码？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+              <el-button type="primary" size="mini" @click="addRegisterForm">确定</el-button>
+            </div>
+            <el-button slot="reference" type="primary" style="margin-left:100px;">确 定
+            </el-button>
+          </el-popover>
+        </el-form>
+      </div>
+    </el-drawer>
+
+
+
+    <!-- 修改入院登记信息框 -->
+    <el-drawer title="病人入院信息修改" :visible.sync="modifyDrawer" size="60%">
+      <div>
+
+
+        <!-- 修改入院登记信息 -->
+        <el-form ref="form" :model="modifyregister" label-width="100px">
+          <el-form-item label="病人编号:">
+            <el-input disabled v-model="modifyregister.id" autocomplete="off" style="width: 50px;">
+            </el-input>
+
+          </el-form-item>
+
+          <el-form-item label="姓名:" style="display:inline-block">
+            <el-input v-model="modifyregister.name" autocomplete="off" style="width: 300px" placeholder="请输入姓名">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="性别:" style="display:inline-block">
+            <el-radio v-model="modifyregister.sex" label="男" border size="medium">男</el-radio>
+            <el-radio v-model="modifyregister.sex" label="女" border size="medium">女</el-radio>
+          </el-form-item>
+
+          <el-form-item label="联系方式:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px;" v-model="modifyregister.phone" placeholder="请输入联系方式">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="年龄:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 120px;" v-model="modifyregister.age" placeholder="请输入年龄">
+            </el-input>
+          </el-form-item>
+
+
+
+          <el-form-item label="身份证号码:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px;" v-model="modifyregister.card" placeholder="请输入身份证号码">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="住址:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.area" placeholder="请输入住址">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="门诊诊断:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.diagnose" placeholder="请输入门诊诊断">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="预缴金额:" style="display:inline-block">
+            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.money" placeholder="请输入预缴金额">
+            </el-input>
+          </el-form-item>
+
+          <el-form-item label="状态:">
+            <el-select style="width: 300px; " v-model="modifyregister.status" placeholder="请输入状态">
+              <el-option value="未缴费">未缴费</el-option>
+              <el-option value="已缴费">已缴费</el-option>
+              <el-option value="已入院">已入院</el-option>
+              <el-option value="申请出院">申请出院</el-option>
+              <el-option value="已出院">已出院</el-option>
+
+            </el-select>
+
+
+
+          </el-form-item>
+          <el-popover placement="top" width="160" v-model="modifyvisible">
+            <p>确定要修改入院信息码？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="modifyvisible = false">取消</el-button>
+              <el-button type="primary" size="mini" @click="modifyRegisterForm()">确定</el-button>
+            </div>
+            <el-button slot="reference" type="primary" style="margin-left:100px;">确 定
+            </el-button>
+          </el-popover>
+        </el-form>
+      </div>
+    </el-drawer>
+
+
 
     <!-- 入院登记列表 -->
     <el-table :data="tableData.list" style="width: 100%; height:450px; margin-top:50px;" :fit="false">
@@ -144,11 +226,11 @@
       </el-table-column>
       <el-table-column prop="age" label="年龄" width="50" align="center">
       </el-table-column>
-      <el-table-column prop="phone" label="联系方式" width="100" align="center">
+      <el-table-column prop="phone" label="联系方式" width="110" align="center">
       </el-table-column>
-      <el-table-column prop="card" label="身份证" width="180" align="center">
+      <el-table-column prop="card" label="身份证" width="100" align="center" show-overflow-tooltip="true">
       </el-table-column>
-      <el-table-column prop="area" label="住址" width="250" align="center">
+      <el-table-column prop="area" label="住址" width="200" align="center">
       </el-table-column>
       <el-table-column prop="diagnose" label="病因" width="100" align="center">
       </el-table-column>
@@ -166,17 +248,29 @@
 
       <el-table-column label="状态" width="100" align="center">
         <template slot-scope="scope">
-          <span v-if="scope.row.status == 0">未缴费</span>
-          <span v-if="scope.row.status == 1">已缴费</span>
-          <span v-if="scope.row.status == 2">已入院</span>
+          <span v-if="scope.row.status == 0">
+            <el-tag type="danger">未缴费</el-tag>
+          </span>
+          <span v-if="scope.row.status == 1">
+            <el-tag type="success">已缴费</el-tag>
+          </span>
+          <span v-if="scope.row.status == 2">
+            <el-tag type="info">住院中</el-tag>
+          </span>
+          <span v-if="scope.row.status == 3">
+            <el-tag type="warning">申请出院</el-tag>
+          </span>
+          <span v-if="scope.row.status == 4">
+            <el-tag>已出院</el-tag>
+          </span>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="操作">
+      <el-table-column label="操作" width="150" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button size="mini" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
     <el-pagination small layout="prev, pager, next , total " :total="tableData.total" next-text="下一页" prev-text="上一页"
       :page-size="pageSize" @current-change="queryPageInfo" :current-page="pageNum">
@@ -200,6 +294,18 @@ export default {
       //添加窗口的打开和关闭属性
       drawer: false,
       innerDrawer: false,
+      //预约的列表
+      appointmentList: [],
+      //预约列表中点击选择后绑定的对象
+      appointment: {},
+      //确认添加框
+      visible: false,
+
+
+      //修改窗口的打开和关闭属性
+      modifyDrawer: false,
+      modifyregister: {},
+      modifyvisible: false,
 
       //表单添加的信息
       addregister: {
@@ -209,14 +315,7 @@ export default {
       //幂等Token
       idempotentToken: '',
 
-      //预约的列表
-      appointmentList: [],
 
-      //预约列表中点击选择后绑定的对象
-      appointment: {},
-
-      //确认添加框
-      visible: false,
 
     }
   },
@@ -228,7 +327,7 @@ export default {
     //分页列表
     queryPageInfo(pageNum) {
       this.pageNum = pageNum;
-      let searchStatus = this.statusTransition(this.searchStatus);
+      let searchStatus = this.statusStringFormNumber(this.searchStatus);
 
       this.$axios.get("/api/register/queryPageInfo", {
         params: {
@@ -256,51 +355,46 @@ export default {
       })
     },
 
+    //添加入院信息
     addRegisterForm() {
-      if (this.addregister.patientid == "" || this.addregister.patientid == null) {
+
+      if (this.addregister.id == "" || this.addregister.id == null) {
         this.$message.error('请先在预约列表中进行选择!');
         return;
       }
       this.visible = false;
-      this.addregister.status = this.statusTransition(this.addregister.status);
+      this.addregister.status = this.statusStringFormNumber(this.addregister.status);
       this.addregister.chargeid = window.sessionStorage.getItem('currentUserId');
       this.$axios({
         url: '/api/register/publish',
         method: 'post',
-        headers: { 'addRegister': this.idempotentToken },
+        headers: { addRegister: this.idempotentToken },
         data: this.addregister
       }).then(res => {
         if (res.data.status === 200) {
           this.$message({
-            message: '添加消息',
+            message: '添加成功',
             type: 'success'
           });
+
+          this.drawer = false;
+          this.queryPageInfo(this.pageNum);
         } else {
           console.log(res.data);
+          this.$message({
+            message: '服务器维护中,请稍后再试...',
+            type: 'success'
+          });
         }
       }).catch(e => {
         this.$message({
           message: e.message,
           type: 'error'
         });
-      })
+      });
     },
 
 
-    //类型转换方法
-    statusTransition(obj) {
-      let searchStatus = '';
-      if (obj == '查询所有') {
-        searchStatus = -1
-      } else if (obj == '未缴费') {
-        searchStatus = 0
-      } else if (obj == '已缴费') {
-        searchStatus = 1
-      } else if (obj == '已入院') {
-        searchStatus = 2
-      }
-      return searchStatus;
-    },
 
 
     //关闭入院登记窗口
@@ -308,6 +402,9 @@ export default {
       this.$confirm('还有未保存的工作哦确定关闭吗？')
         .then(_ => {
           done();
+          this.addregister = {
+            sex: '男',
+          };
         })
         .catch(_ => { });
     },
@@ -317,7 +414,8 @@ export default {
     drawerOpen() {
       this.drawer = true;
       this.$axios.get("/api/getIdempotentToken").then(res => {
-        this.idempotentToken = res;
+
+        this.idempotentToken = res.data;
       });
     },
 
@@ -335,11 +433,129 @@ export default {
     //预约列表点击选择
     optionAppointment(obj) {
       obj.status = '';
+      obj.patientid = obj.id;
       this.addregister = obj;
       this.innerDrawer = false;
-    }
+    },
 
 
+    //删除行
+    handleDelete(id) {
+      this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios.post("/api/register/remove/" + id).then(res => {
+          if (res.data.data == true) {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            this.queryPageInfo(this.pageNum);
+          }
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+
+    },
+
+    //打开编辑框并回显数据
+    handleEdit(obj) {
+
+      this.modifyregister = {
+        id: obj.id,
+        patientid: obj.patientid,
+        name: obj.name,
+        sex: obj.sex,
+        age: obj.age,
+        phone: obj.phone,
+        card: obj.card,
+        area: obj.area,
+        diagnose: obj.diagnose,
+        money: obj.money,
+        status: obj.status,
+      }
+      this.modifyregister.status = this.statusNumberFormString(this.modifyregister.status);
+
+      this.$axios.get("/api/getIdempotentToken").then(res => {
+        this.idempotentToken = res.data;
+      });
+      this.modifyDrawer = true;
+    },
+
+    //提交修改
+    modifyRegisterForm() {
+      this.modifyregister.status = this.statusStringFormNumber(this.modifyregister.status);
+      this.modifyvisible = false;
+      this.$axios({
+        url: '/api/register/modify',
+        method: 'post',
+        headers: { modifyRegister: this.idempotentToken },
+        data: this.modifyregister
+      }).then(res => {
+        if (res.data.status === 200) {
+          this.$message({
+            message: '修改成功',
+            type: 'success'
+          });
+          this.queryPageInfo(this.pageNum);
+          this.modifyDrawer = false;
+        } else {
+          this.$message({
+            message: '修改失败',
+            type: 'error'
+          });
+        }
+      }).catch(e => {
+        this.$message({
+          message: e.message,
+          type: 'error'
+        });
+      });
+    },
+
+
+    //类型转换方法
+    statusStringFormNumber(obj) {
+      let searchStatus = '';
+      if (obj == '查询所有') {
+        searchStatus = -1
+      } else if (obj == '未缴费') {
+        searchStatus = 0
+      } else if (obj == '已缴费') {
+        searchStatus = 1
+      } else if (obj == '入院中') {
+        searchStatus = 2
+      } else if (obj == '申请出院') {
+        searchStatus = 3
+      } else if (obj == '已出院') {
+        searchStatus = 4
+      }
+      return searchStatus;
+    },
+
+    statusNumberFormString(obj) {
+      let searchStatus = '';
+      if (obj == '-1') {
+        searchStatus = '查询所有'
+      } else if (obj == 0) {
+        searchStatus = '未缴费'
+      } else if (obj == 1) {
+        searchStatus = '已缴费'
+      } else if (obj == 2) {
+        searchStatus = '入院中'
+      } else if (obj == 3) {
+        searchStatus = '申请出院'
+      } else if (obj == 4) {
+        searchStatus = '已出院'
+      }
+      return searchStatus;
+    },
 
   },
 

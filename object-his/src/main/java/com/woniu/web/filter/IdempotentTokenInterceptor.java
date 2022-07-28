@@ -26,7 +26,7 @@ public class IdempotentTokenInterceptor  implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
 
-
+        System.out.println("进入IdempotentTokenInterceptor");
 
         // 当前请求要访问的不是 Controller 中的 "方法"，放行。
         if (!(object instanceof HandlerMethod))
@@ -41,9 +41,12 @@ public class IdempotentTokenInterceptor  implements HandlerInterceptor {
         if (annotation == null)
             return true;
 
+        System.out.println(method.getName());
         // 2. 如果有。从请求头中获取幂等token
         //     如果请求头中没有，拒绝访问。
+
         String idempotentToken = request.getHeader(method.getName());
+        System.out.println(idempotentToken);
         if (StringUtils.isEmpty(idempotentToken)){
 //            throw new NullPointerException("请求头中没有idempotentToken,不可重复执行");
             return false;

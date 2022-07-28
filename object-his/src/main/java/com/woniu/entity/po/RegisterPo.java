@@ -7,11 +7,10 @@ import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.redis.core.RedisHash;
 
 /**
- * <p>
- * 
- * </p>
  *
  * @author lh
  * @since 2022-07-23
@@ -19,6 +18,7 @@ import lombok.*;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("register")
+@RedisHash("RegisterPo")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +26,7 @@ public class RegisterPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 

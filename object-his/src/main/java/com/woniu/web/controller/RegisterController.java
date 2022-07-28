@@ -6,8 +6,10 @@ import com.woniu.config.ResponseResult;
 import com.woniu.config.ResultCode;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.dto.UserDto;
+import com.woniu.mapper.redis.RegisterRedis;
 import com.woniu.web.anon.IdempotentToken;
 import com.woniu.web.fo.AddRegister;
+import com.woniu.web.fo.ModifyRegister;
 import com.woniu.web.fo.QueryPageInfo;
 import com.woniu.web.fo.QueryUserListByRoleId;
 import com.woniu.entity.po.RegisterPo;
@@ -44,6 +46,9 @@ public class RegisterController {
 
     @Resource
     private RegisterConverter registerConverter;
+
+    @Autowired
+    private RegisterRedis registerRedis;
 
 
 
@@ -83,17 +88,25 @@ public class RegisterController {
 
     /**
      * 罗虎
+     * 添加入院信息
      * @return
      */
     @PostMapping("/publish")
     @IdempotentToken
     public ResponseResult<Void> addRegister(@RequestBody AddRegister addRegister , HttpServletRequest request ){
-//        System.out.println(addRegister);
-//        String idempotentToken = request.getHeader("addRegister");
-//        System.out.println(idempotentToken);
         return addRegister.exec();
+    }
 
 
+    /**
+     * 罗虎
+     * 修改入院信息
+     * @return
+     */
+    @PostMapping("/modify")
+    @IdempotentToken
+    public ResponseResult<Void> modifyRegister(@RequestBody ModifyRegister modifyRegister , HttpServletRequest request ){
+        return modifyRegister.exec();
     }
 
 
@@ -110,5 +123,16 @@ public class RegisterController {
 
     }
 
+    /**
+     * 罗虎
+     * 修改入院信息
+     * @return
+     */
+    @PostMapping("/remove/{id}")
+    public ResponseResult<Boolean> removeRegister(@PathVariable("id") Integer id ){
+        boolean remove = registerService.removeById(id);
+        registerRedis.deleteById(id);
+        return new ResponseResult<>(remove,"ok",2000);
+    }
 }
 

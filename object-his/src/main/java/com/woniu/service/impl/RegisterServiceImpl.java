@@ -40,6 +40,11 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMysqlDao, RegisterP
         return registerRepository.addRegister(po);
     }
 
+    @Override
+    public boolean modifyRegister(RegisterPo po) {
+        return registerRepository.modifyRegister(po);
+    }
+
 
     @Override
     public void upRegisterbyBad(RegisterDto registerDto) {//安排床位修改方法

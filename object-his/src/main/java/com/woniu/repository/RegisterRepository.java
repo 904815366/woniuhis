@@ -24,6 +24,7 @@ public class RegisterRepository {
 
     private final RegisterMysqlDao registerMysqlDao;
     private final AppointmentMysqlDao appointmentMysqlDao;
+    private final RegisterRedis registerRedis;
 
 
 //    简单的增加办法
@@ -52,6 +53,11 @@ public class RegisterRepository {
     }
 
 
+    /**
+     * 添加入院登记信息 , 添加成功后修改预约信息的状态
+     * @param po
+     * @return
+     */
     public boolean addRegister(RegisterPo po) {
         QueryWrapper<RegisterPo> wrapper = new QueryWrapper<>();
         wrapper.eq("patientid", po.getPatientid())
@@ -63,16 +69,31 @@ public class RegisterRepository {
 
         int insert = registerMysqlDao.insert(po);
         if (insert == 0)
-            throw new RuntimeException("添加登记信息失败!");
+            throw new RuntimeException("添加入院登记信息失败!");
 
-        AppointmentPo appointmentPo = AppointmentPo.builder().patientid(po.getPatientid()).status("1").build();
+        AppointmentPo appointmentPo = AppointmentPo.builder().status("1").build();
         UpdateWrapper updateWrapper = new UpdateWrapper();
-        updateWrapper.eq("patientid",po.getPatientid());
+        updateWrapper.eq("id",po.getPatientid());
         int updateById = appointmentMysqlDao.update(appointmentPo,updateWrapper);
 
         if (updateById == 0)
             throw new RuntimeException("添加预约信息状态失败!");
 
+        return true;
+    }
+
+
+    /**
+     * 罗虎
+     * 通过ID修改入院登记信息 , 修改成功后通过ID删除redis中的数据
+     * @return
+     */
+    public boolean modifyRegister(RegisterPo po) {
+        int update = registerMysqlDao.updateById(po);
+        if (update == 0)
+            throw new RuntimeException("修改入院登记信息失败!");
+
+        registerRedis.deleteById(po.getId());
         return true;
     }
 }
