@@ -4,6 +4,8 @@ import com.woniu.web.controller.RegisterController;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.NoSuchElementException;
+
 @RestControllerAdvice(assignableTypes = RegisterController.class)
 public class RegisterControllerExceptionHandler {
 
@@ -17,7 +19,9 @@ public class RegisterControllerExceptionHandler {
             return "RegisterController空指针异常:"+e.getMessage();
         } else if (e instanceof IndexOutOfBoundsException) {
             return "RegisterController下标越界异常:"+e.getMessage();
-        } else {
+        } else if (e instanceof NoSuchElementException) {
+            return "RegisterController从redis未找到数据:"+e.getMessage();
+        }else {
             return "RegisterController其他异常"+e.getMessage();
         }
     }

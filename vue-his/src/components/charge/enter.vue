@@ -60,7 +60,7 @@
         <!-- 入院登记信息 -->
         <el-form ref="form" :model="addregister" label-width="100px">
           <el-form-item label="病人编号:">
-            <el-input disabled v-model="addregister.id" autocomplete="off" style="width: 50px;">
+            <el-input :disabled="true" v-model="addregister.id" autocomplete="off" style="width: 50px;">
             </el-input>
 
           </el-form-item>
@@ -228,7 +228,7 @@
       </el-table-column>
       <el-table-column prop="phone" label="联系方式" width="110" align="center">
       </el-table-column>
-      <el-table-column prop="card" label="身份证" width="100" align="center" show-overflow-tooltip="true">
+      <el-table-column prop="card" label="身份证" width="100" align="center" :show-overflow-tooltip="true">
       </el-table-column>
       <el-table-column prop="area" label="住址" width="200" align="center">
       </el-table-column>
@@ -272,6 +272,8 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- 分页 -->
     <el-pagination small layout="prev, pager, next , total " :total="tableData.total" next-text="下一页" prev-text="上一页"
       :page-size="pageSize" @current-change="queryPageInfo" :current-page="pageNum">
     </el-pagination>
@@ -533,8 +535,10 @@ export default {
         searchStatus = 2
       } else if (obj == '申请出院') {
         searchStatus = 3
-      } else if (obj == '已出院') {
+      } else if (obj == '审核通过') {
         searchStatus = 4
+      } else if (obj == '已出院') {
+        searchStatus = 5
       }
       return searchStatus;
     },
@@ -552,6 +556,8 @@ export default {
       } else if (obj == 3) {
         searchStatus = '申请出院'
       } else if (obj == 4) {
+        searchStatus = '审核通过'
+      } else if (obj == 5) {
         searchStatus = '已出院'
       }
       return searchStatus;

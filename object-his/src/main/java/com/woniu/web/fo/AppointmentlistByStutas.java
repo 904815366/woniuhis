@@ -6,6 +6,7 @@ import com.woniu.entity.converter.AppointmentConverter;
 import com.woniu.entity.converter.RegisterConverter;
 import com.woniu.entity.dto.AppointmentDto;
 import com.woniu.entity.po.AppointmentPo;
+import com.woniu.entity.po.RegisterPo;
 import com.woniu.mapper.mysql.AppointmentMysqlDao;
 import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.util.ApplicationContextHolder;
@@ -20,6 +21,8 @@ public class AppointmentlistByStutas {
     private String status;
 
     public ResponseResult<List<AppointmentDto>> exec(){
+        AppointmentPo appointmentPo = new AppointmentPo();
+        RegisterPo registerPo = new RegisterPo();
         ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
         AppointmentConverter appointmentConverter = applicationContext.getBean(AppointmentConverter.class);
         AppointmentMysqlDao appointmentMysqlDao = applicationContext.getBean(AppointmentMysqlDao.class);

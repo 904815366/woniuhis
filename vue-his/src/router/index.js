@@ -36,7 +36,8 @@ const routes = [
       { path: "/doctor/patient", name: "patient", component: Patient },//患者列表
       {path:"/doctor/cpoe",name:"cpoe",component:Cpoe},//医嘱管理
       {path:"/doctor/emr",name:"emr",component:Emr},//入院记录
-      {path:'/charge/enter',name: '/charge/enter',component: () => import('../components/charge/enter.vue')},
+      {path:'/charge/enter',name: '/charge/enter',component: () => import('../components/charge/enter.vue')},//入院登记
+      {path:'/charge/delivery',name: '/charge/delivery',component: () => import('../components/charge/delivery.vue')},//预交缴费
       {path: '/user/add',
       name: 'addUser',
       component: AddUser,

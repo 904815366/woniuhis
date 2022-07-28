@@ -16,6 +16,8 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 
 @Repository
@@ -95,5 +97,19 @@ public class RegisterRepository {
 
         registerRedis.deleteById(po.getId());
         return true;
+    }
+
+    public RegisterPo queryByIdRegister(Integer id) {
+        try {
+            Optional<RegisterPo> byId = registerRedis.findById(id);
+            RegisterPo po = byId.get();
+            return po;
+        }catch (NoSuchElementException e){
+            RegisterPo po = registerMysqlDao.selectById(id);
+            if (po == null){
+                throw new NullPointerException("queryByIdRegister根据ID为查询到数据...");
+            }
+            return po;
+        }
     }
 }

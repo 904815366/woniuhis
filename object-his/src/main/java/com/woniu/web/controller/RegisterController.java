@@ -3,27 +3,20 @@ package com.woniu.web.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
-import com.woniu.config.ResultCode;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.mapper.redis.RegisterRedis;
 import com.woniu.web.anon.IdempotentToken;
-import com.woniu.web.fo.AddRegister;
-import com.woniu.web.fo.ModifyRegister;
-import com.woniu.web.fo.QueryPageInfo;
-import com.woniu.web.fo.QueryUserListByRoleId;
+import com.woniu.web.fo.*;
 import com.woniu.entity.po.RegisterPo;
 import com.woniu.repository.RegisterRepository;
 import com.woniu.service.RegisterService;
 import com.woniu.entity.converter.RegisterConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -125,7 +118,7 @@ public class RegisterController {
 
     /**
      * 罗虎
-     * 修改入院信息
+     * 根据ID删除入院信息
      * @return
      */
     @PostMapping("/remove/{id}")
@@ -133,6 +126,16 @@ public class RegisterController {
         boolean remove = registerService.removeById(id);
         registerRedis.deleteById(id);
         return new ResponseResult<>(remove,"ok",2000);
+    }
+
+    /**
+     * 罗虎
+     * 根据ID查询单个入院信息
+     * @return
+     */
+    @GetMapping("/queryById/{id}")
+    public ResponseResult<RegisterDto> queryByIdRegister(@PathVariable("id") Integer id ){
+        return new RegisterByIdQuery(id).exec();
     }
 }
 
