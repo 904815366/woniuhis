@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
 /**
  * <p>
@@ -28,7 +31,7 @@ public class WarnPo implements Serializable {
 
     private Integer registerid;
 
-    private LocalDateTime warntime;
+    private Date warntime;
 
     private String warndetailsid;
 

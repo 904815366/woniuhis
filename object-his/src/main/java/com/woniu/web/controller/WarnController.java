@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.WarnDto;
 import com.woniu.service.WarnService;
+import com.woniu.web.fo.AddCpoeFo;
 import com.woniu.web.fo.ModifyCpoe;
 import com.woniu.web.fo.QueryWarnList;
 import io.swagger.annotations.Api;
@@ -80,6 +81,20 @@ public class WarnController {
         try {
             String[] idArr = ids.split(",");
             warnService.updatestatus(idArr);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+        return new ResponseResult<>(null, "SUCCESS", 200);
+    }
+
+    @PostMapping("/addCpoe")
+    @Operation( summary = "新增医嘱", description = "新增医嘱", tags = {"医嘱管理"} )
+    public ResponseResult<Void> addCpoe(@RequestBody AddCpoeFo addCpoeFo){
+        try {
+            System.out.println(addCpoeFo);
+            AddCpoeFo cpoeFo = new AddCpoeFo();
+            cpoeFo.addCpoe(addCpoeFo);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseResult<>(null, "Internal Server Error", 500);

@@ -7,6 +7,7 @@ import com.woniu.repository.WarnRepository;
 import com.woniu.repository.WarndetailsRepository;
 import com.woniu.service.WarnService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.woniu.web.fo.AddCpoeFo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,5 +44,10 @@ public class WarnServiceImpl extends ServiceImpl<WarnMysqlDao, WarnPo> implement
     @Override
     public void updatestatus(String[] ids) {
         warnRepository.updateWarnStatus(ids);
+    }
+
+    @Override
+    public void addCpoe(AddCpoeFo addCpoeFo) {
+        warnRepository.createCpoe(addCpoeFo);
     }
 }

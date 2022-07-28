@@ -12,4 +12,8 @@
         delete from warndetails where warnid=#{warnid}
     </delete>
 
+    <insert id="createWarndetails">
+        INSERT INTO warndetails(drugid,num,measure,directions,warnid)
+            VALUE(#{drugid},#{num},#{measure},#{directions},#{warnid})
+    </insert>
 </mapper>

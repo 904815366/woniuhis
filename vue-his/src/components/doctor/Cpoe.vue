@@ -175,14 +175,16 @@ export default {
         },
         //页码尺寸改变
         handleSizeChange(pSize) {
+            let id = this.$route.query.id;
             this.pageSize = pSize;
             this.pageNum = 1;//默认为第一页
-            this.getPatientList(1);//初始化为第一页
+            this.getWarnListById(id,1);//初始化为第一页
         },
         // 当前页码改变
         handleCurrentChange(pNo) {
+            let id = this.$route.query.id;
             this.pageNum = pNo;
-            this.getPatientList(pNo);//翻页
+            this.getWarnListById(id,pNo);//翻页
         },
         handleShow() {
             this.comName = '';

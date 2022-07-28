@@ -12,6 +12,7 @@
         <result property="drugname" column="drugname"></result>
         <result property="num" column="num"></result>
         <result property="measure" column="measure"></result>
+        <result property="drugid" column="drugid"></result>
         <result property="directions" column="directions"></result>
     </resultMap>
     <!--查询患者医嘱-->
@@ -24,6 +25,7 @@
                e.name as drugname,
                d.num,
                d.measure,
+               d.drugid,
                d.directions
         FROM register a,
              patient b,
@@ -57,4 +59,8 @@
             #{id}
         </foreach>
     </update>
+    <insert id="createWarn" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO warn(patientname,registerid,warntime,doctorid,status)
+        value(#{patientname},#{registerid},#{warntime},#{doctorid},0)
+    </insert>
 </mapper>

@@ -8,7 +8,7 @@
             </el-form-item>
             <el-form-item label="药品名称:">
                 <el-select v-model="cpoe.drugid" filterable placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                    <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -38,28 +38,14 @@ export default {
             editDialogFormVisible: true,
             formLabelWidth: '120px',
             num: 1,
-            options: [{
-                value: '1',
-                label: '青霉素'
-            }, {
-                value: '2',
-                label: '头孢'
-            }, {
-                value: '3',
-                label: '利巴韦林'
-            }, {
-                value: '4',
-                label: '感康'
-            }, {
-                value: '5',
-                label: '维生素c'
-            }],
+            options: [],
             value: ''
         }
     },
     props: ['patient', 'cpoe'],//接收父组件传来的属性值
     created() {
         console.log(this.cpoe);
+        this.getDrugList();
     },
     methods: {
         cancelAdd() {
@@ -87,6 +73,12 @@ export default {
                         duration: 1000  //显示的时间,ms
                     });
                 }
+            })
+        },
+        getDrugList() {
+            this.$axios.get("/api/drug/druglist").then(res => {
+                console.log(res.data);
+                this.options = res.data.data;
             })
         }
     }

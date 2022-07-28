@@ -15,4 +15,6 @@ public interface WarndetailsMysqlDao extends BaseMapper<WarndetailsPo> {
     void updateWarndetailsByWarnid(WarndetailsPo warndetailsPo);
 
     void deleteByWarnid(Integer warnid);
+
+    void createWarndetails(WarndetailsPo warndetailsPo);
 }

@@ -59,12 +59,12 @@
                 {{ patient.entertime }}
             </el-descriptions-item>
         </el-descriptions>
-        <my-editor></my-editor>
+        <!-- <my-editor></my-editor> -->
     </div>
 </template>
 
 <script>
-import MyEditor from './MyEditor.vue'
+// import MyEditor from './MyEditor.vue'
 export default {
     data() {
         return {
@@ -72,7 +72,7 @@ export default {
         }
     },
     components: {
-    MyEditor,
+    // MyEditor,
     },
     created() {
         this.getPatientById(id);
