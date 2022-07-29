@@ -15,4 +15,6 @@ public interface BedService extends IService<BedPo> {
 
     void upBedByidStatus(Integer bid);
 
+    void dowBedByidStatus(Integer bid);
+
 }

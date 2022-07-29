@@ -35,34 +35,6 @@
         </el-select>
        </el-form-item>
 
-
-
-
-        <!-- <el-form-item label="毕业专业" :label-width="formLabelWidth">
-          <el-input v-model="bedpatient.career" autocomplete="off"></el-input>
-        </el-form-item> -->
-
-        <!-- <el-switch v-model="f" active-text="是名师" inactive-text="不是名师"> </el-switch> -->
-
-        <!-- <el-form-item label="所教课程"> -->
-          <!-- <el-select v-model="myuptecher.subjectid" placeholder="请选择教课程"> -->
-            <!--用于回显的数据  -->
-            <!-- <el-option
-              :label="sub.name"
-              :value="0"
-              v-for="sub in subjlist"
-              :key="0"
-              v-if="myuptecher.subjectid == sub.id"
-            ></el-option> -->
-
-            <!-- <el-option
-              :label="sub.name"
-              :value="sub.id"
-              v-for="sub in subjlist"
-              :key="sub.id"
-            ></el-option>
-          </el-select>
-        </el-form-item> -->
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -101,7 +73,7 @@ export default {
      this.bedpatient.familyid=this.fid;
      this.bedpatient.bedid=this.bid;
     //  提交的同时修改床位 upbedstats
- this.$axios
+     this.$axios
         .get("/api/bed/upbedstats", {
             params:{
             bid: this.bid,
@@ -119,7 +91,6 @@ export default {
     }).then((res) => {
 
         });
-//取消方法
       this.hidden = false;
       this.$emit("func"); //调用父类中的方法
      },

@@ -6,6 +6,7 @@ import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.mapper.redis.RegisterRedis;
+import com.woniu.service.BedService;
 import com.woniu.web.anon.IdempotentToken;
 import com.woniu.web.fo.*;
 import com.woniu.entity.po.RegisterPo;
@@ -42,7 +43,8 @@ public class RegisterController {
 
     @Autowired
     private RegisterRedis registerRedis;
-
+    @Autowired
+    private BedService bedService;
 
 
 //    分页查询所有
@@ -102,9 +104,7 @@ public class RegisterController {
         return modifyRegister.exec();
     }
 
-
-
-    @PostMapping("/upregister")
+    @PostMapping("/upregister")//修改床位的方法
     public ResponseResult<Void> upRegisterbyBad(@RequestBody RegisterDto registerDto){
         try {
             registerService.upRegisterbyBad(registerDto);
@@ -113,7 +113,29 @@ public class RegisterController {
             e.printStackTrace();
             return new ResponseResult<>(400, "失败");
         }
+    }
 
+    @GetMapping("/upstatusc")
+    public ResponseResult upRegisterBytatus(Integer id,String status){
+        Boolean f = registerService.upRegisterByStatus(id,status);
+        if (f){
+            return new ResponseResult(200, "OK");
+        }else {
+            return new ResponseResult(400, "ERRO");
+        }
+    }
+
+    @PostMapping("/gotoOut")//修改出院状态的
+    public ResponseResult<Void> gotoregitOut(@RequestBody RegisterDto registerDto){
+        //出院的同时修改床位状态
+        bedService.dowBedByidStatus(registerDto.getBedid());
+        try {
+            registerService.upRegisterbyOut(registerDto);
+            return new ResponseResult(200,"OK");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(400, "失败");
+        }
     }
 
     /**

@@ -35,8 +35,6 @@ public class RegisterRepository {
 
 //    简单的修改方法
     public void upRegisterByBed(RegisterDto registerDto){
-        LocalDateTime loc = LocalDateTime.now();
-        registerDto.setEntertime(loc);//获取当前时间
         registerMysqlDao.upRegister(registerDto);
     }
 
@@ -111,5 +109,10 @@ public class RegisterRepository {
             }
             return po;
         }
+    }
+
+//    修改患者的出院申请
+    public Boolean upRegistByStatu(Integer id,String status){
+       return registerMysqlDao.upRegisterByStatus(id,status);
     }
 }

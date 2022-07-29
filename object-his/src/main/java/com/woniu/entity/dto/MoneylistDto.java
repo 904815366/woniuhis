@@ -8,7 +8,8 @@ import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * <p>
@@ -20,26 +21,22 @@ import java.time.LocalDateTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class NurserecordDto implements Serializable {
+public class MoneylistDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private String nursename;//护理类型
+    private Integer registerid;//住院号
 
-    private String nursetext;
+    private BigDecimal consummoney;//消费金额
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private LocalDateTime nursetime;
+    private Date consumtime;//消费时间
 
-    private Integer registerid;//住院编号
-
-    private String name;//记录护士名字
+    private String consumpart;//消费详情
 
     private String status;
-
-
 }

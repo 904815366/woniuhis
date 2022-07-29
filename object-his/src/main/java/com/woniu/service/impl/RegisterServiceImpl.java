@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -48,6 +49,22 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMysqlDao, RegisterP
 
     @Override
     public void upRegisterbyBad(RegisterDto registerDto) {//安排床位修改方法
+        LocalDateTime loc = LocalDateTime.now();
+        registerDto.setEntertime(loc);//获取当前时间
+        registerDto.setStatus("2");
+        registerRepository.upRegisterByBed(registerDto);
+    }
+
+    @Override//修改入院申请
+    public Boolean upRegisterByStatus(Integer id, String status) {
+       return registerRepository.upRegistByStatu(id, status);
+    }
+
+    @Override
+    public void upRegisterbyOut(RegisterDto registerDto) {//出院修改患者状态
+        LocalDateTime loc = LocalDateTime.now();
+        registerDto.setOuttime(loc);//获取当前时间
+        registerDto.setStatus("5");
         registerRepository.upRegisterByBed(registerDto);
     }
 }

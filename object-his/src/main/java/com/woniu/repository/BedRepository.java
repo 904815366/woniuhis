@@ -34,5 +34,8 @@ public class BedRepository {
         bedMysqlDao.upBadstatu(bid);
     }
 
+    public void dowBadStatu(Integer bid){//恢复床位信息
+        bedMysqlDao.dowBadstatu(bid);
+    }
 
 }

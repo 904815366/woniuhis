@@ -14,7 +14,10 @@
 
     <update id="upRegister">
         update register set familyid=#{familyid},bedid=#{bedid}
-                            ,entertime=#{entertime},status='2'
+                            ,entertime=#{entertime},status=#{status}
+                  <if test="outtime!=null">
+                            ,outtime=#{outtime}
+                  </if>
            where id=#{id}
     </update>
 </mapper>

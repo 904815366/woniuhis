@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -28,4 +29,8 @@ public interface RegisterMysqlDao extends BaseMapper<RegisterPo> {
     RegisterPo queryRegisterByPatientid(Integer patientid);
 
     void upRegister(RegisterDto registerDto);
+
+    @Update("update register set status=#{status} where id=#{id}")
+    Boolean upRegisterByStatus(@Param("id") Integer id,@Param("status") String status);
+
 }

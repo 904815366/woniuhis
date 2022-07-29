@@ -22,4 +22,8 @@ public interface RegisterService  extends IService<RegisterPo>  {
     void upRegisterbyBad(RegisterDto registerDto);
 
     boolean modifyRegister(RegisterPo po);
+
+    Boolean upRegisterByStatus(Integer id,String status);
+
+    void upRegisterbyOut(RegisterDto registerDto);
 }

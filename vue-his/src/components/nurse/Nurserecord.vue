@@ -72,15 +72,9 @@
       <el-table-column label="操作">
         
         <template slot-scope="scope">
-          <el-button v-if="scope.row.status=='1'" size="mini" 
-          type="primary"
-          @click="">安排床位</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click=""
-            >详情</el-button
-          >
+          <el-button v-if="scope.row.name==name" size="mini" 
+          type="danger"
+          @click="gotodeltNurByid(scope.row.id)">删除</el-button>
         </template>
 
       </el-table-column>
@@ -122,15 +116,18 @@ export default {
             total:null,
             comname:'',
             patient:null,
-            patientid:''
+            patientid:'',
+            name:''
       }
    },
    created(){
         this.gotoNursers();
+        this.name=window.sessionStorage.getItem('currentUser');
    },
    methods:{
      turnSon(){//子调父方法
-    this.comname='';
+     this.comname='';
+     this.gotoNursers();//再次调查询方法刷新页面
     },
     getRegister(){
         this.$axios
@@ -156,21 +153,45 @@ export default {
         })
         .then((res) => {
           this.nurData=res.data.list;
-          console.log(this.registerData);
            this.pageInfo=res.data;
            this.pageNum=res.data.pageNum;
           this.pageSize=res.data.pageSize;
           this.total=res.data.total;
         })
         .catch((e) => {console.log(e);});
+    },gotodeltNurByid(x){//根据id删除某一条护理记录
+  this.$axios.get("/api/nurserecord/delNur", {
+            params:{
+            id: x,
+            }
+        })
+        .then((res) => {
+          if(res.data.status==200){
+             this.$message({
+                    message: '删除成功',
+                    type: 'success',
+                    duration: 1500 ,
+                    offset : 175
+                   });
+                   this.gotoNursers();//再次调查询方法刷新页面
+         }else{
+          this.$message({
+                  message: '删除失败',
+                  type: 'error',
+                  duration: 1500 ,
+                  offset : 175
+                });
+         }
+        })
+        .catch((e) => {console.log(e);});
     },
     changepagebynum(pageNum){
           this.pageNum=pageNum
-          this.gotoTeacherList();
+          this.gotoNursers();
     },
     sizepageSize(pageSize){
           this.pageSize=pageSizee;
-          this.gotoTeacherList();
+          this.gotoNursers();
     },
    }
 }

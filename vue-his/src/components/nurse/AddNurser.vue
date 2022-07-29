@@ -3,7 +3,7 @@
   <el-form :model="nurser">
 
     <el-form-item label="护理类型">
-      <el-select v-model="nurser.nursetypeid" @change="gotoNutype"  placeholder="请选择记录类型">
+      <el-select v-model="nurser.nursetypeid"   placeholder="请选择记录类型">
       <el-option v-for="nty in nurtypes" :label="nty.nursename" :value="nty.id"
       :key="nty.id"></el-option>
         </el-select>
@@ -21,9 +21,18 @@
       <el-input v-model="nurser.nursetext" autocomplete="off"></el-input> 
     </el-form-item>
 
-        <el-form-item label="护理时间" :label-width="formLabelWidth">
-    <el-time-picker placeholder="选择时间" v-model="nurser.nursetime" style="width: 100%;"></el-time-picker>
-</el-form-item>
+    <el-form-item label="护理时间" :label-width="formLabelWidth">
+     <el-time-picker placeholder="选择时间" v-model="nurser.nursetime" style="width: 100%;"></el-time-picker>
+      </el-form-item>
+
+     <el-form-item label="当前记录人" :label-width="formLabelWidth">
+       <el-input
+            v-model="username"
+            :disabled="true">
+          </el-input>
+      </el-form-item>
+
+
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="cancle">取 消</el-button>
@@ -38,13 +47,16 @@ export default {
       return {
             hidden:true,
             formLabelWidth: '120px' ,
-            nurser:[],
-            nurtypes:''
+            nurser:{},
+            nurtypes:[],
+            username:''
       }
    },
    created(){
    this.gotosubjlist();
    this.gotoNutype();
+   this.nurser.userid=window.sessionStorage.getItem("currentUserId");
+   this.username=window.sessionStorage.getItem('currentUser');
    },
    methods:{
     cancle(){//取消方法
@@ -54,7 +66,7 @@ export default {
     commin(){//提交方法
         this.hidden = false;
         // 异步添加
-         this.$axios.post("/api/addtcher",this.nurser).then((res) => {
+         this.$axios.post("/api/nurserecord/addNureser",this.nurser).then((res) => {
          if(res.data.status==200){
              this.$message({
                     message: '添加成功',

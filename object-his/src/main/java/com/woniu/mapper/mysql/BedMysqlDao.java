@@ -32,4 +32,7 @@ public interface BedMysqlDao extends BaseMapper<BedPo> {
 
     @Update("update bed set status='1' where id=#{bid}")
     void upBadstatu(Integer bid);
+
+    @Update("update bed set status='0' where id=#{bid}")
+    void dowBadstatu(Integer bid);
 }

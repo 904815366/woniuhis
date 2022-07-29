@@ -25,7 +25,7 @@
 
     <el-table-column
         prop="id"
-        label="患者序号"
+        label="患者住院号"
         width="80">
       </el-table-column>
 
@@ -62,33 +62,53 @@
         <!-- </template> -->
       <!-- </el-table-column> -->
 
-       <el-table-column  label="是否缴费" width="120" align="center">
+       <el-table-column  label="患者状态" width="120" align="center">
          <template slot-scope="scope">
-         <!-- 判断是否添加颜色背景 -->
-         <el-tag :type="scope.row.status=='0' ? 'success' : 'danger' ">
-         <!-- 三目表达式赋值 -->
-             {{scope.row.status=='0' ? '未缴费' : '已缴费' }}
-         </el-tag>
-        </template>
+                    <el-tag type="info" v-if="scope.row.status == '0'">未缴费</el-tag>
+                    <el-tag v-if="scope.row.status == '1'">已缴费</el-tag>
+                    <el-tag type="success" v-if="scope.row.status == '2'">入院中</el-tag>
+                    <el-tag type="warning" v-if="scope.row.status == '3'">申请出院中</el-tag>
+                    <el-tag type="danger" v-if="scope.row.status == '4'">出院申请通过</el-tag>
+                    <el-tag type="danger" v-if="scope.row.status == '5'">已出院</el-tag>
+                </template>
       </el-table-column>
 
-      <el-table-column label="操作">
+      <el-table-column label="业务">
         
         <template slot-scope="scope">
           <el-button v-if="scope.row.status=='1'" size="mini" 
           type="primary"
           @click="gotoBad(scope.row)">安排床位</el-button>
+
           <el-button
+          v-if="scope.row.status=='2'"
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-            >详情</el-button
+            @click="gotoappliy(scope.row.id)"
+            >申请出院</el-button
           >
+
+           <el-button
+          v-if="scope.row.status=='4'"
+            size="mini"
+            type="warning"
+            @click="gotoOut(scope.row)"
+            >办理出院</el-button
+          >
+
         </template>
 
       </el-table-column>
+      <el-table-column
+        prop="diagnose"
+        label="详情"
+        width="140">
+        <template slot-scope="scope">
+        <el-button type="primary"  @click="gotoMoney(scope.row)">查看详情</el-button>
+        </template>
+      </el-table-column>
 
-    </el-table>
+      </el-table>
 
     <!-- 分页组件 
      :background 表示背景颜色开启不开启 默认是false
@@ -117,9 +137,11 @@
 <script>
 // 导入子组件
 import Bed from "../nurse/Bed.vue"
+import Money from "../nurse/Money.vue"
 export default {
   components: {
-    Bed
+    Bed,
+    Money
   } ,
    data() {
       return {
@@ -137,16 +159,73 @@ export default {
     this.gotoRegisters();
    },
    methods:{
+    gotoMoney(x){
+    this.patient=x;
+      this.comname='Money';
+    },
+    gotoOut(x){//办理出院gotoOut
+      x.status='';
+    this.$axios({//发送修改状态请求
+      method: 'post',
+      url:'/api/register/gotoOut',
+      data: x
+    }).then((res) => {
+    if(res.data.status==200){
+             this.$message({
+                    message: '办理成功',
+                    type: 'success',
+                    duration: 1500 ,
+                    offset : 175
+                   });
+                  this.gotoRegisters();
+         }else{
+          this.$message({
+                  message: '办理失败',
+                  type: 'error',
+                  duration: 1500 ,
+                  offset : 175
+                });
+         }
+        });
+    },
+    gotoappliy(x){//申请出院
+     this.$axios.get("/api/register/upstatusc",{
+            params:{
+            id: x,
+            status:'3'
+            }
+        })
+        .then((res) => {
+          if(res.data.status==200){
+             this.$message({
+                    message: '申请成功',
+                    type: 'success',
+                    duration: 1500 ,
+                    offset : 175
+                   });
+                  this.gotoRegisters();
+         }else{
+          this.$message({
+                  message: '申请失败',
+                  type: 'error',
+                  duration: 1500 ,
+                  offset : 175
+                });
+         }
+        })
+        .catch((e) => {console.log(e);});
+    },
     // 安排病房方法
     gotoBad(x){
        this.patient=x;
       this.comname='bed';
-     
     },
      turnSon(){//子调父方法
     this.comname='';
+    // 再次调查询方法刷新页面
+    this.gotoRegisters();
     },
-    getRegister(){
+    getRegister(){//查看单个患者
         this.$axios
         .get("/api/register/gotoRegisters", {
             params:{
@@ -160,7 +239,7 @@ export default {
         })
         .catch((e) => {console.log(e);});
     },
-    gotoRegisters(){
+    gotoRegisters(){//分页查看所有
         this.$axios
         .get("/api/register/gotoRegisters", {
             params:{

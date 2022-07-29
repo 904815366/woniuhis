@@ -26,4 +26,9 @@ public class BedServiceImpl extends ServiceImpl<BedMysqlDao, BedPo> implements B
         bedRepository.upBadStatu(bid);
 
     }
+
+    @Override
+    public void dowBedByidStatus(Integer bid) {
+        bedRepository.dowBadStatu(bid);
+    }
 }
