@@ -53,6 +53,7 @@ public class WarnRepository {
         warnPo.setRegisterid(addCpoeFo.getPatientid());
         warnPo.setWarntime(addCpoeFo.getWarntime());
         warnPo.setDoctorid(addCpoeFo.getDoctorid());
+        warnPo.setFamilyid(addCpoeFo.getFamilyid());
         warnMysqlDao.createWarn(warnPo);
 
         //新增医嘱详情

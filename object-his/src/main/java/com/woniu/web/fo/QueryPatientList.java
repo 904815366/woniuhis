@@ -18,9 +18,9 @@ public class QueryPatientList {
     /**
      * 查询在院患者列表
      */
-    public List<PatientDto> getPatientList(String name){
+    public List<PatientDto> getPatientList(String name,Integer familyid){
         PatientMysqlDao patientMapper =(PatientMysqlDao)
                 ApplicationContextHolder.getApplicationContext().getBean(PatientMysqlDao.class);
-        return patientMapper.getPatientList(name);
+        return patientMapper.getPatientList(name,familyid);
     }
 }

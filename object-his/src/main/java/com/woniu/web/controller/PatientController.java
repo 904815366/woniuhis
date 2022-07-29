@@ -31,11 +31,12 @@ public class PatientController {
     @GetMapping("/list")
     @Operation( summary = "查询在院患者", description = "查询在院患者", tags = {"患者管理"} )
     public ResponseResult<PageInfo<PatientDto>> getPatientList(@RequestParam(name = "searchName",defaultValue = "")String name,
+                                                           @RequestParam(name = "familyid") Integer familyid,
                                                            @RequestParam(name = "pageNum",defaultValue = "1")Integer pageNum,
                                                            @RequestParam(name = "pageSize",defaultValue ="5")Integer pageSize){
         try {
             PageHelper.startPage(pageNum, pageSize);
-            List<PatientDto> patientList = new QueryPatientList().getPatientList(name);
+            List<PatientDto> patientList = new QueryPatientList().getPatientList(name,familyid);
             PageInfo<PatientDto> pageInfo = new PageInfo<>(patientList);
             return new ResponseResult<>(pageInfo,"SUCCESS",200);
         } catch (Exception e) {
@@ -45,9 +46,10 @@ public class PatientController {
     }
     @GetMapping("/listAll")
     @Operation( summary = "查询在院患者不分页", description = "查询在院患者不分页", tags = {"患者管理"} )
-    public ResponseResult<List<PatientDto>> getPatientListAll(@RequestParam(name = "searchName",defaultValue = "")String name){
+    public ResponseResult<List<PatientDto>> getPatientListAll(@RequestParam(name = "searchName",defaultValue = "")String name,
+                                                              @RequestParam(name = "familyid") Integer familyid){
         try {
-            List<PatientDto> patientList = new QueryPatientList().getPatientList(name);
+            List<PatientDto> patientList = new QueryPatientList().getPatientList(name,familyid);
             return new ResponseResult<>(patientList,"SUCCESS",200);
         } catch (Exception e) {
             e.printStackTrace();

@@ -19,6 +19,7 @@
         on a.id=b.patientid and b.familyid=c.id
     <where>
         and b.outtime is null
+        and b.familyid=#{familyid}
         <if test="name != '' and name != null">
             and a.name like concat('%',#{name},'%')
         </if>

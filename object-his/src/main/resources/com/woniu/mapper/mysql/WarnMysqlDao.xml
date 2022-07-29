@@ -60,7 +60,7 @@
         </foreach>
     </update>
     <insert id="createWarn" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO warn(patientname,registerid,warntime,doctorid,status)
-        value(#{patientname},#{registerid},#{warntime},#{doctorid},0)
+        INSERT INTO warn(patientname,registerid,warntime,doctorid,status,familyid)
+        value(#{patientname},#{registerid},#{warntime},#{doctorid},0,#{familyid})
     </insert>
 </mapper>

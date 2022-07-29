@@ -70,7 +70,9 @@ export default {
     methods: {
         getPatientList(pNum) {
             console.log(this.searchName);
-            this.$axios.get("/api/patient/list?searchName="+this.searchName+"&pageNum="+pNum+"&pageSize="+this.pageSize).then(res => {
+            let deptid=window.sessionStorage.getItem("currentUserFamilyId");
+            this.$axios.get("/api/patient/list?searchName="+this.searchName+"&familyid="+deptid+"&pageNum="+pNum+"&pageSize="+this.pageSize)
+            .then(res => {
                     console.log(res.data);
                     this.tableData=res.data.data.list;
                     this.totalCount=res.data.data.total;

@@ -275,7 +275,8 @@ export default {
             }
         },
         getPatientListAll(){
-            this.$axios.get("/api/patient/listAll").then(res=>{
+            let deptid=window.sessionStorage.getItem("currentUserFamilyId");
+            this.$axios.get("/api/patient/listAll?familyid="+deptid).then(res=>{
                 console.log(res.data)
                 this.options=res.data.data;
             })

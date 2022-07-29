@@ -42,6 +42,9 @@ public class AddCpoeFo {
     @Schema(name = "directions", description = "用法用量")
     private String directions;
 
+    @Schema(name = "familyid",description = "开立科室id")
+    private Integer familyid;
+
     public void addCpoe(AddCpoeFo addCpoeFo){
         WarnService bean = ApplicationContextHolder.getApplicationContext().getBean(WarnService.class);
         bean.addCpoe(addCpoeFo);

@@ -5,6 +5,7 @@
                 <input type="hidden" name="patientname" v-model="cpoe.patientname" />
                 <input type="hidden" name="patientid" v-model="cpoe.patientid" />
                 <input type="hidden" name="doctorid" v-model="cpoe.doctorid" />
+                <input type="hidden" name="familyid" v-model="cpoe.familyid"/>
                 <el-form-item label="开立时间:">
                     <el-date-picker v-model="cpoe.warntime" type="datetime" placeholder="选择日期时间">
                     </el-date-picker>
@@ -54,6 +55,7 @@ export default {
         this.cpoe.patientname = this.patient.name;
         this.cpoe.patientid = this.patient.id;
         this.cpoe.doctorid = window.sessionStorage.getItem("currentUserId");
+        this.cpoe.familyid=window.sessionStorage.getItem("currentUserFamilyId");
         console.log(this.cpoe.doctorid);
     },
     methods: {
