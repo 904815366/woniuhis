@@ -2,14 +2,17 @@ package com.woniu.entity.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +49,6 @@ public class ArrangeDto implements Serializable {
     private Integer roleid;
     @Schema(name = "rolename", description = "岗位名")
     private String rolename;
-
     @Schema(name = "monday", description = "周一")
     private String monday;
     @Schema(name = "tuesday", description = "周二")
@@ -61,6 +63,4 @@ public class ArrangeDto implements Serializable {
     private String saturday;
     @Schema(name = "sunday", description = "周日")
     private String sunday;
-//    @Schema(name = "arrangeInfoDtoList", description = "信息列表")
-//    private List<ArrangeInfoDto> arrangeInfoDtoList;
 }

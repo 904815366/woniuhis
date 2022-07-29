@@ -36,4 +36,24 @@ public interface ArrangeMysqlDao extends BaseMapper<ArrangePo> {
             "order by dutyuserid" +
             "</script>"})
     List<ArrangeDto> getArrangeList(ArrangeDto arrangeDto);
+
+    @Select({"<script> " +
+            "select arrange.id,arrange.dutyuserid,arrange.dutytime," +
+            "user.name,user.familyid,user.roleid," +
+            "role.name rolename , family.familyname " +
+            "from arrange , user , role ,family " +
+            "where user.roleid = role.id and user.familyid = family.id " +
+            "and user.id = arrange.dutyuserid " +
+            "and createtime <![CDATA[ <= ]]> (date_sub(curdate(),interval weekday(curdate()) - 13 DAY)) " +
+            "and createtime <![CDATA[ >= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 7 DAY)) " +
+            "and user.name like concat('%',#{name},'%') " +
+            "<if test='roleid != null and roleid !=\"\"'>" +
+            "and roleid=#{roleid} " +
+            "</if>" +
+            "<if test='familyid != null and familyid !=\"\"'>" +
+            "and familyid=#{familyid} " +
+            "</if>" +
+            "order by dutyuserid" +
+            "</script>"})
+    List<ArrangeDto> getArrangeListNext(ArrangeDto arrangeDto);
 }

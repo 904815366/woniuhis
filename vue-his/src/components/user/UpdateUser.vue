@@ -83,9 +83,7 @@ export default {
       this.user.status = this.user.status == true ? "0" : "1";
       //发送axios请求
       this.$axios
-        .post("/api/user/edit", this.user, {
-          headers: { strToken: window.localStorage.getItem("strToken") },
-        })
+        .post("/api/user/edit", this.user)
         .then((res) => {
           console.log(res.data);
           if (res.data.status == 200) {
@@ -103,12 +101,10 @@ export default {
               offset: 300,
               duration: 1000,
             });
+            this.$emit("func");
           }
         })
-        .catch(() => { });
-
-
-      console.log("func-ok");
+        .catch(() => {});
       this.editUserDialogFormVisible = false;
     },
   },

@@ -36,4 +36,23 @@ public class HomeArrangeList {
         List<ArrangeDto> arrangeList = arrangeMysqlDao.getArrangeList(arrangeDto);
         return arrangeList;
     }
+
+    public List<ArrangeDto> arrangeListNext() {
+        ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
+        ArrangeMysqlDao arrangeMysqlDao = applicationContext.getBean(ArrangeMysqlDao.class);
+        ArrangeDto arrangeDto = new ArrangeDto();
+        if(!StringUtils.isEmpty(searchName)){
+            arrangeDto.setName(searchName);
+        }else {
+            arrangeDto.setName("");
+        }
+        if (!StringUtils.isEmpty(searchRoleid)){
+            arrangeDto.setRoleid(searchRoleid);
+        }
+        if (!StringUtils.isEmpty(searchFamilyid)){
+            arrangeDto.setFamilyid(searchFamilyid);
+        }
+        List<ArrangeDto> arrangeList = arrangeMysqlDao.getArrangeListNext(arrangeDto);
+        return arrangeList;
+    }
 }

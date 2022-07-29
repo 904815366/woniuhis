@@ -64,56 +64,56 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="monday" label="周一" width="80" align="center">
+      <el-table-column prop="monday" label="周一" width="70" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.monday !== null" circle>
             <span style="color: #409eff" class="el-icon-check"></span>
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="tuesday" label="周二" width="80" align="center">
+      <el-table-column prop="tuesday" label="周二" width="70" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.tuesday !== null" circle>
             <span style="color: #409eff" class="el-icon-check"></span>
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="wednesday" label="周三" width="80" align="center">
+      <el-table-column prop="wednesday" label="周三" width="70" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.wednesday !== null" circle>
             <span style="color: #409eff" class="el-icon-check"></span>
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="thursday" label="周四" width="80" align="center">
+      <el-table-column prop="thursday" label="周四" width="70" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.thursday !== null" circle>
             <span style="color: #409eff" class="el-icon-check"></span>
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="friday" label="周五" width="80" align="center">
+      <el-table-column prop="friday" label="周五" width="70" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.friday !== null" circle>
             <span style="color: #409eff" class="el-icon-check"></span>
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="saturday" label="周六" width="80" align="center">
+      <el-table-column prop="saturday" label="周六" width="70" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.saturday !== null" circle>
             <span style="color: #409eff" class="el-icon-check"></span>
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="sunday" label="周日" width="80" align="center">
+      <el-table-column prop="sunday" label="周日" width="60" align="center">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.sunday !== null" circle>
             <span style="color: #409eff" class="el-icon-check"></span>
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="180">
+      <el-table-column label="操作" align="center" width="120">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -160,7 +160,7 @@ export default {
     //查询排班信息
     findArrangeList() {
       this.$axios
-        .get("/api/arrange/list", {
+        .get("/api/arrange/listnext", {
           params: {
             searchName: this.searchName,
             searchRoleid: this.searchRoleid,

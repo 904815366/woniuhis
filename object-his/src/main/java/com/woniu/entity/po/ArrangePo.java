@@ -27,9 +27,9 @@ public class ArrangePo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    @Id
-    private Integer id;
 
+    private Integer id;
+    @Id
     private Integer dutyuserid;
 
     private Integer dutytime;

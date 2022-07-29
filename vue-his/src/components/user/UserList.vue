@@ -186,30 +186,38 @@ export default {
     },
     //处理删除
     handleDelete(index, row) {
-      this.$axios
-        .get("/api/user/delete", {
-          params: { id: row.id },
-          headers: { strToken: window.localStorage.getItem("strToken") },
-        })
-        .then((res) => {
-          if (res.data.status == 200) {
-            this.$message({
-              type: "success",
-              message: "删除成功!",
-              offset: 300,
-              duration: 1000,
-            });
-          } else {
-            this.$message({
-              type: "error",
-              message: res.data.msg,
-              offset: 300,
-              duration: 1000,
-            });
-          }
+      this.$confirm("确定删除吗?", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$axios
+            .get("/api/user/delete", {
+              params: { id: row.id },
+              headers: { strToken: window.localStorage.getItem("strToken") },
+            })
+            .then((res) => {
+              if (res.data.status == 200) {
+                this.$message({
+                  type: "success",
+                  message: "删除成功!",
+                  offset: 300,
+                  duration: 1000,
+                });
+                this.finduserList(this.currentPage);
+              } else {
+                this.$message({
+                  type: "error",
+                  message: res.data.msg,
+                  offset: 300,
+                  duration: 1000,
+                });
+              }
+            })
+            .catch(() => {});
         })
         .catch(() => {});
-      this.finduserList(1);
     },
     //获取用户列表数据
     finduserList(pno) {
