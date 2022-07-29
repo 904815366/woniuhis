@@ -2,6 +2,7 @@ package com.woniu.service;
 
 import com.woniu.entity.po.MoneyrecordPo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.woniu.web.fo.InsertMoneyRecordComment;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface MoneyrecordService extends IService<MoneyrecordPo> {
 
+    boolean addOne(InsertMoneyRecordComment comment);
 }

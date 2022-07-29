@@ -5,6 +5,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import qs from 'qs'
+import './filters/index'  //加载自定义过滤器
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false

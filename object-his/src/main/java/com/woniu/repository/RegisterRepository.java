@@ -8,6 +8,8 @@ import com.woniu.entity.po.RegisterPo;
 import com.woniu.mapper.mysql.AppointmentMysqlDao;
 import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.mapper.redis.RegisterRedis;
+import com.woniu.web.fo.InsertMoneyRecordComment;
+import com.woniu.web.fo.ModifyRegisterMoneyComment;
 import io.minio.messages.ExistingObjectReplication;
 import lombok.RequiredArgsConstructor;
 import net.sf.jsqlparser.expression.operators.relational.ExistsExpression;
@@ -114,5 +116,12 @@ public class RegisterRepository {
 //    修改患者的出院申请
     public Boolean upRegistByStatu(Integer id,String status){
        return registerMysqlDao.upRegisterByStatus(id,status);
+    }
+
+    public void modifyMoney(ModifyRegisterMoneyComment modifyRegisterMoneyComment) {
+        boolean modifyMoney = registerMysqlDao.modifyMoney(modifyRegisterMoneyComment);
+        if (modifyMoney == false){
+            throw new RuntimeException("增加余额失败..");
+        }
     }
 }

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.po.RegisterPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.woniu.web.fo.InsertMoneyRecordComment;
+import com.woniu.web.fo.ModifyRegisterMoneyComment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -33,4 +35,7 @@ public interface RegisterMysqlDao extends BaseMapper<RegisterPo> {
     @Update("update register set status=#{status} where id=#{id}")
     Boolean upRegisterByStatus(@Param("id") Integer id,@Param("status") String status);
 
+
+    @Update("UPDATE register set money=money+#{prepaymoney} WHERE id=#{registerid}")
+    boolean modifyMoney(ModifyRegisterMoneyComment modifyRegisterMoneyComment);
 }

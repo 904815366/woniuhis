@@ -5,6 +5,8 @@ import com.woniu.entity.po.RegisterPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.woniu.entity.po.RolePerms;
+import com.woniu.web.fo.InsertMoneyRecordComment;
+import com.woniu.web.fo.ModifyRegisterMoneyComment;
 
 /**
  * <p>
@@ -26,4 +28,7 @@ public interface RegisterService  extends IService<RegisterPo>  {
     Boolean upRegisterByStatus(Integer id,String status);
 
     void upRegisterbyOut(RegisterDto registerDto);
+
+
+    void modifyMoney(ModifyRegisterMoneyComment modifyRegisterMoneyComment);
 }

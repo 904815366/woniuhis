@@ -6,12 +6,11 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * <p>
@@ -27,6 +26,7 @@ import org.springframework.data.redis.core.RedisHash;
 @RedisHash("MoneyrecordPo")
 @TableName("moneyrecord")
 @EqualsAndHashCode(callSuper = false)
+@Builder
 public class MoneyrecordPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +39,8 @@ public class MoneyrecordPo implements Serializable {
 
     private Double prepaymoney;
 
+    @JsonFormat(pattern = "yyyy-MM-dd" , timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime prepaytime;
 
     private Integer userid;

@@ -37,6 +37,7 @@ const routes = [
       { path: "/doctor/cpoe", name: "cpoe", component: Cpoe }, //医嘱管理
       {path:'/charge/enter',name: '/charge/enter',component: () => import('../components/charge/enter.vue')},//入院登记
       {path:'/charge/delivery',name: '/charge/delivery',component: () => import('../components/charge/delivery.vue')},//预交缴费
+
       { path: "/doctor/patient", name: "patient", component: Patient }, //患者列表
       { path: "/doctor/emr", name: "emr", component: Emr }, //入院记录
       {
@@ -44,11 +45,7 @@ const routes = [
         name: "notification",
         component: Notification,
       }, //住院通知单
-      {
-        name: "/charge/enter",
-        path: "/charge/enter",
-        component: () => import("../components/charge/enter.vue"),
-      },
+      {path:'/charge/outSettlement',name: '/charge/outSettlement',component: () => import('../components/charge/outSettlement.vue')},//出院结算
       { path: "/user/add", name: "addUser", component: AddUser, children: [] },
       {
         path: "/user/list",

@@ -1,18 +1,19 @@
 package com.woniu.web.controller;
 
 
+import com.google.common.eventbus.EventBus;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.MoneyrecordDto;
 import com.woniu.entity.dto.RegisterDto;
+import com.woniu.web.anon.IdempotentToken;
+import com.woniu.web.fo.InsertMoneyRecordComment;
 import com.woniu.web.fo.MoneyRecordListByIdQuery;
 import com.woniu.web.fo.RegisterByIdQuery;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -27,16 +28,33 @@ import java.util.List;
 @RequestMapping("/moneyrecord")
 public class MoneyrecordController {
 
+    @Resource
+    private EventBus bus;
+
 
     /**
      * 罗虎
-     * 根据ID查询单个入院信息
+     * 根据ID查询缴费列表
      * @return
      */
     @GetMapping("/ListById/{id}")
     public ResponseResult<List<MoneyrecordDto>> queryByIdRegister(@PathVariable("id") Integer id ){
         return new MoneyRecordListByIdQuery(id).exec();
-
     }
+
+
+    /**
+     * 罗虎
+     * 添加缴费信息
+     * @return
+     */
+    @PostMapping("/insertOne")
+    @IdempotentToken
+    public ResponseResult<Void> addMoneyrecord(@RequestBody InsertMoneyRecordComment insertMoneyRecordComment){
+        bus.post(insertMoneyRecordComment);
+        return new ResponseResult<>(2000,"ok");
+    }
+
+
 }
 

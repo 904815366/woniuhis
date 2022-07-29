@@ -61,7 +61,7 @@ export default {
                 center: true,
               });
               this.nameAndId = res.data.msg.split("-");
-              console.log(this.nameAndId[2]);
+              // console.log(this.nameAndId[2]);
               window.localStorage.setItem("strToken", res.data.data);
               window.sessionStorage.setItem("username", this.user.username);
               window.sessionStorage.setItem("currentUser", this.nameAndId[0]);
