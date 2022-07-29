@@ -2,13 +2,11 @@
     <div>
         <el-descriptions class="margin-top" title="入院记录" :column="8" border>
             <template slot="extra">
-                <el-select v-model="pid" filterable placeholder="请选择患者" @change="changePatient()">
-                        <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
-                        </el-option>
+                <el-select v-model="pid" filterable placeholder="请选择患者" @change="changePatient()"
+                    style="margin-right: 10px;">
+                    <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
+                    </el-option>
                 </el-select>
-            </template>
-            <template slot="extra">
-                <el-button type="success" round size="mini">保存病历</el-button>
             </template>
             <el-descriptions-item>
                 <template slot="label">
@@ -62,23 +60,39 @@
                 {{ patient.entertime }}
             </el-descriptions-item>
         </el-descriptions>
-        <!-- <my-editor></my-editor> -->
+        <el-tabs type="border-card" sty>
+            <el-tab-pane>
+                <span slot="label"><i class="el-icon-notebook-1"></i>记录总览</span>
+                我的行程
+            </el-tab-pane>
+            <el-tab-pane>
+            <span slot="label"><i class="el-icon-edit"></i>入院记录</span>
+            <my-editor></my-editor>
+            </el-tab-pane>
+        </el-tabs>
     </div>
 </template>
 
 <script>
-// import MyEditor from './MyEditor.vue'
+import MyEditor from './MyEditor.vue'
 export default {
     data() {
         return {
             patient: {},//患者信息
             options: [],
             value: '',
-            pid:''
+            pid: '',
+            editableTabsValue: '2',
+            editableTabs: [{
+                title: 'Tab 1',
+                name: '1',
+                content: 'Tab 1 content'
+            }],
+            tabIndex: 2
         }
     },
     components: {
-    // MyEditor,
+        MyEditor,
     },
     created() {
         this.getPatientListAll();
@@ -89,13 +103,14 @@ export default {
                 this.patient = res.data.data;
             })
         },
-        getPatientListAll(){
-            this.$axios.get("/api/patient/listAll").then(res=>{
+        getPatientListAll() {
+            let deptid = window.sessionStorage.getItem("currentUserFamilyId");
+            this.$axios.get("/api/patient/listAll?familyid=" + deptid).then(res => {
                 console.log(res.data)
-                this.options=res.data.data;
+                this.options = res.data.data;
             })
         },
-        changePatient(){
+        changePatient() {
             this.getPatientById(this.pid);
         }
     }
@@ -104,6 +119,6 @@ export default {
 
 <style>
 .box-card {
-  width: 800px;
+    width: 800px;
 }
 </style>

@@ -2,7 +2,7 @@
     <div>
         <el-descriptions class="margin-top" title="医嘱录入" :column="8" border>
             <template slot="extra">
-                <el-select v-model="pid" filterable placeholder="请选择患者" @change="changePatient()">
+                <el-select v-model="pid" filterable placeholder="请选择患者" @change="changePatient()" style="margin-right: 10px;">
                     <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                 </el-select>
