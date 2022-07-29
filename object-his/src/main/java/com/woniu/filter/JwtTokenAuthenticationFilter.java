@@ -61,7 +61,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                         .replace("]", "");
 
                 String[] authoritiesArr = authoritiesStr.split(",");
-
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 for (String s : authoritiesArr) {
                     authorities.add(new SimpleGrantedAuthority(s));

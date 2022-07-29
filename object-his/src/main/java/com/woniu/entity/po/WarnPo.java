@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 
 import lombok.Data;
@@ -20,6 +22,7 @@ import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@TableName("warn")
 public class WarnPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,6 +45,4 @@ public class WarnPo implements Serializable {
     private String status;
 
     private Integer familyid;
-
-
 }

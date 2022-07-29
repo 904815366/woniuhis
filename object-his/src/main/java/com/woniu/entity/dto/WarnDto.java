@@ -31,7 +31,6 @@ public class WarnDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
     @Schema(name = "id", description = "医嘱")
     private Integer id;
 
@@ -64,8 +63,18 @@ public class WarnDto implements Serializable {
     @Schema(name = "directions", description = "用法用量")
     private String directions;
 
-    @Schema(name = "familyid",description = "开立科室id")
+    @Schema(name = "registerid", description = "住院id")
+    private String registerid;
+
+    @Schema(name = "warndeteilsid", description = "详情id")
+    private String warndeteilsid;
+
+    @Schema(name = "doctorid", description = "医生id")
+    private String doctorid;
+
+    @Schema(name = "nurseid", description = "护士id")
+    private String nurseid;
+
+    @Schema(name = "familyid", description = "科室id")
     private Integer familyid;
-
-
 }

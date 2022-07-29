@@ -26,8 +26,10 @@ import java.util.List;
 @RestController
 @Api( tags = {"科室管理"} )
 public class FamilyController {
+
     @Autowired
     private FamilyService familyService;
+
     @RequestMapping("/list")
     @Operation( summary = "查询科室列表", description = "查询科室列表", tags = {"科室管理"} )
     public ResponseResult<List<FamilyDto>> fmlList(){

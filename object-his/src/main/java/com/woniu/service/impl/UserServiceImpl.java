@@ -1,6 +1,8 @@
 package com.woniu.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.po.UserPo;
 import com.woniu.mapper.mysql.PermsMysqlDao;
@@ -67,6 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
         List<String> percodes = permsMapper.getPermsPercodeByUsername(userPo.getUsername());
 //        List<String> percodes = new ArrayList<>();
 
+
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         percodes.forEach(percode->{
@@ -76,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
         UserDetails userDetails =
                 new org.springframework.security.core.userdetails.User(
                         userPo.getUsername(), userPo.getPassword(),enabled,accountNonExpired,credentialsNonExpired,accountNonLocked,authorities);
+
         return userDetails;
     }
 

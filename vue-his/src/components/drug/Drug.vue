@@ -20,10 +20,15 @@
         </el-input>
       </el-col>
     </el-row>
-    <el-table :data="tableData" style="width: 100%; margin-top: 10px" max-height="100%">
-      <el-table-column prop="id" label="药品id" width="80" align="center">
+    <el-table
+      :data="tableData"
+      style="width: 100%; margin-top: 10px"
+      max-height="100%"
+      @cell-dblclick="dbclick"
+    >
+      <el-table-column prop="id" label="药品编号" width="80" align="center">
       </el-table-column>
-      <el-table-column prop="name" label="姓名" width="120"> </el-table-column>
+      <el-table-column prop="name" label="药品名" width="120"> </el-table-column>
       <el-table-column prop="batch" label="批次" width="120" align="center">
       </el-table-column>
       <el-table-column prop="type" label="类型" width="80" align="center">
@@ -40,6 +45,8 @@
         <template slot-scope="scope"
           >{{ scope.row.alarmnum }}
           <el-button
+            circle
+            type="primary"
             size="mini"
             icon="el-icon-edit"
             @click="handleEdit(scope.row)"
@@ -170,6 +177,10 @@ export default {
     handleEdit(row) {
       this.drug = row;
       this.comName = DrugEdit;
+    },
+    dbclick(row, column) {
+      console.log("触发双击事件");
+      this.handleEdit(row);
     },
   },
 };
