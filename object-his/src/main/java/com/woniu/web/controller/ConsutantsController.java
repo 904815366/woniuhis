@@ -3,13 +3,12 @@ package com.woniu.web.controller;
 
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.ConsutantsDto;
-import com.woniu.web.fo.QueryConsutatsListByApplydeptid;
-import com.woniu.web.fo.QueryConsutatsListByReplydeptid;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.woniu.service.ConsutantsService;
+import com.woniu.web.fo.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -25,6 +24,8 @@ import java.util.List;
 @RequestMapping("/consutants")
 public class ConsutantsController {
 
+    @Autowired
+    private ConsutantsService consutantsService;
     @GetMapping("/getByApplydeptidList")
     public ResponseResult<List<ConsutantsDto>> getByApplydeptid(Integer deptId){
         try {
@@ -43,6 +44,51 @@ public class ConsutantsController {
             QueryConsutatsListByReplydeptid queryConsutatsListByReplydeptid = new QueryConsutatsListByReplydeptid();
             List<ConsutantsDto> dtoList = queryConsutatsListByReplydeptid.consultationByReplydeptid(deptId);
             return new ResponseResult<>(dtoList,"SUCCESS", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+    }
+
+    @PostMapping("/addApplyConsultation")
+    public ResponseResult<Void> addApplyConsultation(@RequestBody AddApplyConsultation addApplyConsultation){
+        try {
+            System.out.println(addApplyConsultation);
+            addApplyConsultation.AddApplyConsultation();
+            return new ResponseResult<>(null,"SUCCESS", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+    }
+
+    @PostMapping("/replyConsultation")
+    public ResponseResult<Void> replyConsultation(@RequestBody ModifyReplyConsultation modifyReplyConsultation){
+        try {
+            modifyReplyConsultation.replyConsultation();
+            return new ResponseResult<>(null,"SUCCESS", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+    }
+
+    @PostMapping("/modifyApplyConsultation")
+    public ResponseResult<Void> modifyApplyConsultation(@RequestBody ModifyApplyConsultation modifyApplyConsultation){
+        try {
+            modifyApplyConsultation.modifyApplyConsultation();
+            return new ResponseResult<>(null,"SUCCESS", 200);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(null, "Internal Server Error", 500);
+        }
+    }
+
+    @GetMapping("/removeById")
+    public ResponseResult<Void> removeById(Integer id){
+        try {
+            consutantsService.removeById(id);
+            return new ResponseResult<>(null,"SUCCESS", 200);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseResult<>(null, "Internal Server Error", 500);

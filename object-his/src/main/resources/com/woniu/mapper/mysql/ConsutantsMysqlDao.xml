@@ -32,6 +32,29 @@
         from consutants a,
              family b
         where a.applydeptid = b.id
-          and a.replydeptid=#{replydeptid}
+          and a.replydeptid = #{replydeptid}
     </select>
+    <insert id="addApplyConsultation">
+        INSERT INTO consutants(patientname, registerid, consutantstype, goal,
+                               patientcondition, consutantscondition,
+                               replydeptid, applydeptid, status, userid)
+            value (#{patientname},#{registerid},#{consutantstype},#{goal},#{patientcondition},
+            #{consutantscondition},#{replydeptid},#{applydeptid},0,#{userid})
+    </insert>
+    <update id="updateReplyConsultation">
+        UPDATE consutants set opinion=#{opinion},replyid=#{replyid},status=1 where id=#{id}
+    </update>
+    <update id="updateApplyConsultation">
+        UPDATE consutants
+        SET consutantstype = #{consutantstype},
+            goal = #{goal},
+            patientcondition = #{patientcondition},
+            consutantscondition = #{consutantscondition},
+            replydeptid = #{replydeptid}
+        WHERE
+            id = #{id}
+    </update>
+    <delete id="removeById">
+        DELETE FROM consutants where id=#{id}
+    </delete>
 </mapper>

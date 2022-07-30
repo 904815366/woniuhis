@@ -12,5 +12,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-07-23
  */
 public interface ConsutantsService extends IService<ConsutantsPo> {
+    void addApplyConsultation(ConsutantsPo consutantsPo);
 
+    void updateReplyConsultation(ConsutantsPo consutantsPo);
+
+    void updateApplyConsultation(ConsutantsPo consutantsPo);
+
+    void removeById(Integer id);
 }

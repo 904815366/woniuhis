@@ -232,6 +232,7 @@ export default {
             })
         },
         handleSelectionChange(val) {
+            this.ids=[];
             for (let i = 0; i < val.length; i++) {
                 this.ids[i] = val[i].id;
             }

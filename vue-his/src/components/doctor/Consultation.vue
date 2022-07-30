@@ -8,6 +8,9 @@
                     </el-option>
                 </el-select>
             </template>
+            <template slot="extra">
+                <el-button type="success" round size="mini" @click="comName = 'addConsultation'">发起会诊</el-button>
+            </template>
             <el-descriptions-item>
                 <template slot="label">
                     <i class="el-icon-receiving"></i> 床号:
@@ -93,10 +96,9 @@
                     <el-table-column label="操作" width="200">
                         <template slot-scope="scope">
                             <el-button type="primary" icon="el-icon-edit"
-                                @click="comName = 'editCpoe', handleEdit(scope.row)" circle
-                                v-if="scope.row.status == '0'"></el-button>
+                                @click="comName = 'viewConsultation', handleEdit(scope.row)" circle></el-button>
                             <el-button type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)" circle
-                                v-if="scope.row.status != '2'"></el-button>
+                                v-if="scope.row.status == '0'"></el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -132,20 +134,24 @@
                     </el-table-column>
                     <el-table-column label="操作" width="200">
                         <template slot-scope="scope">
-                            <el-button type="primary" icon="el-icon-edit"
-                                @click="comName = 'editCpoe', handleEdit(scope.row)" circle
-                                v-if="scope.row.status == '0'"></el-button>
-                            <el-button type="danger" icon="el-icon-delete" @click="handleDelete(scope.row.id)" circle
-                                v-if="scope.row.status != '2'"></el-button>
+                            <el-button type="primary" icon="el-icon-edit-outline"
+                                @click="comName = 'replyConsultation', reply(scope.row)" v-if="scope.row.status == '0'">
+                                回复</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
         </el-tabs>
+        <!-- 指定显示名称的子组件并传值 -->
+        <component :is="comName" @func="handleShow" :replyobj="replyobj" :applyobj="applyobj"></component>
     </div>
 </template>
 
 <script>
+//引入子组件
+import addConsultation from '../doctor/AddConsultation.vue'
+import replyConsultation from '../doctor/ReplyConsultation.vue'
+import viewConsultation from '../doctor/ViewConsultation.vue'
 export default {
     data() {
         return {
@@ -158,22 +164,34 @@ export default {
             tabIndex: 2,
             applyData: [],
             replyData: [],
-            deptid: ''
+            deptid: '',
+            comName: '',
+            replyobj: {},
+            applyobj: {}
         }
     },
+    components: {
+        addConsultation,
+        replyConsultation,
+        viewConsultation
+    },
     created() {
-        this.getPatientListAll();
         this.deptid = window.sessionStorage.getItem("currentUserFamilyId");
         this.getByApplydeptid();
         this.getByReplydeptid();
+        this.getPatientListAll();
     },
     methods: {
+        handleShow() {
+            this.comName = '';
+        },
         getPatientById(id) {
             this.$axios.get("/api/patient/getPatientById?id=" + id).then(res => {
                 this.patient = res.data.data;
             })
         },
         getPatientListAll() {
+            console.log(this.deptid)
             this.$axios.get("/api/patient/listAll?familyid=" + this.deptid).then(res => {
                 console.log(res.data)
                 this.options = res.data.data;
@@ -192,6 +210,32 @@ export default {
             this.$axios.get("/api/consutants/getByReplydeptid?deptId=" + this.deptid).then(res => {
                 console.log(res.data);
                 this.replyData = res.data.data;
+            })
+        },
+        reply(obj) {
+            console.log(obj)
+            this.replyobj = obj;
+        },
+        handleEdit(obj) {
+            this.applyobj = obj;
+        },
+        handleDelete(id) {
+            this.$axios.get("/api/consutants/removeById?id=" + id).then(res=>{
+                if (res.data.status == 200) {
+                    this.$message({
+                        showClose: true,
+                        message: "删除成功",
+                        type: "success",
+                        center: true,
+                    });
+                } else {
+                    this.$message({
+                        showClose: true,
+                        message: '服务异常!',
+                        type: 'error',
+                        duration: 1000  //显示的时间,ms
+                    });
+                }
             })
         }
     }

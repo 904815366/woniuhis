@@ -20,4 +20,12 @@ public interface ConsutantsMysqlDao extends BaseMapper<ConsutantsPo> {
     List<ConsutantsDto> consultationByApplydeptid(Integer applydeptid);
 
     List<ConsutantsDto> consultationByReplydeptid(Integer replydeptid);
+
+    void addApplyConsultation(ConsutantsPo consutantsPo);
+
+    void updateReplyConsultation(ConsutantsPo consutantsPo);
+
+    void updateApplyConsultation(ConsutantsPo consutantsPo);
+
+    void removeById(Integer id);
 }
