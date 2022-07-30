@@ -42,8 +42,8 @@ public class WarnServiceImpl extends ServiceImpl<WarnMysqlDao, WarnPo> implement
     }
 
     @Override
-    public void updatestatus(String[] ids) {
-        warnRepository.updateWarnStatus(ids);
+    public void updatestatus(String[] ids,Integer status) {
+        warnRepository.updateWarnStatus(ids,status);
     }
 
     @Override

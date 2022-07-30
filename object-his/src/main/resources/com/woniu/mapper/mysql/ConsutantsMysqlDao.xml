@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.mysql.ConsutantsMysqlDao">
+    <resultMap id="consultation" type="com.woniu.entity.dto.ConsutantsDto">
+        <id property="id" column="id"></id>
+        <result property="patientname" column="patientname"></result>
+        <result property="registerid" column="registerid"></result>
+        <result property="consutantstype" column="consutantstype"></result>
+        <result property="goal" column="goal"></result>
+        <result property="patientcondition" column="patientcondition"></result>
+        <result property="consutantscondition" column="consutantscondition"></result>
+        <result property="status" column="status"></result>
+        <result property="userid" column="userid"></result>
+        <result property="opinion" column="opinion"></result>
+        <result property="replyid" column="replyid"></result>
+        <result property="applydeptid" column="applydeptid"></result>
+        <result property="replydeptid" column="replydeptid"></result>
+        <result property="familyname" column="familyname"></result>
+    </resultMap>
+    <select id="consultationByApplydeptid" resultMap="consultation">
+        select a.*, b.familyname
+        from consutants a,
+             family b
+        where a.replydeptid = b.id
+          and a.applydeptid = #{applydeptid}
+    </select>
+
+    <select id="consultationByReplydeptid" resultMap="consultation">
+        select a.*, b.familyname
+        from consutants a,
+             family b
+        where a.applydeptid = b.id
+          and a.replydeptid=#{replydeptid}
+    </select>
+</mapper>

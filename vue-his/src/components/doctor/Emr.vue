@@ -66,8 +66,8 @@
                 我的行程
             </el-tab-pane>
             <el-tab-pane>
-            <span slot="label"><i class="el-icon-edit"></i>入院记录</span>
-            <my-editor></my-editor>
+                <span slot="label"><i class="el-icon-edit"></i>入院记录</span>
+                <my-editor></my-editor>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -88,7 +88,7 @@ export default {
                 name: '1',
                 content: 'Tab 1 content'
             }],
-            tabIndex: 2
+            tabIndex: 2,
         }
     },
     components: {
@@ -96,6 +96,8 @@ export default {
     },
     created() {
         this.getPatientListAll();
+        // 当"我"收到 xxx 事件（信号）的时候，就自动执行"我"的showMessage 方法
+        this.$bus.on('input', this.showMessage);
     },
     methods: {
         getPatientById(id) {
@@ -112,6 +114,12 @@ export default {
         },
         changePatient() {
             this.getPatientById(this.pid);
+        }, beforeDestroy() {
+            // 上面的 on 的反向操作：解绑定
+            this.$bus.off('input', this.showMessage);
+        },
+        showMessage(data) {
+            console.log(data)
         }
     }
 }

@@ -43,7 +43,20 @@ public class ConsutantsPo implements Serializable {
 
     private String status;
 
+    //发起医生id
     private Integer userid;
+
+    //回复内容
+    private String opinion;
+
+    //回复医生
+    private Integer replyid;
+
+    //发起科室id
+    private Integer applydeptid;
+
+    //回复科室id
+    private Integer replydeptid;
 
 
 

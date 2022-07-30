@@ -77,10 +77,10 @@ public class WarnController {
 
     @GetMapping("/updateCpoeStatus")
     @Operation( summary = "更新医嘱状态", description = "更新医嘱状态", tags = {"医嘱管理"} )
-    public ResponseResult<Void> updateCpoeStatus(String ids){
+    public ResponseResult<Void> updateCpoeStatus(String ids,Integer status){
         try {
             String[] idArr = ids.split(",");
-            warnService.updatestatus(idArr);
+            warnService.updatestatus(idArr,status);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseResult<>(null, "Internal Server Error", 500);

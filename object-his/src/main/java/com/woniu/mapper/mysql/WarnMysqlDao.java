@@ -43,7 +43,7 @@ public interface WarnMysqlDao extends BaseMapper<WarnPo> {
      * 更改医嘱状态
      * @param ids
      */
-    void updateWarnStatus(@Param("ids") String[] ids);
+    void updateWarnStatus(@Param("ids") String[] ids,@Param("status") Integer status);
 
     /**
      * 新增医嘱

@@ -254,7 +254,7 @@ export default {
                 });
             } else {
                 let result = this.ids.join(",");
-                this.$axios.get("/api/warn/updateCpoeStatus?ids=" + result)
+                this.$axios.get("/api/warn/updateCpoeStatus?ids=" + result+"&status=1")
                     .then(res => {
                         if (res.data.status == 200) {
                             this.$message({

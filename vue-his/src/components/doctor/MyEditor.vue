@@ -30,10 +30,6 @@ import 'tinymce/plugins/code' // 代码插件
 import '@/utils/zh_CN'
 
 export default {
-    selector: '#textarea',
-    height: 430,
-    // language_url: "/tinymce/zh_CN.js",
-    // language: "zh_CN",
     components: {
         Editor
     },
@@ -127,8 +123,8 @@ export default {
         value(newValue) {
             this.myValue = newValue
         },
-        myValue(newValue) {
-            this.$emit('input', newValue)
+        myValue(newValue,oldVal) {
+            this.$bus.emit('input', newValue)
         }
     },
     mounted() {
@@ -151,8 +147,6 @@ export default {
         }
     },
     created() {
-        window.οnlοad = function () {
-        }
     }
 }
 </script>

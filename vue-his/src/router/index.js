@@ -6,6 +6,7 @@ import Patient from "../components/doctor/Patient.vue";
 import Cpoe from "../components/doctor/Cpoe.vue";
 import Emr from "../components/doctor/Emr.vue";
 import Notification from "../components/doctor/Notification.vue";
+import Consultation from "../components/doctor/Consultation.vue";
 import AddUser from '../components/user/AddUser.vue'
 import UserInfo from '../components/user/UserInfo.vue'
 import UserList from '../components/user/UserList.vue'
@@ -39,7 +40,7 @@ const routes = [
       { path: "/doctor/cpoe", name: "cpoe", component: Cpoe }, //医嘱管理
       {path:'/charge/enter',name: '/charge/enter',component: () => import('../components/charge/enter.vue')},//入院登记
       {path:'/charge/delivery',name: '/charge/delivery',component: () => import('../components/charge/delivery.vue')},//预交缴费
-
+      { path: "/doctor/consultation", name: "consultation", component: Consultation }, //会诊管理
       { path: "/doctor/patient", name: "patient", component: Patient }, //患者列表
       { path: "/doctor/emr", name: "emr", component: Emr }, //入院记录
       {

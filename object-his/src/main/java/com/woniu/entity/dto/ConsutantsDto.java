@@ -55,6 +55,20 @@ public class ConsutantsDto implements Serializable {
     @Schema(name = "userid", description = "会诊医生ID")
     private Integer userid;
 
+    @Schema(name = "opinion", description = "回复会诊")
+    private String opinion;
+
+    @Schema(name = "replyid", description = "回复医生")
+    private Integer replyid;
+
+    @Schema(name = "applydeptid", description = "申请科室")
+    private Integer applydeptid;
+
+    @Schema(name = "replydeptid", description = "回复科室")
+    private Integer replydeptid;
+
+    private String familyname;
+
 
 
 }

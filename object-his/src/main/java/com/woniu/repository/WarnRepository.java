@@ -38,8 +38,8 @@ public class WarnRepository {
      * 修改医嘱状态
      * @param ids
      */
-    public void updateWarnStatus(String[] ids){
-        warnMysqlDao.updateWarnStatus(ids);
+    public void updateWarnStatus(String[] ids,Integer status){
+        warnMysqlDao.updateWarnStatus(ids,status);
     }
 
     /**
