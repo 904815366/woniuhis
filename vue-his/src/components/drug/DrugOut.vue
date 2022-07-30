@@ -24,7 +24,7 @@
       :data="tableData"
       style="width: 100%; margin-top: 10px"
       max-height="100%"
-      @cell-dblclick="dbclick"
+      stripe
     >
       <el-table-column
         type="index"
@@ -35,14 +35,14 @@
       ></el-table-column>
       <el-table-column prop="registerid" label="住院编号" width="80" align="center">
       </el-table-column>
-      <el-table-column label="患者姓名" width="150" align="center">
+      <el-table-column label="患者姓名" width="120" align="center">
         <template slot-scope="scope">
           <span v-for="register in registerList" :key="register.id">
             <span v-if="register.id == scope.row.registerid">{{ register.name }}</span>
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="科室" width="150" align="center">
+      <el-table-column label="科室" width="120" align="center">
         <template slot-scope="scope">
           <span v-for="family in familyList" :key="family.id">
             <span v-if="family.id == scope.row.familyid">{{ family.familyname }}</span>
@@ -69,11 +69,30 @@
           <span style="margin-left: 10px">{{ scope.row.warntime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="180">
+      <el-table-column label="药品名" width="120" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleDetail(scope.row)"
-            >详情</el-button
-          >
+          <span v-for="detail in detailList" :key="detail.id">
+            <span v-if="detail.warnid == scope.row.id">
+              <span v-for="drug in drugList" :key="drug.id">
+                <span v-if="drug.id == detail.drugid">
+                  {{ drug.name }}
+                </span>
+              </span>
+            </span>
+          </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="数量" width="120" align="center">
+        <template slot-scope="scope">
+          <span v-for="detail in detailList" :key="detail.id">
+            <span v-if="detail.warnid == scope.row.id">
+              <span v-for="drug in drugList" :key="drug.id">
+                <span v-if="drug.id == detail.drugid">
+                  {{ detail.num }}
+                </span>
+              </span>
+            </span>
+          </span>
         </template>
       </el-table-column>
     </el-table>
@@ -110,10 +129,6 @@
 //导入子组件
 import DrugEdit from "./DrugEdit.vue";
 export default {
-  components: {
-    //注册子组件
-    DrugEdit,
-  },
   data() {
     return {
       tableData: [],
@@ -129,6 +144,8 @@ export default {
       registerList: [], //用于存放在院患者
       familyList: [], //用于存放科室列表
       userList: [], //用于存放用户列表
+      drugList: [], //用于存放药品列表
+      detailList: [], //用于存放医嘱详情列表
     };
   },
   created() {
@@ -136,6 +153,8 @@ export default {
     this.queryRegisterList();
     this.queryFamilyList();
     this.queryUserList();
+    this.queryDrugList();
+    this.queryDetailList();
   },
   methods: {
     //为type=index 属性指定生成规则
@@ -180,6 +199,24 @@ export default {
           });
         });
     },
+    //查询医嘱详情列表
+    queryDetailList() {
+      this.$axios
+        .get("/api/drugout/detaillist")
+        .then((res) => {
+          this.detailList = res.data.data;
+        })
+        .catch((e) => {
+          this.$message({
+            showClose: true,
+            message: "服务器跑不见了!",
+            type: "error",
+            offset: 550,
+            duration: 1000, //显示的时间,ms
+          });
+        });
+    },
+    //查询用户列表
     queryUserList() {
       this.$axios
         .get("/api/drugout/userlist")
@@ -196,6 +233,24 @@ export default {
           });
         });
     },
+    //查询药品列表
+    queryDrugList() {
+      this.$axios
+        .get("/api/drug/druglist")
+        .then((res) => {
+          this.drugList = res.data.data;
+        })
+        .catch((e) => {
+          this.$message({
+            showClose: true,
+            message: "服务器跑不见了!",
+            type: "error",
+            offset: 550,
+            duration: 1000, //显示的时间,ms
+          });
+        });
+    },
+    //查询住院患者列表
     queryRegisterList() {
       this.$axios
         .get("/api/drugout/registerlist")
@@ -239,14 +294,6 @@ export default {
     handleCurrentChange(pNo) {
       this.pageNum = pNo;
       this.getDrugOutList(pNo); //翻页
-    },
-    handleDetail(row) {
-      this.drug = row;
-      this.comName = DrugEdit;
-    },
-    dbclick(row, column) {
-      console.log("触发双击事件");
-      this.handleDetail(row);
     },
   },
 };

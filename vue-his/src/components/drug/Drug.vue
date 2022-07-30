@@ -24,6 +24,7 @@
       :data="tableData"
       style="width: 100%; margin-top: 10px"
       max-height="100%"
+      stripe
       @cell-dblclick="dbclick"
     >
       <el-table-column prop="id" label="药品编号" width="80" align="center">

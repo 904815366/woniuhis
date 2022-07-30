@@ -5,6 +5,8 @@ import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.dto.WarnDto;
+import com.woniu.entity.dto.WarndetailsDto;
+import com.woniu.web.fo.DrugDetailList;
 import com.woniu.web.fo.DrugOutList;
 import com.woniu.web.fo.DrugOutUserList;
 import io.swagger.annotations.Api;
@@ -51,6 +53,19 @@ public class DrugoutController {
         try {
             List<UserDto> userDtoList = drugOutUserList.exec();
             return new ResponseResult<>(userDtoList,"OK",200);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping("/detaillist")
+    @Operation( summary = "医嘱详情列表", description = "不带分页查询", tags = {"发药管理"} )
+    public ResponseResult<List<WarndetailsDto>> DetailList(DrugDetailList drugDetailList){
+        try {
+            System.out.println("到达查询医嘱详情");
+            List<WarndetailsDto> warndetailsDto = drugDetailList.getWarndetailsList();
+            return new ResponseResult<>(warndetailsDto,"OK",200);
         }catch (Exception e){
             e.printStackTrace();
             return null;

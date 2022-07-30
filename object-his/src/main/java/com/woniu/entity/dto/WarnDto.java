@@ -67,7 +67,7 @@ public class WarnDto implements Serializable {
     private String registerid;
 
     @Schema(name = "warndeteilsid", description = "详情id")
-    private String warndeteilsid;
+    private String warndetailsid;
 
     @Schema(name = "doctorid", description = "医生id")
     private String doctorid;
