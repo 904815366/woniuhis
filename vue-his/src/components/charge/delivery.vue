@@ -11,7 +11,7 @@
     <div class="demo-input-suffix">
       <!-- <el-col :span="6" style="margin-top:5px"> -->
       <el-input placeholder="请输住院号进行查询" v-model="searchpatientid" style="width:300px;margin-top:5px">
-        <el-button slot="append" icon="el-icon-search" @click="queryregisterByIdAndqueryMoneyrecordList()"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="queryregisterById()"></el-button>
         <el-button slot="append" icon="el-icon-delete" @click="cleanQuery()"></el-button>
       </el-input>
 
@@ -168,10 +168,11 @@ export default {
   methods: {
     //根据ID查询病人入院登记信息
     queryregisterById() {
-      this.axios.get("/api/register/queryById/" + this.searchpatientid).then(res => {
+      this.axios.get("/api/register/queryById/" + this.searchpatientid + "/1").then(res => {
         if (res.data.status === 2000) {
           this.register = res.data.data;
           this.register.status = this.statusNumberFormString(this.register.status);
+          this.queryMoneyrecordList();
         } else {
           this.$message({
             message: '住院号不存在,未查询到信息!',
@@ -209,7 +210,7 @@ export default {
       } else if (obj == 1) {
         searchStatus = '已缴费'
       } else if (obj == 2) {
-        searchStatus = '入院中'
+        searchStatus = '住院中'
       } else if (obj == 3) {
         searchStatus = '申请出院'
       } else if (obj == 4) {

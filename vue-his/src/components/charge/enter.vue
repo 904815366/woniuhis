@@ -21,7 +21,10 @@
           <el-option value="查询所有">查询所有</el-option>
           <el-option value="未缴费">未缴费</el-option>
           <el-option value="已缴费">已缴费</el-option>
-          <el-option value="已入院">已入院</el-option>
+          <el-option value="住院中">住院中</el-option>
+          <el-option value="申请出院">申请出院</el-option>
+          <el-option value="审核通过">审核通过</el-option>
+          <el-option value="已出院">已出院</el-option>
         </el-select>
 
 
@@ -191,8 +194,9 @@
             <el-select style="width: 300px; " v-model="modifyregister.status" placeholder="请输入状态">
               <el-option value="未缴费">未缴费</el-option>
               <el-option value="已缴费">已缴费</el-option>
-              <el-option value="已入院">已入院</el-option>
+              <el-option value="住院中">住院中</el-option>
               <el-option value="申请出院">申请出院</el-option>
+              <el-option value="审核通过">审核通过</el-option>
               <el-option value="已出院">已出院</el-option>
 
             </el-select>
@@ -261,6 +265,9 @@
             <el-tag type="warning">申请出院</el-tag>
           </span>
           <span v-if="scope.row.status == 4">
+            <el-tag>审核通过</el-tag>
+          </span>
+          <span v-if="scope.row.status == 5">
             <el-tag>已出院</el-tag>
           </span>
         </template>
@@ -531,7 +538,7 @@ export default {
         searchStatus = 0
       } else if (obj == '已缴费') {
         searchStatus = 1
-      } else if (obj == '入院中') {
+      } else if (obj == '住院中') {
         searchStatus = 2
       } else if (obj == '申请出院') {
         searchStatus = 3
@@ -552,7 +559,7 @@ export default {
       } else if (obj == 1) {
         searchStatus = '已缴费'
       } else if (obj == 2) {
-        searchStatus = '入院中'
+        searchStatus = '住院中'
       } else if (obj == 3) {
         searchStatus = '申请出院'
       } else if (obj == 4) {

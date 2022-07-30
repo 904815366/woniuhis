@@ -12,7 +12,9 @@ import com.woniu.repository.RegisterRepository;
 import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.service.RegisterService;
 import com.woniu.web.fo.InsertMoneyRecordComment;
+import com.woniu.web.fo.ModifyMoneyListOfStatusComment;
 import com.woniu.web.fo.ModifyRegisterMoneyComment;
+import com.woniu.web.fo.OutSettlementComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -81,6 +83,26 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMysqlDao, RegisterP
     @Subscribe
     public void modifyMoney(ModifyRegisterMoneyComment modifyRegisterMoneyComment) {
         registerRepository.modifyMoney(modifyRegisterMoneyComment);
+    }
+
+
+    /**
+     * 罗虎
+     * 出院结算 , 减余额,修改状态为出院审核通过 .
+     * 将消费列表数据的状态改为已结算
+     * @return
+     */
+    @Override
+    @Subscribe
+    public void modifyMoneyAndStatusById(OutSettlementComment outSettlementComment) {
+        boolean modifyResult = registerRepository.modifyMoneyAndStatusById(outSettlementComment);
+        if(modifyResult == false)
+            throw new RuntimeException("modifyMoneyAndStatusById结果为false");
+
+        if (outSettlementComment.getMoneyListId().isEmpty() || "".equals(outSettlementComment.getMoneyListId()))
+            return;
+        String[] ids = outSettlementComment.getMoneyListId().substring(0,outSettlementComment.getMoneyListId().length()-1).split(",");
+        bus.post(new ModifyMoneyListOfStatusComment(ids));
     }
 
 

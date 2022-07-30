@@ -10,6 +10,7 @@ import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.mapper.redis.RegisterRedis;
 import com.woniu.web.fo.InsertMoneyRecordComment;
 import com.woniu.web.fo.ModifyRegisterMoneyComment;
+import com.woniu.web.fo.OutSettlementComment;
 import io.minio.messages.ExistingObjectReplication;
 import lombok.RequiredArgsConstructor;
 import net.sf.jsqlparser.expression.operators.relational.ExistsExpression;
@@ -99,18 +100,20 @@ public class RegisterRepository {
         return true;
     }
 
-    public RegisterPo queryByIdRegister(Integer id) {
-        try {
-            Optional<RegisterPo> byId = registerRedis.findById(id);
-            RegisterPo po = byId.get();
-            return po;
-        }catch (NoSuchElementException e){
-            RegisterPo po = registerMysqlDao.selectById(id);
+    public RegisterPo queryByIdRegister(Integer id,Integer status) {
+        QueryWrapper<RegisterPo> wrapper = new QueryWrapper();
+        wrapper.eq("id",id);
+        if (status == 3){
+            wrapper.eq("status",status);
+        }
+
+
+        RegisterPo po = registerMysqlDao.selectOne(wrapper);
             if (po == null){
                 throw new NullPointerException("queryByIdRegister根据ID为查询到数据...");
             }
             return po;
-        }
+
     }
 
 //    修改患者的出院申请
@@ -123,5 +126,15 @@ public class RegisterRepository {
         if (modifyMoney == false){
             throw new RuntimeException("增加余额失败..");
         }
+    }
+
+    /**
+     * 罗虎
+     * 出院结算 , 减余额,修改状态为出院审核通过
+     * @return
+     */
+    public boolean modifyMoneyAndStatusById(OutSettlementComment outSettlementComment) {
+        boolean modifyResult = registerMysqlDao.UpdateMoneyAndStatusById(outSettlementComment);
+        return modifyResult;
     }
 }

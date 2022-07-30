@@ -2,6 +2,7 @@ package com.woniu.web.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.google.common.eventbus.EventBus;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.dto.UserDto;
@@ -46,6 +47,8 @@ public class RegisterController {
     @Autowired
     private BedService bedService;
 
+    @Resource
+    private EventBus bus;
 
 //    分页查询所有
     @GetMapping("/gotoRegisters")
@@ -155,9 +158,24 @@ public class RegisterController {
      * 根据ID查询单个入院信息
      * @return
      */
-    @GetMapping("/queryById/{id}")
-    public ResponseResult<RegisterDto> queryByIdRegister(@PathVariable("id") Integer id ){
-        return new RegisterByIdQuery(id).exec();
+    @GetMapping("/queryById/{id}/{status}")
+    public ResponseResult<RegisterDto> queryByIdRegister(@PathVariable("id") Integer id ,@PathVariable("status") Integer status){
+        return new RegisterByIdQuery(id,status).exec();
     }
+
+
+    /**
+     * 罗虎
+     * 出院结算
+     * @return
+     */
+    @PostMapping("/settlement")
+    @IdempotentToken
+    public ResponseResult<Void> modifyRegisterAndMoneyList(@RequestBody OutSettlementComment outSettlementComment){
+        bus.post(outSettlementComment);
+        return new ResponseResult<>(2000,"ok");
+    }
+
+
 }
 

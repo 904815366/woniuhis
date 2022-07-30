@@ -10,16 +10,40 @@
     <!-- 通过住院号查询信息 -->
     <div class="demo-input-suffix">
       <!-- <el-col :span="6" style="margin-top:5px"> -->
-      <el-input placeholder="请输住院号进行查询" v-model="searchpatientid" style="width:300px;margin-top:5px">
-        <el-button slot="append" icon="el-icon-search" @click="queryregisterByIdAndqueryMoneyrecordList()"></el-button>
+      <el-input placeholder="请输住院号进行查询" v-model="searchRegisterId" style="width:300px;margin-top:5px">
+        <el-button slot="append" icon="el-icon-search" @click="queryregisterById()"></el-button>
         <el-button slot="append" icon="el-icon-delete" @click="cleanQuery()"></el-button>
       </el-input>
 
       <!-- 开启结算框按钮 -->
-      <el-button size="medium" type="primary" style="margin-left: 16px;" class="el-icon-circle-plus">
+      <el-button size="medium" @click="openSettlementFormVisible()" type="primary" style="margin-left: 16px;">点击进行结算
       </el-button>
 
+      <el-dialog title="结算窗口" :visible.sync="settlementFormVisible" width="30%">
+        <el-form :model="settlementData">
 
+          <el-form-item label="缴 费 人:" :label-width="formLabelWidth">
+            <span style="font-weight:900;font-size: 20px;">{{ register.name }}</span>
+          </el-form-item>
+
+          <el-form-item label="未结算项:" :label-width="formLabelWidth">
+            <span style="font-weight:900;font-size: 20px;">{{ settlementData.num }}</span>
+          </el-form-item>
+
+          <el-form-item label="未结算项总金额:" :label-width="formLabelWidth">
+            <span style="font-weight:900; font-size: 20px; color:red">{{ settlementData.sumMoney }}元</span>
+          </el-form-item>
+
+          <el-form-item>
+            <span style="color:red">{{ settlementInfo }}</span>
+          </el-form-item>
+
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="closeSettlementFormVisible()">取 消</el-button>
+          <el-button type="primary" @click="addSettlementData()">结算出院</el-button>
+        </div>
+      </el-dialog>
 
       <!-- 病人信息 -->
       <div
@@ -101,7 +125,13 @@
           </el-table-column>
           <el-table-column prop="consumpart" label="消费详情" width="200" align="center">
           </el-table-column>
-          <el-table-column prop="status" label="状态" width="200" align="center">
+
+          <el-table-column label="状态" width="200" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.status == 0" style="color:red">未结算</span>
+              <span v-if="scope.row.status == 1" style="color:green">已结算</span>
+
+            </template>
           </el-table-column>
 
         </el-table>
@@ -115,17 +145,32 @@
 </template>
 
 <script>
+import { type } from 'os';
+
 export default {
   data() {
     return {
+      //查询的住院信息
       register: {},
-      searchpatientid: '',
+      //查询条件
+      searchRegisterId: '',
+      //消费列表
       MoneyList: [],
-      //添加窗口
-      addFormVisible: false,
-      moneyrecord: {},
+      //结算窗口
+      settlementFormVisible: false,
+      //结算的数据
+      settlementData: {
+        registerId: '',
+        num: 0,
+        sumMoney: 0,
+        moneyListId: '',
+      },
+      //结算窗口大小
       formLabelWidth: '120px',
+      //UUID
       idempotentToken: '',
+
+      settlementInfo: '',
     }
   },
   created() {
@@ -134,23 +179,76 @@ export default {
   methods: {
     //根据ID查询病人入院登记信息
     queryregisterById() {
-      this.axios.get("/api/register/queryById/" + this.searchpatientid).then(res => {
+      this.axios.get("/api/register/queryById/" + this.searchRegisterId + "/3").then(res => {
         if (res.data.status === 2000) {
           this.register = res.data.data;
           this.register.status = this.statusNumberFormString(this.register.status);
+          this.QueryMoneyListByRegisterId(-1);
         } else {
           this.$message({
-            message: '住院号不存在,未查询到信息!',
+            message: '未查询到信息,请先申请出院或住院号不存在!',
             type: 'error'
           });
         }
+      }).catch(e => {
+        this.$message({
+          message: '服务器跑步见了,请稍后再试...!',
+          type: 'error'
+        });
       });
     },
 
 
+    //根据住院号查询病人消费列表
+    QueryMoneyListByRegisterId(status) {
+      this.axios.get("/api/moneylist/query/registerIdAndStatus", {
+        params: {
+          registerId: this.searchRegisterId,
+          status: status,
+        }
+      }).then(res => {
+        if (res.data.status === 2000) {
+          this.MoneyList = res.data.data;
+        }
+      });
+    },
 
-    queryregisterByIdAndqueryMoneyrecordList() {
-      this.queryregisterById();
+    //打开结算框
+    openSettlementFormVisible() {
+      if (this.register.id == null) {
+        this.$message({
+          message: '请先查询住院号才能结算!',
+          type: 'warning'
+        });
+        return;
+      }
+
+      for (let i of this.MoneyList) {
+        if (i.status == '0') {
+          console.log(i);
+          this.settlementData.num++;
+          this.settlementData.sumMoney += i.consummoney;
+          this.settlementData.moneyListId += i.id + ",";
+        }
+      }
+
+      this.settlementFormVisible = true;
+      this.$axios.get("/api/getIdempotentToken").then(res => {
+        this.idempotentToken = res.data;
+      });
+    },
+
+
+    //关闭结算窗口
+    closeSettlementFormVisible() {
+      this.settlementFormVisible = false;
+      this.settlementData = {
+        register: '',
+        num: 0,
+        sumMoney: 0,
+        moneyListId: '',
+      };
+
     },
 
 
@@ -164,7 +262,7 @@ export default {
       } else if (obj == 1) {
         searchStatus = '已缴费'
       } else if (obj == 2) {
-        searchStatus = '入院中'
+        searchStatus = '住院中'
       } else if (obj == 3) {
         searchStatus = '申请出院'
       } else if (obj == 4) {
@@ -179,9 +277,43 @@ export default {
     //清除查询
     cleanQuery() {
       this.register = {};
-      this.searchpatientid = '';
-      this.MoneyrecordList = [];
+      this.searchRegisterId = '';
+      this.MoneyList = [];
     },
+
+    //结算
+    addSettlementData() {
+      if (this.settlementData.sumMoney > this.register.money) {
+        this.settlementInfo = '余额不足! 请先到缴费窗口缴费. 当前余额:' + this.register.money + '元 , 结算所需金额:' + this.settlementData.sumMoney + '元, 需缴费:' + (this.settlementData.sumMoney - this.register.money) + '元.';
+        return;
+      }
+      this.settlementData.registerId = this.register.id;
+      console.log(this.settlementData.moneyListId);
+      this.$axios({
+        url: "/api/register/settlement",
+        method: "post",
+        headers: { modifyRegisterAndMoneyList: this.idempotentToken },
+        data: this.settlementData,
+      }).then(res => {
+        if (res.data.status === 2000) {
+          this.$message({
+            message: '结算完成,出院审核通过',
+            type: 'success',
+          });
+          this.QueryMoneyListByRegisterId(-1);
+        } else {
+          this.$message({
+            message: '结算失败',
+            type: 'erorr',
+          });
+        }
+      }).catch(e => {
+        this.$message({
+          message: '服务器跑不见了.....',
+          type: 'erorr',
+        })
+      });
+    }
   }
 }
 </script>

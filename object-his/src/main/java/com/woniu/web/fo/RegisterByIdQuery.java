@@ -16,12 +16,12 @@ import org.springframework.context.ApplicationContext;
 @NoArgsConstructor
 public class RegisterByIdQuery {
     private Integer id;
-
+    private Integer status;
     public ResponseResult<RegisterDto> exec(){
         ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
         RegisterRepository repository = applicationContext.getBean(RegisterRepository.class);
         RegisterConverter converter = applicationContext.getBean(RegisterConverter.class);
-        RegisterPo po = repository.queryByIdRegister(id);
+        RegisterPo po = repository.queryByIdRegister(id,status);
         RegisterDto dto = converter.from(po);
         return new ResponseResult<>(dto,"ok",2000);
     }
