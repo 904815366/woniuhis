@@ -1,7 +1,12 @@
 <template>
-  <div>
-    <!-- <h1>本周人员排信息</h1> -->
-    <!-- 搜索栏 -->
+  <el-drawer
+    :title="title"
+    direction="ltr"
+    :visible.sync="editUserDialogFormVisible"
+    :before-close="cancelEdit"
+    size="80%"
+  >
+    {{ week }},{{ arrangeData }}
     <el-row style="margin-top: 10px">
       <el-col :span="6">
         <el-input v-model="searchName" placeholder="请输入员工姓名">
@@ -9,7 +14,7 @@
           <el-button
             slot="append"
             icon="el-icon-search"
-            @click="findArrangeList"
+            @click="findNullArrUserList"
           ></el-button>
         </el-input>
       </el-col>
@@ -34,9 +39,6 @@
             :value="role.id"
           ></el-option>
         </el-select>
-      </el-col>
-      <el-col :span="4">
-        <el-button type="warning" plain @click="addUserTime">新增人员排班</el-button>
       </el-col>
     </el-row>
     <!-- 数据表格 -->
@@ -118,152 +120,95 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="120">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="handleEdit(scope.$index, scope.row)"
-            icon="el-icon-edit"
-            >编辑</el-button
-          >
+          <el-button type="primary" @click="confirmEdit">提 交</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <!-- 切换方式显示子组件 -->
-    <component
-      :is="comName"
-      :arrangeData="arrangeData"
-      :roleData="roleData"
-      :familyData="familyData"
-      :objuserid="user.dutyuserid"
-      @func="handleShow"
-      week="thisWeek"
-    ></component>
-  </div>
+  </el-drawer>
 </template>
 
 <script>
-//导入子组件
-import UserTimeEdit from "./UserTimeEdit.vue";
-import UserTimeAdd from "./UserTimeAdd.vue";
 export default {
-  components: {
-    UserTimeEdit,
-    UserTimeAdd,
-  },
   data() {
     return {
       searchName: "",
       searchRoleid: "",
       searchFamilyid: "",
-      roleData: [],
-      familyData: [],
       arrangeData: [],
-      user: {},
-      comName: "",
+      title: "",
+      editUserDialogFormVisible: true,
     };
   },
+  props: ["roleData", "familyData", "week"],
   created() {
-    //获取科室数据
-    this.findFamilyList();
-    //获取岗位数据
-    this.findRoleList();
-    //获取排班数据
-    this.findArrangeList();
+    let week = this.week;
+    if (week == "thisWeek") {
+      this.title = "本周未排班人员列表";
+    } else if ((week = "nextWeek")) {
+      this.title = "下周未排班人员列表";
+    }
+    this.findNullArrUserList();
   },
   methods: {
-    //新增人员排班
-    addUserTime() {
-      this.comName = "UserTimeAdd";
-    },
-    //处理编辑
-    handleEdit(index, row) {
-      this.comName = "UserTimeEdit";
-      this.user = row;
-    },
-    //控制子组件
-    handleShow() {
-      this.comName = "";
-    },
     //处理岗位变化
     searchRoleChange() {
-      this.findArrangeList();
+      this.findNullArrUserList();
     },
     //处理科室变化
     searchFamilyChange() {
-      this.findArrangeList();
+      this.findNullArrUserList();
     },
-    //查询排班信息
-    findArrangeList() {
-      this.$axios
-        .get("/api/arrange/list", {
-          params: {
-            searchName: this.searchName,
-            searchRoleid: this.searchRoleid,
-            searchFamilyid: this.searchFamilyid,
-          },
-        })
-        .then((res) => {
-          console.log(res.data.data);
-          this.arrangeData = res.data.data;
-        })
-        .catch((e) => {
-          this.$message({
-            showClose: true,
-            message: "服务器跑不见了!",
-            type: "error",
-            offset: 550,
-            duration: 1000, //显示的时间,ms
-          });
-        });
+    cancelEdit() {
+      this.editUserDialogFormVisible = false;
+      //调用父组件传来的方法
+      this.$emit("func");
     },
-    //查询角色列表
-    findRoleList() {
-      this.$axios
-        .get("/api/role/list", {
-          //  headers: { strToken: window.localStorage.getItem("strToken") },
-        })
-        .then((res) => {
-          console.log(res.data);
-          this.roleData = res.data.data;
-        })
-        .catch((e) => {
-          this.$message({
-            showClose: true,
-            message: "服务器跑不见了!",
-            type: "error",
-            offset: 550,
-            duration: 1000, //显示的时间,ms
-          });
-        });
+    confirmEdit() {
+      let week = this.week;
+      this.editUserDialogFormVisible = false;
+      if (week == "thisWeek") {
+        console.log(week);
+        //本周新增操作
+      } else if ((week = "nextWeek")) {
+        console.log(week);
+        //下周新增操作
+      }
     },
-    //查询科室列表
-    findFamilyList() {
-      this.$axios
-        .get("/api/family/list", {
-          //  headers: { strToken: window.localStorage.getItem("strToken") },
-        })
-        .then((res) => {
-          console.log(res.data);
-          this.familyData = res.data.data;
-        })
-        .catch((e) => {
-          this.$message({
-            showClose: true,
-            message: "服务器跑不见了!",
-            type: "error",
-            offset: 550,
-            duration: 1000, //显示的时间,ms
-          });
-        });
+    //查出未排班的员工信息
+    findNullArrUserList() {
+      let week = this.week;
+      if (week == "thisWeek") {
+        this.$axios
+          .get("/api/user/nullArrUserThis", {
+            params: {
+              searchName: this.searchName,
+              searchRoleid: this.searchRoleid,
+              searchFamilyid: this.searchFamilyid,
+            },
+          })
+          .then((res) => {
+            console.log(res.data.data);
+            this.arrangeData = res.data.data;
+          })
+          .catch(() => {});
+      } else if ((week = "nextWeek")) {
+        this.$axios
+          .get("/api/user/nullArrUserNext", {
+            params: {
+              searchName: this.searchName,
+              searchRoleid: this.searchRoleid,
+              searchFamilyid: this.searchFamilyid,
+            },
+          })
+          .then((res) => {
+            console.log(res.data.data);
+            this.arrangeData = res.data.data;
+          })
+          .catch(() => {});
+      }
     },
   },
 };
 </script>
-<style lang="less" scoped>
-.el-breadcrumb {
-  background: #d4dae0;
-  padding-left: 15px;
-  height: 40px;
-  line-height: 40px;
-}
-</style>
+
+<style></style>

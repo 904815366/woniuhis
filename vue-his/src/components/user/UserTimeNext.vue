@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <h1>本周人员排信息</h1> -->
     <!-- 搜索栏 -->
     <el-row style="margin-top: 10px">
       <el-col :span="6">
@@ -34,6 +33,9 @@
             :value="role.id"
           ></el-option>
         </el-select>
+      </el-col>
+      <el-col :span="4">
+        <el-button type="warning" plain @click="addUserTime">新增人员排班</el-button>
       </el-col>
     </el-row>
     <!-- 数据表格 -->
@@ -120,16 +122,33 @@
             type="primary"
             @click="handleEdit(scope.$index, scope.row)"
             icon="el-icon-edit"
-            >排班</el-button
+            >编辑</el-button
           >
         </template>
       </el-table-column>
     </el-table>
+    <!-- 切换方式显示子组件 -->
+    <component
+      :is="comName"
+      :arrangeData="arrangeData"
+      :roleData="roleData"
+      :familyData="familyData"
+      :objuserid="user.dutyuserid"
+      @func="handleShow"
+      week="nextWeek"
+    ></component>
   </div>
 </template>
 
 <script>
+//导入子组件
+import UserTimeEdit from "./UserTimeEdit.vue";
+import UserTimeAdd from "./UserTimeAdd.vue";
 export default {
+  components: {
+    UserTimeEdit,
+    UserTimeAdd,
+  },
   data() {
     return {
       searchName: "",
@@ -138,6 +157,8 @@ export default {
       roleData: [],
       familyData: [],
       arrangeData: [],
+      user: {},
+      comName: "",
     };
   },
   created() {
@@ -149,6 +170,19 @@ export default {
     this.findArrangeList();
   },
   methods: {
+    //新增人员排班
+    addUserTime() {
+      this.comName = "UserTimeAdd";
+    },
+    //处理编辑
+    handleEdit(index, row) {
+      this.comName = "UserTimeEdit";
+      this.user = row;
+    },
+    //控制子组件
+    handleShow() {
+      this.comName = "";
+    },
     //处理岗位变化
     searchRoleChange() {
       this.findArrangeList();

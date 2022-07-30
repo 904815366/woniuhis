@@ -3,12 +3,11 @@ package com.woniu.web.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
+import com.woniu.entity.dto.ArrangeDto;
+import com.woniu.entity.dto.NullArrUserDto;
 import com.woniu.entity.dto.UserDto;
-import com.woniu.web.fo.AddUser;
-import com.woniu.web.fo.QueryUserByUsername;
-import com.woniu.web.fo.UserList;
+import com.woniu.web.fo.*;
 import com.woniu.service.UserService;
-import com.woniu.web.fo.UserModify;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -84,6 +85,7 @@ public class UserController {
         }
         return responseResult;
     }
+
     @RequestMapping("/addUser")
     @Operation( summary = "用户录入", description = "用户录入", tags = {"用户管理"} )
     public ResponseResult<Void> addUser(@RequestBody AddUser addUser){
@@ -97,5 +99,20 @@ public class UserController {
         return responseResult;
     }
 
+    @RequestMapping("/nullArrUserThis")
+    @Operation( summary = "查询本周无安排的人员", description = "查询本周无安排的人员", tags = {"用户管理"} )
+    public ResponseResult<List<NullArrUserDto>> nullArrUserListThis(NullArrUserList nullArrUserList){
+        List<NullArrUserDto> thisList = nullArrUserList.getThisList();
+        System.out.println(thisList);
+        return new ResponseResult<>(thisList,"OK",200);
+    }
+
+    @RequestMapping("/nullArrUserNext")
+    @Operation( summary = "查询下周无安排的人员", description = "查询下周无安排的人员", tags = {"用户管理"} )
+    public ResponseResult<List<NullArrUserDto>> nullArrUserListNext(NullArrUserList nullArrUserList){
+        List<NullArrUserDto> nextList = nullArrUserList.getNextList();
+        System.out.println(nextList);
+        return new ResponseResult<>(nextList,"OK",200);
+    }
 }
 

@@ -1,10 +1,7 @@
 package com.woniu.web.fo;
 
-import com.woniu.entity.converter.UserConverter;
 import com.woniu.entity.dto.ArrangeDto;
-import com.woniu.entity.po.ArrangePo;
 import com.woniu.mapper.mysql.ArrangeMysqlDao;
-import com.woniu.mapper.mysql.UserMysqlDao;
 import com.woniu.util.ApplicationContextHolder;
 import lombok.Data;
 import org.springframework.context.ApplicationContext;
@@ -13,7 +10,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 @Data
-public class HomeArrangeList {
+public class ArrangeInfoList {
     private String searchName;
     private Integer searchRoleid;
     private Integer searchFamilyid;

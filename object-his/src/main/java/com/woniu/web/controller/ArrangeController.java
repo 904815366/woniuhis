@@ -4,13 +4,14 @@ package com.woniu.web.controller;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.ArrangeDto;
 import com.woniu.entity.dto.ArrangeInfoDto;
-import com.woniu.web.fo.HomeArrangeList;
+import com.woniu.web.fo.ArrangeInfoList;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -22,17 +23,19 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/arrange")
+@Api( tags = {"排班管理"} )
 public class ArrangeController {
     /**
      * 首页展示排班信息(本周)
-     * @param homeArrangeList
+     * @param arrangeInfoList
      * @return
      */
     @RequestMapping("/list")
-    public ResponseResult<List<ArrangeDto>> arrangeList(HomeArrangeList homeArrangeList){
+    @Operation( summary = "查询本周排班列表", description = "查询本周排班列表", tags = {"排班管理"} )
+    public ResponseResult<List<ArrangeDto>> arrangeList(ArrangeInfoList arrangeInfoList){
         List<ArrangeDto> arrangeDtoList = new ArrayList<>();
         //从数据库中查到的数据
-        List<ArrangeDto> sqlArgeDtoList = homeArrangeList.arrangeList();
+        List<ArrangeDto> sqlArgeDtoList = arrangeInfoList.arrangeList();
         //拿到医生id的集合,放入新建nameMap的key--key=userid,value=String
         Map<String, String> nameMap = new HashMap<>();
         for (ArrangeDto sqlArgeDto : sqlArgeDtoList) {
@@ -121,14 +124,15 @@ public class ArrangeController {
 
     /**
      * 下周排班信息
-     * @param homeArrangeList
+     * @param arrangeInfoList
      * @return
      */
     @RequestMapping("/listnext")
-    public ResponseResult<List<ArrangeDto>> arrangeListNext(HomeArrangeList homeArrangeList){
+    @Operation( summary = "查询下周排班列表", description = "查询下周排班列表", tags = {"排班管理"} )
+    public ResponseResult<List<ArrangeDto>> arrangeListNext(ArrangeInfoList arrangeInfoList){
         List<ArrangeDto> arrangeDtoList = new ArrayList<>();
         //从数据库中查到的数据
-        List<ArrangeDto> sqlArgeDtoList = homeArrangeList.arrangeListNext();
+        List<ArrangeDto> sqlArgeDtoList = arrangeInfoList.arrangeListNext();
         //拿到医生id的集合,放入新建nameMap的key--key=userid,value=String
         Map<String, String> nameMap = new HashMap<>();
         for (ArrangeDto sqlArgeDto : sqlArgeDtoList) {
@@ -214,5 +218,7 @@ public class ArrangeController {
         }
         return new ResponseResult<List<ArrangeDto>>(arrangeDtoList,"OK",200);
     }
+
+
 }
 

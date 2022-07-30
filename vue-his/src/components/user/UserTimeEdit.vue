@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-dialog
-      title="用户排班"
+      title="编辑人员排班信息"
       :visible.sync="editUserDialogFormVisible"
       @close="cancelEdit"
     >
-      {{ objuserid }}
+      {{ objuserid }},{{ week }},{{ arrangeData }}
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancelEdit">取 消</el-button>
         <el-button type="primary" @click="confirmEdit">确 定</el-button>
@@ -21,7 +21,7 @@ export default {
       editUserDialogFormVisible: true,
     };
   },
-  props: ["arrangeData", "objuserid"],
+  props: ["arrangeData", "objuserid", "week"],
   created() {},
   methods: {
     cancelEdit() {
@@ -30,7 +30,15 @@ export default {
       this.$emit("func");
     },
     confirmEdit() {
+      let week = this.week;
       this.editUserDialogFormVisible = false;
+      if (week == "thisWeek") {
+        console.log(week);
+        //本周排班操作
+      } else if ((week = "nextWeek")) {
+        console.log(week);
+        //下周排班操作
+      }
     },
   },
 };

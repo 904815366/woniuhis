@@ -1,5 +1,6 @@
 package com.woniu.mapper.mysql;
 
+import com.woniu.entity.dto.NullArrUserDto;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.po.UserPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -35,4 +36,32 @@ public interface UserMysqlDao extends BaseMapper<UserPo> {
 
     @Select("select * from user where username = #{searchUsername}")
     UserDto getUserByUsername(@Param("searchUsername") String searchUsername);
+
+    @Select("<script>select id,name,roleid,familyid " +
+            "from user where id not in " +
+            "(select distinct dutyuserid from arrange " +
+            "where createtime <![CDATA[ <= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 6 DAY)) " +
+            "and createtime <![CDATA[ >= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + 0 DAY))) " +
+            "and name like concat('%',#{name},'%') " +
+            "<if test='roleid != null and roleid !=\"\"'>" +
+            "and roleid=#{roleid} " +
+            "</if>" +
+            "<if test='familyid != null and familyid !=\"\"'>" +
+            "and familyid=#{familyid} " +
+            "</if> </script>")
+    List<NullArrUserDto> getThisList(UserPo userPo);
+
+    @Select("<script>select id,name,roleid,familyid " +
+            "from user where id not in " +
+            "(select distinct dutyuserid from arrange " +
+            "where createtime <![CDATA[ <= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 13 DAY)) " +
+            "and createtime <![CDATA[ >= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 7 DAY))) " +
+            "and name like concat('%',#{name},'%') " +
+            "<if test='roleid != null and roleid !=\"\"'>" +
+            "and roleid=#{roleid} " +
+            "</if>" +
+            "<if test='familyid != null and familyid !=\"\"'>" +
+            "and familyid=#{familyid} " +
+            "</if> </script>")
+    List<NullArrUserDto> getNextList(UserPo userPo);
 }
