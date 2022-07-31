@@ -1,5 +1,6 @@
 package com.woniu.repository;
 
+import com.woniu.entity.converter.UserConverter;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.po.UserPo;
 import com.woniu.mapper.mysql.UserMysqlDao;
@@ -7,12 +8,16 @@ import com.woniu.mapper.redis.UserRedisDao;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Objects;
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class UserRepository {
     //使用依赖注入生成全参构造方法
     private final UserMysqlDao userMysqlDao;
     private final UserRedisDao userRedisDao;
+    private final UserConverter userConverter;
 
     /**
      * 修改mysql里的信息,删除redis缓存里的信息
@@ -57,5 +62,32 @@ public class UserRepository {
      */
     public Integer addUser(UserPo userPo) {
         return userMysqlDao.insert(userPo);
+    }
+
+    /**
+     * 查询单个用户信息
+     * @param id
+     * @return
+     */
+    public UserDto getUserById(Integer id) {
+        UserDto userDto;
+        UserPo userPo;
+        try {
+            userPo = userRedisDao.findById(id).orElseThrow(NullPointerException::new);
+        }catch (NullPointerException e ){
+            userPo = userMysqlDao.selectById(id);
+            Objects.requireNonNull(userPo, "员工不存在");
+            userRedisDao.save(userPo);
+        }
+        userDto = userConverter.from(userPo);
+        return userDto;
+    }
+
+    public Integer updSelf(Integer id, String password) {
+        Integer integer = userMysqlDao.updSelf(id, password);
+        if (integer==1){
+            userRedisDao.deleteById(id);
+        }
+        return integer;
     }
 }

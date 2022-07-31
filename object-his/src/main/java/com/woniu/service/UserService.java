@@ -22,4 +22,10 @@ public interface UserService extends IService<UserPo> {
     UserDto getUserByUsername(String searchUsername);
 
     Integer addUser(UserPo userPo);
+
+    UserDto getUserById(Integer id);
+
+    Integer updSelf(Integer id,String password) throws Exception;
+
+    Boolean psw(String oPsw, String password);
 }

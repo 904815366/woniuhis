@@ -23,4 +23,17 @@ public interface UserConverter {
     @Mapping(source = "familyid",target = "familyid")
     List<UserDto> listFrom (List<UserPo> userPoList);
 
+    @Mapping(source = "id",target = "id")
+    @Mapping(source = "username",target = "username")
+    @Mapping(source = "password",target = "password")
+    @Mapping(source = "name",target = "name")
+    @Mapping(source = "sex",target = "sex")
+    @Mapping(source = "age",target = "age")
+    @Mapping(source = "card",target = "card")
+    @Mapping(source = "phone",target = "phone")
+    @Mapping(source = "roleid",target = "roleid")
+    @Mapping(source = "level",target = "level")
+    @Mapping(source = "status",target = "status")
+    @Mapping(source = "familyid",target = "familyid")
+    UserDto from (UserPo userPo);
 }

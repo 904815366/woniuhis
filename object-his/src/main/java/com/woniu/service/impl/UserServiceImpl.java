@@ -20,6 +20,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -113,5 +114,35 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
         UserRepository userRepository = ApplicationContextHolder.
                 getApplicationContext().getBean(UserRepository.class);
         return userRepository.addUser(userPo);
+    }
+
+    @Override
+    public UserDto getUserById(Integer id) {
+        UserRepository userRepository = ApplicationContextHolder.
+                getApplicationContext().getBean(UserRepository.class);
+        return userRepository.getUserById(id);
+    }
+
+    @Override
+    public Integer updSelf(Integer id, String password) throws Exception {
+        UserRepository userRepository = ApplicationContextHolder.
+                getApplicationContext().getBean(UserRepository.class);
+        //密码加密
+        PasswordEncoder passwordEncoder = ApplicationContextHolder
+                .getApplicationContext().getBean(PasswordEncoder.class);
+        String encodePsw = passwordEncoder.encode(password);
+        Integer i = userRepository.updSelf(id, encodePsw);
+        if (i==0){
+            throw new Exception("修改失败");
+        }
+        return i;
+    }
+
+    @Override
+    public Boolean psw(String oPsw, String password) {
+        //密码比对
+        PasswordEncoder passwordEncoder = ApplicationContextHolder
+                .getApplicationContext().getBean(PasswordEncoder.class);
+        return passwordEncoder.matches(oPsw, password);
     }
 }

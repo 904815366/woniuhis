@@ -136,6 +136,7 @@
       :familyData="familyData"
       :objuserid="user.dutyuserid"
       @func="handleShow"
+      @add="addDo"
       week="thisWeek"
     ></component>
   </div>
@@ -145,10 +146,12 @@
 //导入子组件
 import UserTimeEdit from "./UserTimeEdit.vue";
 import UserTimeAdd from "./UserTimeAdd.vue";
+import UserTimeAddDo from "./UserTimeAddDo.vue";
 export default {
   components: {
     UserTimeEdit,
     UserTimeAdd,
+    UserTimeAddDo,
   },
   data() {
     return {
@@ -171,6 +174,9 @@ export default {
     this.findArrangeList();
   },
   methods: {
+    addDo(comName) {
+      this.comName = comName;
+    },
     //新增人员排班
     addUserTime() {
       this.comName = "UserTimeAdd";

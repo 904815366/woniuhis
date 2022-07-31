@@ -2,10 +2,15 @@
   <el-drawer
     :title="title"
     direction="ltr"
-    :visible.sync="editUserDialogFormVisible"
-    :before-close="cancelEdit"
+    :visible.sync="editAddUserTimeDialogFormVisible"
+    :before-close="cancelAdd"
     size="80%"
   >
+    <!-- <el-dialog
+    title="排班"
+    :visible.sync="editAddUserTimeDialogFormVisible"
+    @close="cancelAdd"
+  > -->
     {{ week }},{{ arrangeData }}
     <el-row style="margin-top: 10px">
       <el-col :span="6">
@@ -43,6 +48,7 @@
     </el-row>
     <!-- 数据表格 -->
     <el-table :data="arrangeData" style="width: 100%; margin-top: 10px">
+      <!-- row-key="arrangeData.nullArrUser.id" -->
       <el-table-column
         type="index"
         label="序号"
@@ -69,74 +75,74 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="monday" label="周一" width="70" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.monday !== null" circle>
-            <span style="color: #409eff" class="el-icon-check"></span>
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="tuesday" label="周二" width="70" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.tuesday !== null" circle>
-            <span style="color: #409eff" class="el-icon-check"></span>
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="wednesday" label="周三" width="70" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.wednesday !== null" circle>
-            <span style="color: #409eff" class="el-icon-check"></span>
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="thursday" label="周四" width="70" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.thursday !== null" circle>
-            <span style="color: #409eff" class="el-icon-check"></span>
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="friday" label="周五" width="70" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.friday !== null" circle>
-            <span style="color: #409eff" class="el-icon-check"></span>
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="saturday" label="周六" width="70" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.saturday !== null" circle>
-            <span style="color: #409eff" class="el-icon-check"></span>
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="sunday" label="周日" width="60" align="center">
-        <template slot-scope="scope">
-          <el-tag v-if="scope.row.sunday !== null" circle>
-            <span style="color: #409eff" class="el-icon-check"></span>
-          </el-tag>
-        </template>
+      <el-table-column type="index" label="排班信息" width="490" align="center">
+        <div v-for="arrange in arrangeData" :key="arrange.id">
+          <el-checkbox-group v-model="checkList">
+            <el-checkbox
+              v-for="day in weekData"
+              :key="day.id"
+              :label="day.d"
+              v-model="day.id"
+            ></el-checkbox>
+          </el-checkbox-group>
+        </div>
+        <!-- <el-checkbox label="2">周二</el-checkbox>
+        <el-checkbox label="3">周三</el-checkbox>
+        <el-checkbox label="4">周四</el-checkbox><br />
+        <el-checkbox label="5">周五</el-checkbox>
+        <el-checkbox label="6">周六</el-checkbox>
+        <el-checkbox label="7">周日</el-checkbox> -->
       </el-table-column>
       <el-table-column label="操作" align="center" width="120">
         <template slot-scope="scope">
-          <el-button type="primary" @click="confirmEdit">提 交</el-button>
+          <el-button type="primary" @click="confirmEdit(scope.$index, scope.row)"
+            >提 交</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
+
+    <!-- 切换方式显示子组件 -->
+    <component :is="comName" :objuser="user" @func="handleShow"></component>
+    <!-- </el-dialog> -->
   </el-drawer>
 </template>
 
 <script>
+import UserTimeAddDo from "./UserTimeAddDo.vue";
 export default {
+  components: {
+    UserTimeAddDo,
+  },
   data() {
     return {
+      weekData: [
+        { id: 1, d: "周一" },
+        { id: 2, d: "周二" },
+        { id: 3, d: "周三" },
+        { id: 4, d: "周四" },
+        { id: 5, d: "周五" },
+        { id: 6, d: "周六" },
+        { id: 7, d: "周日" },
+      ],
+      user: {},
+      comName: "",
+      checkList: [],
+      arrangeData: [],
       searchName: "",
       searchRoleid: "",
       searchFamilyid: "",
-      arrangeData: [],
+      arrangeInfo: {
+        monday: "",
+        tuesday: "",
+        wednesday: "",
+        thursday: "",
+        friday: "",
+        saturday: "",
+        sunday: "",
+      },
       title: "",
-      editUserDialogFormVisible: true,
+      editAddUserTimeDialogFormVisible: true,
     };
   },
   props: ["roleData", "familyData", "week"],
@@ -150,6 +156,11 @@ export default {
     this.findNullArrUserList();
   },
   methods: {
+    //控制子组件
+    handleShow() {
+      this.comName = "";
+      this.findNullArrUserList();
+    },
     //处理岗位变化
     searchRoleChange() {
       this.findNullArrUserList();
@@ -158,19 +169,22 @@ export default {
     searchFamilyChange() {
       this.findNullArrUserList();
     },
-    cancelEdit() {
-      this.editUserDialogFormVisible = false;
+    cancelAdd() {
+      this.editAddUserTimeDialogFormVisible = false;
       //调用父组件传来的方法
       this.$emit("func");
     },
-    confirmEdit() {
-      let week = this.week;
-      this.editUserDialogFormVisible = false;
-      if (week == "thisWeek") {
-        console.log(week);
+    confirmEdit(index, row) {
+      this.editAddUserTimeDialogFormVisible = false;
+      //今天星期几
+      console.log(new Date().getDay());
+      console.log(row);
+      console.log(this.checkList);
+      this.comName = UserTimeAddDo;
+      this.$emit("add", this.comName);
+      if (this.week == "thisWeek") {
         //本周新增操作
-      } else if ((week = "nextWeek")) {
-        console.log(week);
+      } else if ((this.week = "nextWeek")) {
         //下周新增操作
       }
     },

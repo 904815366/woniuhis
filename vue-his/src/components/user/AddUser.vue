@@ -191,7 +191,7 @@ export default {
     confirmAdd() {
       this.$refs["addForm"].validate((valid) => {
         if (valid) {
-          this.$axios.post("/api//user/addUser", this.user).then((res) => {
+          this.$axios.post("/api/user/addUser", this.user).then((res) => {
             console.log(res.data);
             if (res.data.status === 200) {
               this.$message({

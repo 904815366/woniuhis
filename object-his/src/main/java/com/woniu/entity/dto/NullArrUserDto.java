@@ -14,4 +14,6 @@ public class NullArrUserDto {
     private Integer familyid;
     @Schema(name = "roleid", description = "岗位ID")
     private Integer roleid;
+    @Schema(name = "arrangeInfo", description = "排班信息字符串")
+    private String arrangeInfo;
 }

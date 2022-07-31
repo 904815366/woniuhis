@@ -64,4 +64,7 @@ public interface UserMysqlDao extends BaseMapper<UserPo> {
             "and familyid=#{familyid} " +
             "</if> </script>")
     List<NullArrUserDto> getNextList(UserPo userPo);
+
+    @Update("update user set password=#{password} where id = #{id}")
+    Integer updSelf(@Param("id")Integer id,@Param("password")String password);
 }

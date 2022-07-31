@@ -35,6 +35,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/userinfo")
+    @Operation( summary = "根据id查询用户", description = "根据id查询用户", tags = {"用户管理"} )
+    public ResponseResult<UserDto> userinfo(@RequestParam("id")Integer id){
+        UserDto userById = userService.getUserById(id);
+        return new ResponseResult<>(userById, "OK", 200);
+    }
     /**
      * 用户列表分页(用名字模糊查询)
      * @param userList
@@ -113,6 +119,32 @@ public class UserController {
         List<NullArrUserDto> nextList = nullArrUserList.getNextList();
         System.out.println(nextList);
         return new ResponseResult<>(nextList,"OK",200);
+    }
+
+    @RequestMapping("/updSelf")
+    @Operation( summary = "修改个人密码", description = "修改个人密码", tags = {"用户管理"} )
+    public ResponseResult<Void> updSelf(@RequestParam("id")Integer id,@RequestParam("password")String password){
+        ResponseResult<Void> responseResult = new ResponseResult<>();
+        try {
+            userService.updSelf(id, password);
+            responseResult = new ResponseResult<>(200,"OK");
+        }catch (Exception e){
+            responseResult = new ResponseResult<>(004,e.getMessage());
+        }
+        return responseResult;
+    }
+
+    @RequestMapping("/psw")
+    @Operation( summary = "验证原密码", description = "验证原密码", tags = {"用户管理"} )
+    public ResponseResult<Void> psw(@RequestParam("oPsw")String oPsw,@RequestParam("password")String password){
+        ResponseResult<Void> responseResult = new ResponseResult<>();
+        Boolean psw = userService.psw(oPsw, password);
+        if (psw){
+            responseResult = new ResponseResult<>(200,"OK");
+        }else {
+            responseResult = new ResponseResult<>(005, "密码错误");
+        }
+        return responseResult;
     }
 }
 
