@@ -8,10 +8,10 @@
     </el-breadcrumb>
     <el-row style="margin-top: 10px">
       <el-button type="success" plain @click="thisWeek" :disabled="thisButtonStatus"
-        >本周人员排信息</el-button
+        >本周人员排班信息</el-button
       >
       <el-button type="primary" plain @click="nextWeek" :disabled="nextButtonStatus"
-        >下周人员排信息</el-button
+        >下周人员排班信息</el-button
       >
     </el-row>
     <router-view></router-view>

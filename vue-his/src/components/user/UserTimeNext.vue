@@ -134,8 +134,10 @@
       :roleData="roleData"
       :familyData="familyData"
       :objuserid="user.dutyuserid"
+      :userid="adduserid"
       @func="handleShow"
       @add="addDo"
+      @openCt="open"
       week="nextWeek"
     ></component>
   </div>
@@ -154,6 +156,7 @@ export default {
   },
   data() {
     return {
+      adduserid: "",
       searchName: "",
       searchRoleid: "",
       searchFamilyid: "",
@@ -173,8 +176,9 @@ export default {
     this.findArrangeList();
   },
   methods: {
-    addDo(comName) {
+    addDo(comName, userid) {
       this.comName = comName;
+      this.adduserid = userid;
     },
     //新增人员排班
     addUserTime() {
@@ -188,6 +192,9 @@ export default {
     //控制子组件
     handleShow() {
       this.comName = "";
+    },
+    open() {
+      this.comName = "UserTimeAdd";
     },
     //处理岗位变化
     searchRoleChange() {
