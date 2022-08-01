@@ -83,6 +83,12 @@ public class UserRepository {
         return userDto;
     }
 
+    /**
+     * 用户修改自己的密码
+     * @param id
+     * @param password
+     * @return
+     */
     public Integer updSelf(Integer id, String password) {
         Integer integer = userMysqlDao.updSelf(id, password);
         if (integer==1){

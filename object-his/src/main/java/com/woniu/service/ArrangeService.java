@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ArrangeService extends IService<ArrangePo> {
 
+    void addArr(Integer dutyuserid, String checkListStr,Integer createuserid,String week);
 }

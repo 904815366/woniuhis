@@ -92,12 +92,12 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
     }
 
     @Override
-    public Integer deleteById(Integer id) throws Exception {
+    public Integer deleteById(Integer id) {
         UserRepository userRepository = ApplicationContextHolder.
                 getApplicationContext().getBean(UserRepository.class);
         Integer deleteById = userRepository.deleteById(id);
         if(deleteById==0){
-            throw new Exception("删除失败");
+            throw new RuntimeException("删除失败");
         }
         return deleteById;
     }
@@ -124,7 +124,7 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
     }
 
     @Override
-    public Integer updSelf(Integer id, String password) throws Exception {
+    public Integer updSelf(Integer id, String password) {
         UserRepository userRepository = ApplicationContextHolder.
                 getApplicationContext().getBean(UserRepository.class);
         //密码加密
@@ -133,7 +133,7 @@ public class UserServiceImpl extends ServiceImpl<UserMysqlDao, UserPo> implement
         String encodePsw = passwordEncoder.encode(password);
         Integer i = userRepository.updSelf(id, encodePsw);
         if (i==0){
-            throw new Exception("修改失败");
+            throw new RuntimeException("修改失败");
         }
         return i;
     }

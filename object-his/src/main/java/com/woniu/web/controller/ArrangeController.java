@@ -4,11 +4,14 @@ package com.woniu.web.controller;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.ArrangeDto;
 import com.woniu.entity.dto.ArrangeInfoDto;
+import com.woniu.service.ArrangeService;
 import com.woniu.web.fo.ArrangeInfoList;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
@@ -25,6 +28,8 @@ import java.util.*;
 @RequestMapping("/arrange")
 @Api( tags = {"排班管理"} )
 public class ArrangeController {
+    @Autowired
+    private ArrangeService arrangeService;
     /**
      * 首页展示排班信息(本周)
      * @param arrangeInfoList
@@ -220,5 +225,21 @@ public class ArrangeController {
     }
 
 
+    @RequestMapping("/addArr")
+    @Operation( summary = "下周新增排班", description = "下周新增排班", tags = {"排班管理"} )
+    public ResponseResult<Void> addArr(@RequestParam("dutyuserid")Integer dutyuserid,
+                                           @RequestParam("checkListStr")String checkListStr,
+                                           @RequestParam("createuserid")Integer createuserid,
+                                           @RequestParam("week")String week){
+        ResponseResult<Void> responseResult = new ResponseResult<>();
+        try {
+            arrangeService.addArr(dutyuserid,checkListStr,createuserid,week);
+            responseResult = new ResponseResult<>(200,"OK");
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            responseResult = new ResponseResult<>(006,e.getMessage());
+        }
+        return responseResult;
+    }
 }
 

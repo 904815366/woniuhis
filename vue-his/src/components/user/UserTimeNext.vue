@@ -130,9 +130,9 @@
     <!-- 切换方式显示子组件 -->
     <component
       :is="comName"
-      :arrangeData="arrangeData"
       :roleData="roleData"
       :familyData="familyData"
+      :objuser="user"
       :objuserid="user.dutyuserid"
       :userid="adduserid"
       @func="handleShow"
@@ -192,8 +192,10 @@ export default {
     //控制子组件
     handleShow() {
       this.comName = "";
+      this.findArrangeList;
     },
     open() {
+      this.findArrangeList;
       this.comName = "UserTimeAdd";
     },
     //处理岗位变化

@@ -3,6 +3,8 @@ package com.woniu.mapper.mysql;
 import com.woniu.entity.dto.ArrangeDto;
 import com.woniu.entity.po.ArrangePo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -56,4 +58,12 @@ public interface ArrangeMysqlDao extends BaseMapper<ArrangePo> {
             "order by dutyuserid" +
             "</script>"})
     List<ArrangeDto> getArrangeListNext(ArrangeDto arrangeDto);
+
+    @Insert("insert into arrange values (null,#{dutyuserid},#{dutytime}," +
+            "(date_sub(curdate(),INTERVAL WEEKDAY(curdate()) -(#{dutytime}-1) DAY)),#{createuserid})")
+    Integer addThis(@Param("dutyuserid") Integer dutyuserid,@Param("dutytime") Integer s, @Param("createuserid")Integer createuserid);
+
+    @Insert("insert into arrange values (null,#{dutyuserid},#{dutytime}," +
+            "(date_sub(curdate(),INTERVAL WEEKDAY(curdate()) -(#{dutytime}+6) DAY)),#{createuserid})")
+    Integer addNext(@Param("dutyuserid") Integer dutyuserid,@Param("dutytime") Integer s, @Param("createuserid") Integer createuserid);
 }

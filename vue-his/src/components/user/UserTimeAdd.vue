@@ -145,16 +145,9 @@ export default {
       this.editAddUserTimeDialogFormVisible = false;
       //今天星期几
       console.log(new Date().getDay());
-      console.log(row);
       console.log(row.id);
       this.user = row;
       this.$emit("add", "UserTimeAddDo", row.id);
-
-      if (this.week == "thisWeek") {
-        //本周新增操作
-      } else if ((this.week = "nextWeek")) {
-        //下周新增操作
-      }
     },
     //查出未排班的员工信息
     findNullArrUserList() {

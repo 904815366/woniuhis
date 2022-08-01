@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Param;
 public interface UserService extends IService<UserPo> {
     Integer modifyById(UserPo userModify);
 
-    Integer deleteById(Integer id) throws Exception;
+    Integer deleteById(Integer id);
 
     UserDto getUserByUsername(String searchUsername);
 
@@ -25,7 +25,7 @@ public interface UserService extends IService<UserPo> {
 
     UserDto getUserById(Integer id);
 
-    Integer updSelf(Integer id,String password) throws Exception;
+    Integer updSelf(Integer id,String password);
 
     Boolean psw(String oPsw, String password);
 }
