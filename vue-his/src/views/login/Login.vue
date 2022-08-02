@@ -1,19 +1,34 @@
 <template>
   <div>
-    <el-row type="flex" justify="center" align="middle" style="margin-top:170px; margin-left: 500px;">
+    <el-row
+      type="flex"
+      justify="center"
+      align="middle"
+      style="margin-top: 170px; margin-left: 500px"
+    >
       <el-col :span="10">
         <img style="width: 334px" src="@/assets/QQ截图20220802154346.png" />
         <!-- <h1>登录</h1> -->
-        <el-divider content-position="left" style="font-size:30px;">登录</el-divider>
-        <el-form :model="user" status-icon :rules="rules" ref="loginForm" label-width="100px" class="loginForm"
-          :hide-required-asterisk="true">
-
+        <el-divider content-position="left" style="font-size: 30px">登录</el-divider>
+        <el-form
+          :model="user"
+          status-icon
+          :rules="rules"
+          ref="loginForm"
+          label-width="100px"
+          class="loginForm"
+          :hide-required-asterisk="true"
+        >
           <el-form-item label="用户名" prop="username">
             <el-input v-model="user.username" autocomplete="off"></el-input>
           </el-form-item>
 
           <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
+            <el-input
+              type="password"
+              v-model="user.password"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" :plain="true" @click="submitForm()">登录</el-button>
@@ -22,7 +37,6 @@
         </el-form>
       </el-col>
     </el-row>
-
   </div>
 </template>
 
@@ -32,8 +46,8 @@ export default {
     return {
       nameAndId: [],
       user: {
-        username: "xuke",
-        password: "123",
+        username: "",
+        password: "",
       },
       rules: {
         username: [
@@ -48,7 +62,7 @@ export default {
     };
   },
 
-  created() { },
+  created() {},
   methods: {
     submitForm() {
       this.$refs["loginForm"].validate((valid) => {
