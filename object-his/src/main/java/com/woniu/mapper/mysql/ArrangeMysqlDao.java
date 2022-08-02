@@ -3,6 +3,7 @@ package com.woniu.mapper.mysql;
 import com.woniu.entity.dto.ArrangeDto;
 import com.woniu.entity.po.ArrangePo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -66,4 +67,14 @@ public interface ArrangeMysqlDao extends BaseMapper<ArrangePo> {
     @Insert("insert into arrange values (null,#{dutyuserid},#{dutytime}," +
             "(date_sub(curdate(),INTERVAL WEEKDAY(curdate()) -(#{dutytime}+6) DAY)),#{createuserid})")
     Integer addNext(@Param("dutyuserid") Integer dutyuserid,@Param("dutytime") Integer s, @Param("createuserid") Integer createuserid);
+
+    @Delete("delete from arrange where dutyuserid = #{dutyuserid} " +
+            "and createtime <= (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 6 DAY)) " +
+            "and createtime >= (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + 0 DAY))")
+    Integer delThisByDutyuserid(@Param("dutyuserid") Integer dutyuserid);
+
+    @Delete("delete from arrange where dutyuserid = #{dutyuserid} " +
+            "and createtime <= (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 13 DAY)) " +
+            "and createtime >= (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 7 DAY))")
+    Integer delNextByDutyuserid(@Param("dutyuserid") Integer dutyuserid);
 }

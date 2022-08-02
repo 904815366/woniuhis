@@ -8,6 +8,7 @@ import com.woniu.service.ArrangeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.woniu.util.ApplicationContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
  * @since 2022-07-23
  */
 @Service
+@Transactional
 public class ArrangeServiceImpl extends ServiceImpl<ArrangeMysqlDao, ArrangePo> implements ArrangeService {
 
     @Override
@@ -32,6 +34,19 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMysqlDao, ArrangePo> 
         Boolean addResult = arrangeRepository.addArr(dutyuserid, checkListArr, createuserid,week);
         if (addResult==false){
             throw new RuntimeException("新增排班失败");
+        }
+    }
+
+    @Override
+    public void editArr(Integer dutyuserid, String checkListStr, Integer createuserid, String week) {
+        ArrangeRepository arrangeRepository = ApplicationContextHolder.
+                getApplicationContext().getBean(ArrangeRepository.class);
+        System.out.println(checkListStr);
+        //处理数字字符串
+        String[] checkListArr = checkListStr.split(",");
+        Boolean editResult = arrangeRepository.editArr(dutyuserid, checkListArr, createuserid,week);
+        if (editResult==false){
+            throw new RuntimeException("编辑排班失败");
         }
     }
 }

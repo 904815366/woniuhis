@@ -136,10 +136,10 @@ export default {
               offset: 300,
               duration: 1000,
             });
-            //成功后,关闭窗口,打开新增排班窗口
+            //成功后,关闭窗口
             let timer = setTimeout(() => {
               this.editUserDialogFormVisible = false;
-              this.$emit("openCt");
+              // this.$emit("openCt");
             }, 1000);
           } else {
             this.$message({

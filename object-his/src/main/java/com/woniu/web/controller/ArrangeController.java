@@ -226,7 +226,7 @@ public class ArrangeController {
 
 
     @RequestMapping("/addArr")
-    @Operation( summary = "下周新增排班", description = "下周新增排班", tags = {"排班管理"} )
+    @Operation( summary = "新增排班", description = "新增排班", tags = {"排班管理"} )
     public ResponseResult<Void> addArr(@RequestParam("dutyuserid")Integer dutyuserid,
                                            @RequestParam("checkListStr")String checkListStr,
                                            @RequestParam("createuserid")Integer createuserid,
@@ -238,6 +238,23 @@ public class ArrangeController {
         }catch (RuntimeException e){
             e.printStackTrace();
             responseResult = new ResponseResult<>(006,e.getMessage());
+        }
+        return responseResult;
+    }
+
+    @RequestMapping("/editArr")
+    @Operation( summary = "编辑排班", description = "编辑排班", tags = {"排班管理"} )
+    public ResponseResult<Void> editArr(@RequestParam("dutyuserid")Integer dutyuserid,
+                                       @RequestParam("checkListStr")String checkListStr,
+                                       @RequestParam("createuserid")Integer createuserid,
+                                       @RequestParam("week")String week){
+        ResponseResult<Void> responseResult = new ResponseResult<>();
+        try {
+            arrangeService.editArr(dutyuserid,checkListStr,createuserid,week);
+            responseResult = new ResponseResult<>(200,"OK");
+        }catch (RuntimeException e){
+            e.printStackTrace();
+            responseResult = new ResponseResult<>(007,e.getMessage());
         }
         return responseResult;
     }
