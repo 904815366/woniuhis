@@ -78,7 +78,9 @@
             <el-option label="专家" value="专家"></el-option>
             <el-option label="主治医师" value="主治医师"></el-option>
             <el-option label="主任" value="主任"></el-option>
+            <el-option label="业务员" value="业务员"></el-option>
             <el-option label="副主任" value="副主任"></el-option>
+            <el-option label="其他" value="其他"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="在职状态" prop="status" :label-width="formLabelWidth">

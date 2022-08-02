@@ -1,6 +1,10 @@
 <template>
   <div>
-    <el-dialog title="编辑用户" :visible.sync="editUserDialogFormVisible" @close="cancelEdit">
+    <el-dialog
+      title="编辑用户"
+      :visible.sync="editUserDialogFormVisible"
+      @close="cancelEdit"
+    >
       <el-form :model="user">
         <el-form-item label="姓名" :label-width="formLabelWidth">
           <el-input v-model="user.name" autocomplete="off"></el-input>
@@ -19,12 +23,22 @@
         </el-form-item>
         <el-form-item label="岗位" :label-width="formLabelWidth">
           <el-select v-model="user.roleid" placeholder="请选择岗位">
-            <el-option v-for="role in roleData" :key="role.id" :label="role.name" :value="role.id"></el-option>
+            <el-option
+              v-for="role in roleData"
+              :key="role.id"
+              :label="role.name"
+              :value="role.id"
+            ></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="科室" :label-width="formLabelWidth">
           <el-select v-model="user.familyid" placeholder="请选择科室">
-            <el-option v-for="family in familyData" :key="family.id" :label="family.familyname" :value="family.id">
+            <el-option
+              v-for="family in familyData"
+              :key="family.id"
+              :label="family.familyname"
+              :value="family.id"
+            >
             </el-option>
           </el-select>
         </el-form-item>
@@ -33,11 +47,17 @@
             <el-option label="专家" value="专家"></el-option>
             <el-option label="主治医师" value="主治医师"></el-option>
             <el-option label="主任" value="主任"></el-option>
+            <el-option label="业务员" value="业务员"></el-option>
             <el-option label="副主任" value="副主任"></el-option>
+            <el-option label="其他" value="其他"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="在职状态" :label-width="formLabelWidth">
-          <el-switch v-model="user.status" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+          <el-switch
+            v-model="user.status"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+          ></el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -111,5 +131,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
