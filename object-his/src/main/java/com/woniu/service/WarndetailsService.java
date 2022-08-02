@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface WarndetailsService extends IService<WarndetailsPo> {
 
+    void updateNum(Integer id, Integer returnnum);
 }

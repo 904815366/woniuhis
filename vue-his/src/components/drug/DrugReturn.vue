@@ -3,7 +3,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>
-        <router-link to="/drug/drugoutlist">发药列表</router-link>
+        <router-link to="/drug/drugreturn">退药列表</router-link>
       </el-breadcrumb-item>
     </el-breadcrumb>
     <el-row style="margin-top: 20px">
@@ -15,12 +15,15 @@
           <el-button
             slot="append"
             icon="el-icon-search"
-            @click="getDrugOutList(1)"
+            @click="getDrugReturnList(1)"
           ></el-button>
         </el-input>
       </el-col>
-      <el-button type="success" round @click="updateStatus" style="float: right"
-        >发药</el-button
+      <el-button type="success" round @click="handleReturn" style="float: right"
+        >通过</el-button
+      >
+      <el-button type="danger" round @click="handleRefuse" style="float: right"
+        >退回</el-button
       >
     </el-row>
     <el-table
@@ -46,12 +49,7 @@
       ></el-table-column>
       <el-table-column prop="registerid" label="住院编号" width="80" align="center">
       </el-table-column>
-      <el-table-column label="患者姓名" width="120" align="center">
-        <template slot-scope="scope">
-          <span v-for="register in registerList" :key="register.id">
-            <span v-if="register.id == scope.row.registerid">{{ register.name }}</span>
-          </span>
-        </template>
+      <el-table-column prop="patientname" label="患者姓名" width="120" align="center">
       </el-table-column>
       <el-table-column label="科室" width="100" align="center">
         <template slot-scope="scope">
@@ -74,37 +72,18 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="开立时间" width="180" align="center">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.warntime }}</span>
-        </template>
+      <el-table-column prop="applytime" label="申请时间" width="180" align="center">
       </el-table-column>
       <el-table-column label="药品名" width="123" align="center">
         <template slot-scope="scope">
-          <span v-for="detail in detailList" :key="detail.id">
-            <span v-if="detail.warnid == scope.row.id">
-              <span v-for="drug in drugList" :key="drug.id">
-                <span v-if="drug.id == detail.drugid">
-                  {{ drug.name }}
-                </span>
-              </span>
+          <span v-for="drug in drugList" :key="drug.id">
+            <span v-if="drug.id == scope.row.drugid">
+              {{ drug.name }}
             </span>
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="数量" width="120" align="center">
-        <template slot-scope="scope">
-          <span v-for="detail in detailList" :key="detail.id">
-            <span v-if="detail.warnid == scope.row.id">
-              <span v-for="drug in drugList" :key="drug.id">
-                <span v-if="drug.id == detail.drugid">
-                  {{ detail.num }}
-                </span>
-              </span>
-            </span>
-          </span>
-        </template>
+      <el-table-column prop="num" label="数量" width="120" align="center">
       </el-table-column>
     </el-table>
     <!--background是否显示背景色,layout显示分特的布局组件,prev上一下next下一页pager导航页码sizes每页记录数
@@ -137,25 +116,23 @@ export default {
       pageSize: 5,
       totalCount: 0,
       pageSizes: [5, 10, 15, 20],
-      searchStatus: 2,
+      searchStatus: "",
       drug: {}, //用于存放要编辑的drug
       registerList: [], //用于存放在院患者
       familyList: [], //用于存放科室列表
       userList: [], //用于存放用户列表
       drugList: [], //用于存放药品列表
-      detailList: [], //用于存放医嘱详情列表
       ids: [],
       userid: "",
       nameAndId: [],
     };
   },
   created() {
-    this.getDrugOutList(1);
+    this.getDrugReturnList(1);
     this.queryRegisterList();
     this.queryFamilyList();
     this.queryUserList();
     this.queryDrugList();
-    this.queryDetailList();
   },
   methods: {
     selectHandle(row) {
@@ -168,12 +145,43 @@ export default {
       }
       console.log(this.ids);
     },
-    //发药
-    updateStatus() {
+    //退药
+    handleRefuse() {
       if (this.ids == []) {
         this.$message({
           showClose: true,
-          message: "请先选择要提交的医嘱!",
+          message: "请先选择要提交的退药记录!",
+          type: "error",
+          duration: 1000, //显示的时间,ms
+        });
+      } else {
+        let result = this.ids.join(",");
+        this.$axios.get("/api/drugreturn/handlerefuse?ids=" + result).then((res) => {
+          if (res.data.status == 200) {
+            this.$message({
+              showClose: true,
+              message: "退回成功",
+              type: "success",
+              center: true,
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: "服务异常!",
+              type: "error",
+              duration: 1000, //显示的时间,ms
+            });
+          }
+          this.getDrugReturnList(this.pageNum);
+        });
+      }
+    },
+    //退药
+    handleReturn() {
+      if (this.ids == []) {
+        this.$message({
+          showClose: true,
+          message: "请先选择要提交的退药记录!",
           type: "error",
           duration: 1000, //显示的时间,ms
         });
@@ -181,14 +189,7 @@ export default {
         let result = this.ids.join(",");
         this.userid = window.sessionStorage.getItem("currentUserId", this.nameAndId[1]);
         this.$axios
-          .get(
-            "/api/drugout/updateCpoeStatus?ids=" +
-              result +
-              "&status=3" +
-              "&type=0" +
-              "&userid=" +
-              this.userid
-          )
+          .get("/api/drugreturn/handlereturn?ids=" + result + "&userid=" + this.userid)
           .then((res) => {
             if (res.data.status == 200) {
               this.$message({
@@ -205,7 +206,7 @@ export default {
                 duration: 1000, //显示的时间,ms
               });
             }
-            this.getDrugOutList(this.pageNum);
+            this.getDrugReturnList(this.pageNum);
           });
       }
     },
@@ -213,15 +214,14 @@ export default {
     indexMethod(index) {
       return index + 1 + this.pageSize * (this.pageInfo.pageNum - 1);
     },
-    getDrugOutList(pNum) {
-      console.log("执行getDrugOutList");
+    getDrugReturnList(pNum) {
       this.$axios
-        .get("/api/drugout/list", {
+        .get("/api/drugreturn/returnlist", {
           params: {
             pageInfo: {},
             searchName: this.searchName,
             searchId: this.searchId,
-            searchStatus: 2,
+            searchStatus: this.searchStatus,
             pageNum: pNum,
             pageSize: this.pageSize,
           },
@@ -233,23 +233,6 @@ export default {
           this.totalCount = res.data.data.total;
           this.pageNum = res.data.data.pageNum;
           this.pageSize = res.data.data.pageSize;
-        })
-        .catch((e) => {
-          this.$message({
-            showClose: true,
-            message: "服务器跑不见了!",
-            type: "error",
-            offset: 550,
-            duration: 1000, //显示的时间,ms
-          });
-        });
-    },
-    //查询医嘱详情列表
-    queryDetailList() {
-      this.$axios
-        .get("/api/drugout/detaillist")
-        .then((res) => {
-          this.detailList = res.data.data;
         })
         .catch((e) => {
           this.$message({
@@ -333,12 +316,12 @@ export default {
     handleSizeChange(pSize) {
       this.pageSize = pSize;
       this.pageNum = 1; //默认为第一页
-      this.getDrugOutList(1); //初始化为第一页
+      this.getDrugReturnList(1); //初始化为第一页
     },
     // 当前页码改变
     handleCurrentChange(pNo) {
       this.pageNum = pNo;
-      this.getDrugOutList(pNo); //翻页
+      this.getDrugReturnList(pNo); //翻页
     },
   },
 };

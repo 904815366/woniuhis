@@ -24,6 +24,8 @@ public class DrugOutList {
     private Integer pageSize;
     private String searchName;
     private String searchId;
+    private String searchStatus;
+    private Integer searchDoctorid;
 
     ApplicationContext applicationContext = ApplicationContextHolder.getApplicationContext();
 
@@ -40,7 +42,12 @@ public class DrugOutList {
         if (!StringUtils.isEmpty(searchId)) {
             wrapper.like("registerid", searchId);
         }
-        wrapper.eq("status", 2);
+        if (!StringUtils.isEmpty(searchStatus)) {
+            wrapper.like("status", searchStatus);
+        }
+        if (!StringUtils.isEmpty(searchDoctorid)) {
+            wrapper.like("doctorid", searchDoctorid);
+        }
         List<WarnPo> drugOutPoList = drugOutMysqlDao.selectList(wrapper);
         PageInfo<WarnPo> pagePoInfo = new PageInfo<>(drugOutPoList);
         PageInfo<WarnDto> pageInfo = drugOutConverter.pageInfoFrom(pagePoInfo);

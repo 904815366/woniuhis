@@ -19,24 +19,13 @@
           ></el-button>
         </el-input>
       </el-col>
-      <el-button type="success" round @click="updateStatus" style="float: right"
-        >发药</el-button
-      >
     </el-row>
     <el-table
       :data="tableData"
       style="width: 100%; margin-top: 10px"
       max-height="100%"
       stripe
-      @selection-change="handleSelectionChange"
     >
-      <el-table-column
-        type="selection"
-        width="55"
-        :selectable="selectHandle"
-        align="center"
-      >
-      </el-table-column>
       <el-table-column
         type="index"
         :index="indexMethod"
@@ -60,14 +49,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="开立医生" width="100" align="center">
-        <template slot-scope="scope">
-          <span v-for="user in userList" :key="user.id">
-            <span v-if="user.id == scope.row.doctorid">{{ user.name }}</span>
-          </span>
-        </template>
-      </el-table-column>
-      <el-table-column label="执行护士" width="150" align="center">
+      <el-table-column label="执行护士" width="120" align="center">
         <template slot-scope="scope">
           <span v-for="user in userList" :key="user.id">
             <span v-if="user.id == scope.row.nurseid">{{ user.name }}</span>
@@ -80,7 +62,7 @@
           <span style="margin-left: 10px">{{ scope.row.warntime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="药品名" width="123" align="center">
+      <el-table-column label="药品名" width="122" align="center">
         <template slot-scope="scope">
           <span v-for="detail in detailList" :key="detail.id">
             <span v-if="detail.warnid == scope.row.id">
@@ -93,7 +75,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="数量" width="120" align="center">
+      <el-table-column label="数量" width="80" align="center">
         <template slot-scope="scope">
           <span v-for="detail in detailList" :key="detail.id">
             <span v-if="detail.warnid == scope.row.id">
@@ -104,6 +86,13 @@
               </span>
             </span>
           </span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" width="120">
+        <template slot-scope="scope">
+          <el-button size="mini" type="primary" @click="handleEdit(scope.row)"
+            >退药</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -124,10 +113,30 @@
       style="margin-top: 10px"
     >
     </el-pagination>
+
+    <!-- 显示子组件 -->
+    <component
+      :is="comName"
+      :objWarn="warn"
+      @func="handleShow"
+      @reload="reload"
+      :pageNum="pageNum"
+      :registerList="registerList"
+      :familyList="familyList"
+      :userList="userList"
+      :drugList="drugList"
+      :detailList="detailList"
+    ></component>
   </div>
 </template>
 <script>
+//导入子组件
+import ReturnAdd from "./ReturnAdd.vue";
 export default {
+  components: {
+    //注册子组件
+    ReturnAdd,
+  },
   data() {
     return {
       tableData: [],
@@ -147,6 +156,8 @@ export default {
       ids: [],
       userid: "",
       nameAndId: [],
+      warn: {}, //用于需要修改的医嘱详情关联的医嘱
+      comName: "",
     };
   },
   created() {
@@ -158,72 +169,39 @@ export default {
     this.queryDetailList();
   },
   methods: {
-    selectHandle(row) {
-      return true;
+    reload() {
+      console.log("执行reload");
+      this.queryDetailList();
+      this.queryDrugList();
+      this.getDrugOutList(this.pageNum);
     },
-    handleSelectionChange(val) {
-      this.ids = [];
-      for (let i = 0; i < val.length; i++) {
-        this.ids[i] = val[i].id;
-      }
-      console.log(this.ids);
+    handleShow() {
+      console.log("执行handleShow");
+      this.comName = "";
     },
-    //发药
-    updateStatus() {
-      if (this.ids == []) {
-        this.$message({
-          showClose: true,
-          message: "请先选择要提交的医嘱!",
-          type: "error",
-          duration: 1000, //显示的时间,ms
-        });
-      } else {
-        let result = this.ids.join(",");
-        this.userid = window.sessionStorage.getItem("currentUserId", this.nameAndId[1]);
-        this.$axios
-          .get(
-            "/api/drugout/updateCpoeStatus?ids=" +
-              result +
-              "&status=3" +
-              "&type=0" +
-              "&userid=" +
-              this.userid
-          )
-          .then((res) => {
-            if (res.data.status == 200) {
-              this.$message({
-                showClose: true,
-                message: "提交成功",
-                type: "success",
-                center: true,
-              });
-            } else {
-              this.$message({
-                showClose: true,
-                message: "服务异常!",
-                type: "error",
-                duration: 1000, //显示的时间,ms
-              });
-            }
-            this.getDrugOutList(this.pageNum);
-          });
-      }
+    //处理'退药'
+    handleEdit(row) {
+      this.warn = row;
+      this.comName = "ReturnAdd";
     },
     //为type=index 属性指定生成规则
     indexMethod(index) {
       return index + 1 + this.pageSize * (this.pageInfo.pageNum - 1);
     },
     getDrugOutList(pNum) {
-      console.log("执行getDrugOutList");
+      console.log("发送查询drugoutlist请求");
+      //this.userid = window.sessionStorage.getItem("currentUserId", this.nameAndId[1]);
+      this.userid = 1;
       this.$axios
         .get("/api/drugout/list", {
           params: {
             pageInfo: {},
             searchName: this.searchName,
             searchId: this.searchId,
-            searchStatus: 2,
+            searchStatus: 3,
             pageNum: pNum,
             pageSize: this.pageSize,
+            searchDoctorid: this.userid,
           },
         })
         .then((res) => {

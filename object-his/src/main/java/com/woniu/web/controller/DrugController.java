@@ -8,6 +8,7 @@ import com.woniu.entity.dto.PatientDto;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.dto.WarnDto;
 import com.woniu.service.DrugService;
+import com.woniu.web.fo.DrugAdd;
 import com.woniu.web.fo.DrugEdit;
 import com.woniu.web.fo.DrugList;
 import com.woniu.web.fo.DrugOutList;
@@ -65,6 +66,18 @@ public class DrugController {
         try {
             drugEdit.exac();
             return new ResponseResult<>("修改成功","OK",200);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @RequestMapping("/add")
+    @Operation( summary = "添加药品", description = "如果存在该批次则增加数量", tags = {"药品查询"} )
+    public ResponseResult<String> DrugAdd(@RequestBody DrugAdd drugAdd){
+        try {
+            drugAdd.exac();
+            return new ResponseResult<>("添加成功","OK",200);
         }catch (Exception e){
             e.printStackTrace();
             return null;

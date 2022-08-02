@@ -1,6 +1,8 @@
 package com.woniu.repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.woniu.entity.po.*;
+import com.woniu.mapper.mysql.*;
 import com.woniu.entity.po.MoneylistPo;
 import com.woniu.entity.po.MoneyrecordPo;
 import com.woniu.entity.po.RegisterPo;
@@ -15,12 +17,16 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class MoneyListRepository {
     private final MoneylistMysqlDao moneylistMysqlDao;
+    private final WarnMysqlDao warnMysqlDao;
+    private final WarndetailsMysqlDao warndetailsMysqlDao;
+    private final DrugMysqlDao drugMysqlDao;
 
     public List<MoneylistPo> MoneyListByRegisterIdAndStatusQuery(Integer registerId, Integer status, String consumtime) {
         QueryWrapper<MoneylistPo> wrapper = new QueryWrapper();
@@ -70,5 +76,26 @@ public class MoneyListRepository {
         String[] arr = modifyStatusAndRegisterMoneysComment.getIds().split("-");
         moneylistMysqlDao.updateStatusTo1ByIds(arr);
         return true;
+    }
+
+    public void addDrugList(String[] idArr) {
+        for (String id : idArr) {
+            WarnPo warnPo = warnMysqlDao.selectById(id);
+            QueryWrapper<WarndetailsPo> wrapper = new QueryWrapper<>();
+            wrapper.eq("warnid", id);
+            List<WarndetailsPo> warndetailsPoList = warndetailsMysqlDao.selectList(wrapper);
+            WarndetailsPo warndetailsPo = warndetailsPoList.get(0);
+            //添加费用记录
+            MoneylistPo moneylistPo = new MoneylistPo();
+            moneylistPo.setRegisterid(warnPo.getRegisterid());
+            moneylistPo.setConsumtime(new Date());
+            moneylistPo.setStatus("0");
+            //查询药品列表
+            DrugPo drugPo = drugMysqlDao.selectById(warndetailsPo.getDrugid());
+            moneylistPo.setConsumpart("药品:" + drugPo.getName() + " 数量:" + warndetailsPo.getNum());
+            double money = warndetailsPo.getNum() * drugPo.getPrice();
+            moneylistPo.setConsummoney(new BigDecimal(Double.toString(money)));
+            moneylistMysqlDao.insert(moneylistPo);
+        }
     }
 }

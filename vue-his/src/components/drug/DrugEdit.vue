@@ -1,6 +1,6 @@
 <template>
-  <el-dialog title="编辑讲师" :visible.sync="addDrugDialogFormVisible" @close="cancelAdd">
-    <el-form :model="drug">
+  <el-dialog title="编辑药品" :visible.sync="addDrugDialogFormVisible" @close="cancelAdd">
+    <el-form :model="drug" :rules="rules">
       <el-form-item label="药品id:" :label-width="formLabelWidth">
         <span>{{ drug.id }}</span>
       </el-form-item>
@@ -13,7 +13,7 @@
       <el-form-item label="库存:" :label-width="formLabelWidth">
         <span>{{ drug.num }}</span>
       </el-form-item>
-      <el-form-item label="报警库存:" :label-width="formLabelWidth">
+      <el-form-item label="报警库存:" :label-width="formLabelWidth" prop="alarmnum">
         <el-input v-model="drug.alarmnum" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>
@@ -30,7 +30,15 @@ export default {
     return {
       addDrugDialogFormVisible: true,
       formLabelWidth: "120px",
-      drug: {},
+      drug: {
+        alarmnum: "",
+      },
+      rules: {
+        alarmnum: [
+          { required: true, message: "请输入报警库存", trigger: "blur" },
+          { pattern: /^[1-9][\d]{1,}$/, message: "金额格式错误", trigger: "blur" },
+        ],
+      },
     };
   },
   props: ["objDrug"],

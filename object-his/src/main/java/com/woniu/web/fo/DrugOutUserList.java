@@ -1,7 +1,6 @@
 package com.woniu.web.fo;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.github.pagehelper.PageInfo;
 import com.woniu.entity.converter.UserConverter;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.po.UserPo;

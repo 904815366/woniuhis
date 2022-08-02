@@ -1,5 +1,6 @@
 package com.woniu.service;
 
+import com.woniu.entity.po.DrugrecordPo;
 import com.woniu.entity.po.WarnPo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.woniu.entity.po.WarndetailsPo;
@@ -23,4 +24,5 @@ public interface WarnService extends IService<WarnPo> {
     void updatestatus(String[] ids,Integer status);
 
     void addCpoe(AddCpoeFo addCpoeFo);
+
 }

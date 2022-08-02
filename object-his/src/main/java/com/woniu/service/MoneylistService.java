@@ -26,4 +26,6 @@ public interface MoneylistService extends IService<MoneylistPo> {
 
     void modifyStatus(ModifyStatusAndRegisterMoneysComment modifyStatusAndRegisterMoneysComment);
 
+
+    void addDrugList(String[] idArr);
 }

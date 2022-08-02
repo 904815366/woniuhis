@@ -15,8 +15,12 @@ import UserTime from '../components/user/UserTime.vue'
 import HomeContent from '../components/user/HomeContent.vue'
 import DrugList from '../components/drug/Drug.vue'
 import DrugEdit from '../components/drug/DrugEdit.vue'
+import DrugAdd from '../components/drug/DrugAdd.vue'
 import DrugOut from '../components/drug/DrugOut.vue'
-import DrugDetail from '../components/drug/DrugDetail.vue'
+import DrugRecord from '../components/drug/DrugRecord.vue'
+import DrugReturn from '../components/drug/DrugReturn.vue'
+import DrugReturnAdd from '../components/drug/DrugReturnAdd.vue'
+import ReturnAdd from '../components/drug/ReturnAdd.vue'
 import UserTimeThis from '../components/user/UserTimeThis.vue'
 import UserTimeNext from '../components/user/UserTimeNext.vue'
 Vue.use(VueRouter)
@@ -115,15 +119,34 @@ const routes = [
         name:'drugList',
         component:DrugList,
         children:[
-          { path: "/drug/drugedit", name: "drugedit", component: DrugEdit }
+          { path: "/drug/drugedit", name: "drugedit", component: DrugEdit },
+          { path: "/drug/drugadd", name: "drugadd", component: DrugAdd }
         ]
       },
       {
         path:'/drug/drugout',
         name:'drugOut',
         component:DrugOut,
+        children:[]
+      },
+      {
+        path:'/drug/drugrecord',
+        name:'drugRecord',
+        component:DrugRecord,
+        children:[]
+      },
+      {
+        path:'/drug/drugreturn',
+        name:'drugReturn',
+        component:DrugReturn,
+        children:[]
+      },
+      {
+        path:'/drug/drugreturnadd',
+        name:'drugReturnAdd',
+        component:DrugReturnAdd,
         children:[
-          { path: "/drug/drugdetail", name: "drugdetail", component: DrugDetail }
+          { path: "/drug/returnadd", name: "returnAdd", component: ReturnAdd }
         ]
       }
     ],

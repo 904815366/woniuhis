@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@TableName("drugrecord")
 public class DrugrecordPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,15 +35,23 @@ public class DrugrecordPo implements Serializable {
 
     private Integer num;
 
-    @DateTimeFormat(style = "yyyy-MM-dd")
-    private Date returntime;
+    private String type;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date time;
 
     private Integer userid;
 
-    @TableField("Refundmedicinerequestid")
-    private Integer Refundmedicinerequestid;
+    @TableField("drugreturnid")
+    private Integer drugreturnid;
 
     private Integer warndetailsid;
 
+    private String name;
 
+    private Integer doctorid;
+
+    private Integer nurseid;
+
+    private Integer familyid;
 }

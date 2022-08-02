@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface DrugService extends IService<DrugPo> {
 
+    void updateStock(String[] idArr);
 }
