@@ -20,22 +20,31 @@
         class="el-icon-circle-plus">
       </el-button>
 
-
+      <!-- 缴费框 -->
       <el-dialog title="添加缴费记录" :visible.sync="addFormVisible" width="30%">
-        <el-form :model="moneyrecord">
+        <el-form :model="moneyrecord" :rules="rules" ref="addmoneyrecord">
 
           <el-form-item label="缴 费 人:" :label-width="formLabelWidth">
             <el-input :value="register.name" autocomplete="off" :disabled="true" style="width: 150px"></el-input>
           </el-form-item>
 
-          <el-form-item label="缴费金额:" :label-width="formLabelWidth">
+          <el-form-item label="缴费金额:" :label-width="formLabelWidth" prop="prepaymoney">
             <el-input v-model="moneyrecord.prepaymoney" autocomplete="off" style="width: 150px">
             </el-input>
           </el-form-item>
 
+          <el-form-item label="付费方式:" :label-width="formLabelWidth" prop="type">
+            <el-select v-model="moneyrecord.type">
+              <el-option value="刷卡">刷卡</el-option>
+              <el-option value="支付宝">支付宝</el-option>
+              <el-option value="微信">微信</el-option>
+              <el-option value="云闪付">云闪付</el-option>
+            </el-select>
+          </el-form-item>
+
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="addFormVisible = false">取 消</el-button>
+          <el-button @click="addFormVisible = false, moneyrecord = {}">取 消</el-button>
           <el-button type="primary" @click="addMoneyrecord()">确 定</el-button>
         </div>
       </el-dialog>
@@ -47,80 +56,49 @@
 
     <!-- 病人信息 -->
     <div style="margin-top:10px;padding-top:10px;background-color: white; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)">
+
       <el-divider content-position="left">病人登记的信息</el-divider>
+
+
+
       <!-- 病人入院登记的信息 -->
-      <el-form ref="form" :model="register" label-width="100px">
+      <el-descriptions class="margin-top" :column="5" size="medium" style="padding-left:60px ;">
 
-        <el-form-item label="住院号:" style="display:inline-block">
-          <el-input v-model="register.id" autocomplete="off" style="width: 50px;" :disabled="true">
-          </el-input>
+        <el-descriptions-item label="住院号">{{ register.id }}</el-descriptions-item>
+        <el-descriptions-item label="姓名">{{ register.name }}</el-descriptions-item>
+        <el-descriptions-item label="性别">{{ register.sex }}</el-descriptions-item>
+        <el-descriptions-item label="联系方式">{{ register.phone }}</el-descriptions-item>
+        <el-descriptions-item label="年龄">{{ register.age }}</el-descriptions-item>
+        <el-descriptions-item label="身份证号码">{{ register.card }}</el-descriptions-item>
+        <el-descriptions-item label="住址">{{ register.area }}</el-descriptions-item>
+        <el-descriptions-item label="门诊诊断">{{ register.diagnose }}</el-descriptions-item>
+        <el-descriptions-item label="病房编号">{{ register.wardid }}</el-descriptions-item>
+        <el-descriptions-item label="床位编号">{{ register.bedid }}</el-descriptions-item>
+        <el-descriptions-item label="预交缴费">{{ register.money }}</el-descriptions-item>
+        <el-descriptions-item label="已用">{{ register.used }}</el-descriptions-item>
+        <el-descriptions-item label="退款">{{ register.refund }}</el-descriptions-item>
+        <el-descriptions-item label="状态">{{ register.status }}</el-descriptions-item>
 
-        </el-form-item>
-
-        <el-form-item label="姓名:" style="display:inline-block">
-          <el-input v-model="register.name" autocomplete="off" style="width: 150px" :disabled="true">
-          </el-input>
-        </el-form-item>
-
-        <el-form-item label="性别:" style="display:inline-block">
-          <el-input autocomplete="off" style="width: 50px;" v-model="register.sex" :disabled="true">
-          </el-input>
-
-        </el-form-item>
-
-        <el-form-item label="联系方式:" style="display:inline-block">
-          <el-input autocomplete="off" style="width: 130px;" v-model="register.phone" :disabled="true">
-          </el-input>
-        </el-form-item>
-
-        <el-form-item label="年龄:" style="display:inline-block">
-          <el-input autocomplete="off" style="width: 50px;" v-model="register.age" :disabled="true">
-          </el-input>
-        </el-form-item>
-
-
-
-        <el-form-item label="身份证号码:" style="display:inline-block">
-          <el-input autocomplete="off" style="width: 180px;" v-model="register.card" :disabled="true">
-          </el-input>
-        </el-form-item>
-
-        <el-form-item label="住址:" style="display:inline-block">
-          <el-input autocomplete="off" style="width: 300px; " v-model="register.area" :disabled="true">
-          </el-input>
-        </el-form-item>
-
-        <el-form-item label="门诊诊断:" style="display:inline-block">
-          <el-input autocomplete="off" style="width: 280px; " v-model="register.diagnose" :disabled="true">
-          </el-input>
-        </el-form-item>
-
-        <el-form-item label="余额:" style="display:inline-block">
-          <el-input autocomplete="off" style="width: 100px; color:red; " v-model="register.money" :disabled="true">
-          </el-input>
-
-        </el-form-item>
-
-        <el-form-item label="状态:" style="display:inline-block">
-          <el-input autocomplete="off" style="width: 100px; " v-model="register.status" :disabled="true">
-          </el-input>
-        </el-form-item>
-      </el-form>
-
-      <el-divider content-position="left">病人缴费记录列表</el-divider>
+      </el-descriptions>
 
       <!-- 预交缴费列表 -->
-      <el-table :data="MoneyrecordList" height="280" style="width: 100%; height:450px; margin-left:30px; " :fit="false">
+      <el-divider content-position="left">病人缴费记录列表</el-divider>
+
+      <el-table :data="MoneyrecordList" height="280" style="width: 95%; height:450px; margin-left:30px; " :fit="false">
 
         <el-table-column prop="id" label="收费单编号" width="100" align="center">
         </el-table-column>
         <el-table-column prop="prepaymoney" label="缴费金额(元)" width="200" align="center">
         </el-table-column>
+
         <el-table-column label="缴费时间" width="200" align="center">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.prepaytime | dateconverter }}</span>
           </template>
+        </el-table-column>
+
+        <el-table-column prop="type" label="付款方式" width="200" align="center">
         </el-table-column>
 
         <el-table-column label="收费人员" width="150" align="center">
@@ -160,6 +138,16 @@ export default {
       moneyrecord: {},
       formLabelWidth: '120px',
       idempotentToken: '',
+
+      rules: {
+        prepaymoney: [
+          { required: true, message: '请输入缴费金额', trigger: 'blur' },
+          { pattern: /^[1-9][\d]{1,}$/, message: '金额格式错误', trigger: 'blur' },
+        ],
+        type: [
+          { required: true, message: '请选择付款方式', trigger: 'blur' },
+        ],
+      }
     }
   },
   created() {
@@ -168,7 +156,14 @@ export default {
   methods: {
     //根据ID查询病人入院登记信息
     queryregisterById() {
-      this.axios.get("/api/register/queryById/" + this.searchpatientid + "/1").then(res => {
+      if (this.searchpatientid == "") {
+        this.$message({
+          message: '请先输入住院号!',
+          type: 'warning'
+        });
+        return;
+      };
+      this.axios.get("/api/register/queryById/" + this.searchpatientid + "/5").then(res => {
         if (res.data.status === 2000) {
           this.register = res.data.data;
           this.register.status = this.statusNumberFormString(this.register.status);
@@ -220,6 +215,8 @@ export default {
       }
       return searchStatus;
     },
+
+
     //  查询收费人员列表
     queryUserListByRoleId() {
       this.$axios.get("/api/register/queryUserListByRoleId").then(res => {
@@ -254,31 +251,38 @@ export default {
 
     //  添加缴费信息
     addMoneyrecord() {
-      this.moneyrecord.registerid = this.register.id;
-      this.moneyrecord.prepaytime = new Date();
-      this.moneyrecord.userid = window.sessionStorage.getItem("currentUserId");
-      this.$axios({
-        url: "/api/moneyrecord/insertOne",
-        method: 'post',
-        headers: { addMoneyrecord: this.idempotentToken },
-        data: this.moneyrecord,
-      }).then(res => {
-        if (res.data.status === 2000) {
-          this.$message({
-            message: '添加成功',
-            type: 'succeed'
-          });
-          this.addFormVisible = false;
-          this.queryregisterByIdAndqueryMoneyrecordList();
-          this.moneyrecord = {};
+
+      this.$refs["addmoneyrecord"].validate((valid) => {
+        if (!valid) {
+          return;
+        } else {
+          this.moneyrecord.registerid = this.register.id;
+          this.moneyrecord.userid = window.sessionStorage.getItem("currentUserId");
+          this.$axios({
+            url: "/api/moneyrecord/insertOne",
+            method: 'post',
+            headers: { addMoneyrecord: this.idempotentToken },
+            data: this.moneyrecord,
+          }).then(res => {
+            if (res.data.status === 2000) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              });
+              this.addFormVisible = false;
+              this.queryregisterByIdAndqueryMoneyrecordList();
+              this.moneyrecord = {};
+            }
+          }).catch(e => {
+            console.log(res);
+            this.$message({
+              message: '服务器跑不见了.....',
+              type: 'error'
+            });
+          })
         }
-      }).catch(e => {
-        console.log(res);
-        this.$message({
-          message: '服务器跑不见了.....',
-          type: 'error'
-        });
-      })
+      });
+
     }
 
   }

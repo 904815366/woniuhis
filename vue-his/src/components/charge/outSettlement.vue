@@ -11,7 +11,7 @@
     <div class="demo-input-suffix">
       <!-- <el-col :span="6" style="margin-top:5px"> -->
       <el-input placeholder="请输住院号进行查询" v-model="searchRegisterId" style="width:300px;margin-top:5px">
-        <el-button slot="append" icon="el-icon-search" @click="queryregisterById()"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="queryregisterById(3)"></el-button>
         <el-button slot="append" icon="el-icon-delete" @click="cleanQuery()"></el-button>
       </el-input>
 
@@ -27,11 +27,20 @@
           </el-form-item>
 
           <el-form-item label="未结算项:" :label-width="formLabelWidth">
-            <span style="font-weight:900;font-size: 20px;">{{ settlementData.num }}</span>
+            <span style="font-weight:900;font-size: 20px;">{{ settlementData.notNum }}</span>
           </el-form-item>
 
           <el-form-item label="未结算项总金额:" :label-width="formLabelWidth">
-            <span style="font-weight:900; font-size: 20px; color:red">{{ settlementData.sumMoney }}元</span>
+            <span style="font-weight:900; font-size: 20px; color:red">{{ settlementData.notMoney }}元</span>
+          </el-form-item>
+
+
+          <el-form-item label="退费项:" :label-width="formLabelWidth">
+            <span style="font-weight:900;font-size: 20px;">{{ settlementData.returnNum }}</span>
+          </el-form-item>
+
+          <el-form-item label="退费项总金额:" :label-width="formLabelWidth">
+            <span style="font-weight:900; font-size: 20px; color:red">{{ settlementData.returnMoney }}元</span>
           </el-form-item>
 
           <el-form-item>
@@ -46,72 +55,36 @@
       </el-dialog>
 
       <!-- 病人信息 -->
-      <div
-        style="margin-top:10px;padding-top:10px;background-color: white; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)">
+      <div style="margin-top:10px;padding-top:5px;background-color: white; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)">
+
         <el-divider content-position="left">病人登记的信息</el-divider>
+
         <!-- 病人入院登记的信息 -->
-        <el-form ref="form" :model="register" label-width="100px">
 
-          <el-form-item label="住院号:" style="display:inline-block">
-            <el-input v-model="register.id" autocomplete="off" style="width: 50px;" :disabled="true">
-            </el-input>
+        <el-descriptions class="margin-top" :column="5" size="medium" style="padding-left:60px ;">
 
-          </el-form-item>
+          <el-descriptions-item label="住院号">{{ register.id }}</el-descriptions-item>
+          <el-descriptions-item label="姓名">{{ register.name }}</el-descriptions-item>
+          <el-descriptions-item label="性别">{{ register.sex }}</el-descriptions-item>
+          <el-descriptions-item label="联系方式">{{ register.phone }}</el-descriptions-item>
+          <el-descriptions-item label="年龄">{{ register.age }}</el-descriptions-item>
+          <el-descriptions-item label="身份证号码">{{ register.card }}</el-descriptions-item>
+          <el-descriptions-item label="住址">{{ register.area }}</el-descriptions-item>
+          <el-descriptions-item label="门诊诊断">{{ register.diagnose }}</el-descriptions-item>
+          <el-descriptions-item label="病房编号">{{ register.wardid }}</el-descriptions-item>
+          <el-descriptions-item label="床位编号">{{ register.bedid }}</el-descriptions-item>
+          <el-descriptions-item label="预交缴费">{{ register.money }}</el-descriptions-item>
+          <el-descriptions-item label="已用">{{ register.used }}</el-descriptions-item>
+          <el-descriptions-item label="退款">{{ register.refund }}</el-descriptions-item>
+          <el-descriptions-item label="状态">{{ register.status }}</el-descriptions-item>
 
-          <el-form-item label="姓名:" style="display:inline-block">
-            <el-input v-model="register.name" autocomplete="off" style="width: 150px" :disabled="true">
-            </el-input>
-          </el-form-item>
+        </el-descriptions>
 
-          <el-form-item label="性别:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 50px;" v-model="register.sex" :disabled="true">
-            </el-input>
-
-          </el-form-item>
-
-          <el-form-item label="联系方式:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 130px;" v-model="register.phone" :disabled="true">
-            </el-input>
-          </el-form-item>
-
-          <el-form-item label="年龄:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 50px;" v-model="register.age" :disabled="true">
-            </el-input>
-          </el-form-item>
-
-
-
-          <el-form-item label="身份证号码:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 180px;" v-model="register.card" :disabled="true">
-            </el-input>
-          </el-form-item>
-
-          <el-form-item label="住址:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 300px; " v-model="register.area" :disabled="true">
-            </el-input>
-          </el-form-item>
-
-          <el-form-item label="门诊诊断:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 280px; " v-model="register.diagnose" :disabled="true">
-            </el-input>
-          </el-form-item>
-
-          <el-form-item label="余额:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 100px; color:red; " v-model="register.money" :disabled="true">
-            </el-input>
-
-          </el-form-item>
-
-          <el-form-item label="状态:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 100px; " v-model="register.status" :disabled="true">
-            </el-input>
-          </el-form-item>
-        </el-form>
 
         <el-divider content-position="left">病人消费列表</el-divider>
 
-        <!-- 预交缴费列表 -->
-        <el-table :data="MoneyList" height="280" style="width: 100%; height:450px; margin-left:30px; " :fit="false">
+        <!-- 消费列表 -->
+        <el-table :data="MoneyList" height="280" style="width: 95%; height:450px; margin-left:30px; " :fit="false">
 
           <el-table-column prop="id" label="消费编号" width="100" align="center">
           </el-table-column>
@@ -126,11 +99,15 @@
           <el-table-column prop="consumpart" label="消费详情" width="200" align="center">
           </el-table-column>
 
+          <!-- <el-table-column prop="type" label="付款方式" width="200" align="center">
+          </el-table-column> -->
+
           <el-table-column label="状态" width="200" align="center">
             <template slot-scope="scope">
               <span v-if="scope.row.status == 0" style="color:red">未结算</span>
               <span v-if="scope.row.status == 1" style="color:green">已结算</span>
-
+              <span v-if="scope.row.status == 2" style="color:red">申请退费</span>
+              <span v-if="scope.row.status == 3" style="color:green">已退费</span>
             </template>
           </el-table-column>
 
@@ -161,9 +138,12 @@ export default {
       //结算的数据
       settlementData: {
         registerId: '',
-        num: 0,
-        sumMoney: 0,
-        moneyListId: '',
+        notNum: 0,
+        notMoney: 0,
+        returnNum: 0,
+        returnMoney: 0,
+        notMoneyListId: '',
+        returnMoneyListId: '',
       },
       //结算窗口大小
       formLabelWidth: '120px',
@@ -178,8 +158,16 @@ export default {
   },
   methods: {
     //根据ID查询病人入院登记信息
-    queryregisterById() {
-      this.axios.get("/api/register/queryById/" + this.searchRegisterId + "/3").then(res => {
+    queryregisterById(status) {
+      if (this.searchRegisterId == "") {
+        this.$message({
+          message: '请先输入住院号!',
+          type: 'warning'
+        });
+        return;
+      };
+      console.log("进来了" + status);
+      this.axios.get("/api/register/queryById/" + this.searchRegisterId + "/" + status).then(res => {
         if (res.data.status === 2000) {
           this.register = res.data.data;
           this.register.status = this.statusNumberFormString(this.register.status);
@@ -209,6 +197,7 @@ export default {
       }).then(res => {
         if (res.data.status === 2000) {
           this.MoneyList = res.data.data;
+          console.log(this.MoneyList);
         }
       });
     },
@@ -225,10 +214,16 @@ export default {
 
       for (let i of this.MoneyList) {
         if (i.status == '0') {
-          console.log(i);
-          this.settlementData.num++;
-          this.settlementData.sumMoney += i.consummoney;
-          this.settlementData.moneyListId += i.id + ",";
+
+          this.settlementData.notNum++;
+          this.settlementData.notMoney += i.consummoney;
+          this.settlementData.notMoneyListId += i.id + ",";
+        }
+        if (i.status == '2') {
+
+          this.settlementData.returnNum++;
+          this.settlementData.returnMoney += i.consummoney;
+          this.settlementData.returnMoneyListId += i.id + ",";
         }
       }
 
@@ -243,10 +238,14 @@ export default {
     closeSettlementFormVisible() {
       this.settlementFormVisible = false;
       this.settlementData = {
-        register: '',
-        num: 0,
-        sumMoney: 0,
-        moneyListId: '',
+        registerId: '',
+        notNum: 0,
+        notMoney: 0,
+        notMoneyListId: '',
+
+        returnNum: 0,
+        returnMoney: 0,
+        returnMoneyListId: '',
       };
 
     },
@@ -283,12 +282,12 @@ export default {
 
     //结算
     addSettlementData() {
-      if (this.settlementData.sumMoney > this.register.money) {
-        this.settlementInfo = '余额不足! 请先到缴费窗口缴费. 当前余额:' + this.register.money + '元 , 结算所需金额:' + this.settlementData.sumMoney + '元, 需缴费:' + (this.settlementData.sumMoney - this.register.money) + '元.';
+      if (this.settlementData.notMoney > (this.register.money + this.settlementData.returnMoney)) {
+        this.settlementInfo = '余额不足! 请先到缴费窗口缴费. 当前余额:' + this.register.money + '元. 结清退款项后,还需缴费:' + (this.settlementData.notMoney - this.register.money - this.settlementData.returnMoney) + '元.';
         return;
       }
+
       this.settlementData.registerId = this.register.id;
-      console.log(this.settlementData.moneyListId);
       this.$axios({
         url: "/api/register/settlement",
         method: "post",
@@ -300,7 +299,8 @@ export default {
             message: '结算完成,出院审核通过',
             type: 'success',
           });
-          this.QueryMoneyListByRegisterId(-1);
+          this.queryregisterById(4);
+          this.closeSettlementFormVisible();
         } else {
           this.$message({
             message: '结算失败',

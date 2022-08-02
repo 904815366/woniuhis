@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.woniu.entity.po.MoneylistPo;
 import com.woniu.entity.po.NursetypePo;
 import com.woniu.web.fo.ModifyMoneyListOfStatusComment;
+import com.woniu.web.fo.ModifyStatusAndRegisterMoneyComment;
+import com.woniu.web.fo.ModifyStatusAndRegisterMoneysComment;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -17,4 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface MoneylistService extends IService<MoneylistPo> {
     public void modifyStatusByIds(ModifyMoneyListOfStatusComment modifyMoneyListOfStatusComment);
+
+    void addEverydayMoneyList();
+
+    void modifyStatus(ModifyStatusAndRegisterMoneyComment modifyStatusAndRegisterMoneyComment);
+
+    void modifyStatus(ModifyStatusAndRegisterMoneysComment modifyStatusAndRegisterMoneysComment);
+
 }

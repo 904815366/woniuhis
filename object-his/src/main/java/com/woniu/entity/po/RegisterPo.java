@@ -61,6 +61,10 @@ public class RegisterPo implements Serializable {
     private LocalDateTime outtime;
 
     private String status;
+    private Integer wardid;
 
+
+    private Double used;
+    private Double refund;
 
 }

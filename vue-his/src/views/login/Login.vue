@@ -1,10 +1,12 @@
 <template>
-  <div style="height: 100%">
-    <el-row type="flex" justify="center" align="middle">
-      <el-col :span="8">
-
-        <h1>HIS管理系统</h1><br />
-        <el-form :model="user" status-icon :rules="rules" ref="loginForm" label-width="100px" class="loginForm">
+  <div>
+    <el-row type="flex" justify="center" align="middle" style="margin-top:170px; margin-left: 500px;">
+      <el-col :span="10">
+        <img style="width: 334px" src="@/assets/QQ截图20220802154346.png" />
+        <!-- <h1>登录</h1> -->
+        <el-divider content-position="left" style="font-size:30px;">登录</el-divider>
+        <el-form :model="user" status-icon :rules="rules" ref="loginForm" label-width="100px" class="loginForm"
+          :hide-required-asterisk="true">
 
           <el-form-item label="用户名" prop="username">
             <el-input v-model="user.username" autocomplete="off"></el-input>
@@ -20,6 +22,7 @@
         </el-form>
       </el-col>
     </el-row>
+
   </div>
 </template>
 

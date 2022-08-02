@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.woniu.entity.dto.NursetypeDto;
 import com.woniu.entity.po.MoneylistPo;
 import com.woniu.entity.po.NursetypePo;
+import com.woniu.entity.po.RegisterPo;
 import com.woniu.web.fo.ModifyMoneyListOfStatusComment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,5 +27,10 @@ public interface MoneylistMysqlDao extends BaseMapper<MoneylistPo> {
 //            "<foreach item='id' collection='ids' open='(' close=')' separator=','>" +
 //            "#{id}" +
 //            "</foreach> ")
-    void updateStatusByIds(String[] ids);
+    void updateStatusTo1ByIds(String[] ids);
+
+    void updateStatusTo3ByIds(String[] ids);
+
+
+    void insertEverydayMoneyList(List<RegisterPo> registerPos);
 }

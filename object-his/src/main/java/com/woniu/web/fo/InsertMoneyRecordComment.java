@@ -24,5 +24,6 @@ public class InsertMoneyRecordComment {
     private Double prepaymoney;
     private LocalDateTime prepaytime;
     private Integer userid;
+    private String type;
 
 }

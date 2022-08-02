@@ -11,10 +11,7 @@ import com.woniu.repository.MoneyrecordRepository;
 import com.woniu.repository.RegisterRepository;
 import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.service.RegisterService;
-import com.woniu.web.fo.InsertMoneyRecordComment;
-import com.woniu.web.fo.ModifyMoneyListOfStatusComment;
-import com.woniu.web.fo.ModifyRegisterMoneyComment;
-import com.woniu.web.fo.OutSettlementComment;
+import com.woniu.web.fo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,10 +96,20 @@ public class RegisterServiceImpl extends ServiceImpl<RegisterMysqlDao, RegisterP
         if(modifyResult == false)
             throw new RuntimeException("modifyMoneyAndStatusById结果为false");
 
-        if (outSettlementComment.getMoneyListId().isEmpty() || "".equals(outSettlementComment.getMoneyListId()))
-            return;
-        String[] ids = outSettlementComment.getMoneyListId().substring(0,outSettlementComment.getMoneyListId().length()-1).split(",");
-        bus.post(new ModifyMoneyListOfStatusComment(ids));
+
+        bus.post(new ModifyMoneyListOfStatusComment(outSettlementComment.getNotMoneyListId(),outSettlementComment.getReturnMoneyListId()));
+
+    }
+
+    @Override
+    public List<RegisterPo> queryStatus() {
+        return registerRepository.queryStatus();
+    }
+
+
+    @Override
+    public void modifyRegisterMoneyAndUsed(ModifyStatusAndRegisterMoneyComment modifyStatusAndRegisterMoneyComment) {
+        registerRepository.modifyRegisterMoneyAndUsed(modifyStatusAndRegisterMoneyComment);
     }
 
 

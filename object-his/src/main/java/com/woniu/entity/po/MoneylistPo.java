@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,6 +25,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("moneylist")
+@Builder
 public class MoneylistPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,12 +37,14 @@ public class MoneylistPo implements Serializable {
 
     private BigDecimal consummoney;//消费金额
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    private Date consumtime;//消费时间
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime consumtime;//消费时间
 
     private String consumpart;//消费详情
 
     private String status;
 
+
+    private String type;
 }

@@ -10,7 +10,12 @@ import lombok.NoArgsConstructor;
 public class OutSettlementComment {
 
     private Integer registerId;
-    private Integer num;
-    private Double sumMoney;
-    private String moneyListId;
+    private Integer notNum;
+    private Double notMoney;
+    private String notMoneyListId;
+
+    private Integer returnNum;
+    private Double returnMoney;
+    private String returnMoneyListId;
+
 }

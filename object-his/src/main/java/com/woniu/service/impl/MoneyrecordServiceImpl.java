@@ -18,6 +18,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 /**
  * <p>
  *  服务实现类
@@ -48,7 +50,7 @@ public class MoneyrecordServiceImpl extends ServiceImpl<MoneyrecordMysqlDao, Mon
     public boolean addOne(InsertMoneyRecordComment comment) {
 
         MoneyrecordPo po = MoneyrecordPo.builder().registerid(comment.getRegisterid()).prepaymoney(comment.getPrepaymoney())
-                .prepaytime(comment.getPrepaytime()).userid(comment.getUserid()).build();
+               .userid(comment.getUserid()).type(comment.getType()).build();
         boolean addOne = moneyrecordRepository.addOne(po);
         if (addOne == false){
             throw new RuntimeException("不知道为什么,添加失败了..");

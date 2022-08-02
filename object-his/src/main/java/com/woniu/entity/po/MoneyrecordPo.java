@@ -45,5 +45,7 @@ public class MoneyrecordPo implements Serializable {
 
     private Integer userid;
 
+    private String type;
+
 
 }

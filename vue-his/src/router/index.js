@@ -49,6 +49,7 @@ const routes = [
         component: Notification,
       }, //住院通知单
       {path:'/charge/outSettlement',name: '/charge/outSettlement',component: () => import('../components/charge/outSettlement.vue')},//出院结算
+      {path:'/charge/dailysettlement',name: '/charge/dailysettlement',component: () => import('../components/charge/dailysettlement.vue')},//收费日结
       { path: "/user/add", name: "addUser", component: AddUser, children: [] },
       {
         path: "/user/list",

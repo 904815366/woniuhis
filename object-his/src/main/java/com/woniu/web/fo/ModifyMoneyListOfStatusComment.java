@@ -13,5 +13,7 @@ import org.springframework.context.ApplicationContext;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ModifyMoneyListOfStatusComment {
-  private String[] ids;
+  private String outIds;
+  private String returnIds;
+
 }

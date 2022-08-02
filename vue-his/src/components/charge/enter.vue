@@ -61,14 +61,15 @@
         </el-drawer>
 
         <!-- 入院登记信息 -->
-        <el-form ref="form" :model="addregister" label-width="100px">
+        <el-form ref="addregister" :model="addregister" label-width="100px" :rules="rules"
+          :hide-required-asterisk="false">
           <el-form-item label="病人编号:">
             <el-input :disabled="true" v-model="addregister.id" autocomplete="off" style="width: 50px;">
             </el-input>
 
           </el-form-item>
 
-          <el-form-item label="姓名:" style="display:inline-block">
+          <el-form-item label="姓名:" style="display:inline-block" prop="name">
             <el-input v-model="addregister.name" autocomplete="off" style="width: 300px" placeholder="请输入姓名">
             </el-input>
           </el-form-item>
@@ -78,39 +79,42 @@
             <el-radio v-model="addregister.sex" label="女" border size="medium">女</el-radio>
           </el-form-item>
 
-          <el-form-item label="联系方式:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 300px;" v-model="addregister.phone" placeholder="请输入联系方式">
+          <el-form-item label="联系方式:" style="display:inline-block" prop="phone">
+            <el-input autocomplete="off" style="width: 300px;" v-model="addregister.phone" placeholder="请输入联系方式"
+              maxlength="11">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="年龄:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 120px;" v-model="addregister.age" placeholder="请输入年龄">
+          <el-form-item label="年龄:" style="display:inline-block" prop="age">
+            <el-input autocomplete="off" style="width: 120px;" v-model.number="addregister.age" placeholder="请输入年龄"
+              maxlength="3">
             </el-input>
           </el-form-item>
 
 
 
-          <el-form-item label="身份证号码:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 300px;" v-model="addregister.card" placeholder="请输入身份证号码">
+          <el-form-item label="身份证号码:" style="display:inline-block" prop="card">
+            <el-input autocomplete="off" style="width: 300px;" v-model="addregister.card" placeholder="请输入身份证号码"
+              maxlength="18">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="住址:" style="display:inline-block">
+          <el-form-item label="住址:" style="display:inline-block" prop="area">
             <el-input autocomplete="off" style="width: 300px; " v-model="addregister.area" placeholder="请输入住址">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="门诊诊断:" style="display:inline-block">
+          <el-form-item label="门诊诊断:" style="display:inline-block" prop="diagnose">
             <el-input autocomplete="off" style="width: 300px; " v-model="addregister.diagnose" placeholder="请输入门诊诊断">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="预缴金额:" style="display:inline-block">
+          <el-form-item label="预缴金额:" style="display:inline-block" prop="money">
             <el-input autocomplete="off" style="width: 300px; " v-model="addregister.money" placeholder="请输入预缴金额">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="状态:">
+          <el-form-item label="状态:" prop="status">
             <el-select style="width: 300px; " v-model="addregister.status" placeholder="请输入状态">
               <el-option value="未缴费">未缴费</el-option>
               <el-option value="已缴费">已缴费</el-option>
@@ -141,14 +145,14 @@
 
 
         <!-- 修改入院登记信息 -->
-        <el-form ref="form" :model="modifyregister" label-width="100px">
+        <el-form ref="modifyregister" :model="modifyregister" label-width="100px" :rules="rules">
           <el-form-item label="病人编号:">
             <el-input disabled v-model="modifyregister.id" autocomplete="off" style="width: 50px;">
             </el-input>
 
           </el-form-item>
 
-          <el-form-item label="姓名:" style="display:inline-block">
+          <el-form-item label="姓名:" style="display:inline-block" prop="name">
             <el-input v-model="modifyregister.name" autocomplete="off" style="width: 300px" placeholder="请输入姓名">
             </el-input>
           </el-form-item>
@@ -158,34 +162,34 @@
             <el-radio v-model="modifyregister.sex" label="女" border size="medium">女</el-radio>
           </el-form-item>
 
-          <el-form-item label="联系方式:" style="display:inline-block">
+          <el-form-item label="联系方式:" style="display:inline-block" prop="phone">
             <el-input autocomplete="off" style="width: 300px;" v-model="modifyregister.phone" placeholder="请输入联系方式">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="年龄:" style="display:inline-block">
-            <el-input autocomplete="off" style="width: 120px;" v-model="modifyregister.age" placeholder="请输入年龄">
+          <el-form-item label="年龄:" style="display:inline-block" prop="age">
+            <el-input autocomplete="off" style="width: 120px;" v-model.number="modifyregister.age" placeholder="请输入年龄">
             </el-input>
           </el-form-item>
 
 
 
-          <el-form-item label="身份证号码:" style="display:inline-block">
+          <el-form-item label="身份证号码:" style="display:inline-block" prop="card">
             <el-input autocomplete="off" style="width: 300px;" v-model="modifyregister.card" placeholder="请输入身份证号码">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="住址:" style="display:inline-block">
+          <el-form-item label="住址:" style="display:inline-block" prop="area">
             <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.area" placeholder="请输入住址">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="门诊诊断:" style="display:inline-block">
+          <el-form-item label="门诊诊断:" style="display:inline-block" prop="diagnose">
             <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.diagnose" placeholder="请输入门诊诊断">
             </el-input>
           </el-form-item>
 
-          <el-form-item label="预缴金额:" style="display:inline-block">
+          <el-form-item label="预缴金额:" style="display:inline-block" prop="money">
             <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.money" placeholder="请输入预缴金额">
             </el-input>
           </el-form-item>
@@ -323,9 +327,38 @@ export default {
 
       //幂等Token
       idempotentToken: '',
+      rules: {
+        name: [
+          { required: true, message: '请输入姓名', trigger: 'blur' },
+          { pattern: /^[\u4e00-\u9fa5]{1,}$/, message: '姓名格式错误', trigger: 'blur' },
 
-
-
+        ],
+        phone: [
+          { required: true, message: '请输入联系方式', trigger: 'blur' },
+          { pattern: /^0?(13|14|15|17|18|19)[0-9]{9}$/, message: '联系方式格式错误', trigger: 'change' }
+        ],
+        age: [
+          { required: true, message: '请输入年龄', trigger: 'blur' },
+          { type: 'number', min: 1, max: 120, message: '年龄格式错误(<=120)', trigger: 'blur' }
+        ],
+        card: [
+          { required: true, message: '请输入身份证号码', trigger: 'blur' },
+          { pattern: /^\d{17}[\d|x]/, message: '身份证号码格式错误', trigger: 'blur' }
+        ],
+        area: [
+          { required: true, message: '请输入住址', trigger: 'blur' },
+        ],
+        diagnose: [
+          { required: true, message: '请输入门诊诊断', trigger: 'blur' },
+        ],
+        status: [
+          { required: true, message: '请选择状态', trigger: 'blur' },
+        ],
+        money: [
+          { required: false, message: '请输入缴费金额', trigger: 'blur' },
+          { pattern: /^[1-9][\d]{1,}$/, message: '金额格式错误', trigger: 'blur' },
+        ],
+      }
     }
   },
   created() {
@@ -369,38 +402,47 @@ export default {
 
       if (this.addregister.id == "" || this.addregister.id == null) {
         this.$message.error('请先在预约列表中进行选择!');
+        this.visible = false;
         return;
-      }
-      this.visible = false;
-      this.addregister.status = this.statusStringFormNumber(this.addregister.status);
-      this.addregister.chargeid = window.sessionStorage.getItem('currentUserId');
-      this.$axios({
-        url: '/api/register/publish',
-        method: 'post',
-        headers: { addRegister: this.idempotentToken },
-        data: this.addregister
-      }).then(res => {
-        if (res.data.status === 200) {
-          this.$message({
-            message: '添加成功',
-            type: 'success'
-          });
+      };
 
-          this.drawer = false;
-          this.queryPageInfo(this.pageNum);
+      this.$refs["addregister"].validate((valid) => {
+        if (!valid) {
+          return;
         } else {
-          console.log(res.data);
-          this.$message({
-            message: '服务器维护中,请稍后再试...',
-            type: 'success'
+          this.addregister.status = this.statusStringFormNumber(this.addregister.status);
+          this.addregister.chargeid = window.sessionStorage.getItem('currentUserId');
+          this.$axios({
+            url: '/api/register/publish',
+            method: 'post',
+            headers: { addRegister: this.idempotentToken },
+            data: this.addregister
+          }).then(res => {
+            if (res.data.status === 200) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              });
+
+              this.drawer = false;
+              this.queryPageInfo(this.pageNum);
+            } else {
+              console.log(res.data);
+              this.$message({
+                message: '当前病人已登记过...',
+                type: 'warning'
+              });
+            }
+          }).catch(e => {
+            this.$message({
+              message: e.message,
+              type: 'error'
+            });
           });
         }
-      }).catch(e => {
-        this.$message({
-          message: e.message,
-          type: 'error'
-        });
       });
+      this.addregister.status = this.statusNumberFormString(this.addregister.status);
+      this.visible = false;
     },
 
 
@@ -408,7 +450,7 @@ export default {
 
     //关闭入院登记窗口
     handleClose(done) {
-      this.$confirm('还有未保存的工作哦确定关闭吗？')
+      this.$confirm('确定关闭吗？')
         .then(_ => {
           done();
           this.addregister = {
@@ -499,33 +541,40 @@ export default {
 
     //提交修改
     modifyRegisterForm() {
-      this.modifyregister.status = this.statusStringFormNumber(this.modifyregister.status);
-      this.modifyvisible = false;
-      this.$axios({
-        url: '/api/register/modify',
-        method: 'post',
-        headers: { modifyRegister: this.idempotentToken },
-        data: this.modifyregister
-      }).then(res => {
-        if (res.data.status === 200) {
-          this.$message({
-            message: '修改成功',
-            type: 'success'
-          });
-          this.queryPageInfo(this.pageNum);
-          this.modifyDrawer = false;
+
+      this.$refs["modifyregister"].validate((valid) => {
+        if (!valid) {
+          return;
         } else {
-          this.$message({
-            message: '修改失败',
-            type: 'error'
+          this.modifyregister.status = this.statusStringFormNumber(this.modifyregister.status);
+          this.$axios({
+            url: '/api/register/modify',
+            method: 'post',
+            headers: { modifyRegister: this.idempotentToken },
+            data: this.modifyregister
+          }).then(res => {
+            if (res.data.status === 200) {
+              this.$message({
+                message: '修改成功',
+                type: 'success'
+              });
+              this.queryPageInfo(this.pageNum);
+              this.modifyDrawer = false;
+            } else {
+              this.$message({
+                message: '修改失败',
+                type: 'error'
+              });
+            }
+          }).catch(e => {
+            this.$message({
+              message: e.message,
+              type: 'error'
+            });
           });
         }
-      }).catch(e => {
-        this.$message({
-          message: e.message,
-          type: 'error'
-        });
       });
+      this.modifyvisible = false;
     },
 
 

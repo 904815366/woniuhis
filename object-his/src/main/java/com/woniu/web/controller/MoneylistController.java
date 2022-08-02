@@ -8,13 +8,12 @@ import com.woniu.entity.converter.MoneylistConcerter;
 import com.woniu.entity.dto.MoneylistDto;
 import com.woniu.entity.po.MoneylistPo;
 import com.woniu.service.MoneylistService;
+import com.woniu.web.fo.ModifyStatusAndRegisterMoneyComment;
+import com.woniu.web.fo.ModifyStatusAndRegisterMoneysComment;
 import com.woniu.web.fo.MoneyListByRegisterIdAndStatusQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -59,6 +58,31 @@ public class MoneylistController {
             MoneyListByRegisterIdAndStatusQuery moneyListByRegisterIdAndStatusQuery){
         return moneyListByRegisterIdAndStatusQuery.exec();
 
+    }
+
+    /**
+     * 日结列表,结算单个消费订单
+     * @param modifyStatusAndRegisterMoneyComment
+     * @return
+     */
+    @PostMapping("/modifyStatusAndRegisterMoney")
+    public ResponseResult<Void> modifyStatusAndRegisterMoney(
+            @RequestBody ModifyStatusAndRegisterMoneyComment modifyStatusAndRegisterMoneyComment){
+        bus.post(modifyStatusAndRegisterMoneyComment);
+        return new ResponseResult<>(2000,"ok");
+    }
+
+
+    /**
+     * 日结列表,批量结算消费订单
+     * @param modifyStatusAndRegistersMoneyComment
+     * @return
+     */
+    @PostMapping("/modifyStatusAndRegisterMoneys")
+    public ResponseResult<Void> modifyStatusAndRegisterMoneys(
+            @RequestBody ModifyStatusAndRegisterMoneysComment modifyStatusAndRegistersMoneyComment){
+        bus.post(modifyStatusAndRegistersMoneyComment);
+        return new ResponseResult<>(2000,"ok");
     }
 
 

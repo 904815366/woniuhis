@@ -7,7 +7,10 @@ import com.github.pagehelper.PageInfo;
 import com.woniu.entity.po.RolePerms;
 import com.woniu.web.fo.InsertMoneyRecordComment;
 import com.woniu.web.fo.ModifyRegisterMoneyComment;
+import com.woniu.web.fo.ModifyStatusAndRegisterMoneyComment;
 import com.woniu.web.fo.OutSettlementComment;
+
+import java.util.List;
 
 /**
  * <p>
@@ -34,4 +37,8 @@ public interface RegisterService  extends IService<RegisterPo>  {
     void modifyMoney(ModifyRegisterMoneyComment modifyRegisterMoneyComment);
 
     void  modifyMoneyAndStatusById(OutSettlementComment outSettlementComment);
+
+    List<RegisterPo> queryStatus();
+
+    void modifyRegisterMoneyAndUsed(ModifyStatusAndRegisterMoneyComment modifyStatusAndRegisterMoneyComment);
 }

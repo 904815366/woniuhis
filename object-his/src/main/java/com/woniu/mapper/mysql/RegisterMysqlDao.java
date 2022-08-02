@@ -6,6 +6,7 @@ import com.woniu.entity.po.RegisterPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.woniu.web.fo.InsertMoneyRecordComment;
 import com.woniu.web.fo.ModifyRegisterMoneyComment;
+import com.woniu.web.fo.ModifyStatusAndRegisterMoneyComment;
 import com.woniu.web.fo.OutSettlementComment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -40,6 +41,9 @@ public interface RegisterMysqlDao extends BaseMapper<RegisterPo> {
     @Update("UPDATE register set money=money+#{prepaymoney} WHERE id=#{registerid}")
     boolean modifyMoney(ModifyRegisterMoneyComment modifyRegisterMoneyComment);
 
-    @Update("UPDATE register set money=money-#{sumMoney},status=4 WHERE id=#{registerId}")
+    @Update("UPDATE register set refund=refund+money-(#{notMoney}-#{returnMoney}),used=used+(#{notMoney}-#{returnMoney}),money=0,status=4 WHERE id=#{registerId}")
     boolean UpdateMoneyAndStatusById(OutSettlementComment outSettlementComment);
+
+    @Update("UPDATE register set money=money-#{consummoney},used=used+#{consummoney} WHERE id=#{registerid}")
+    Integer updateRegisterMoneyAndUsed(ModifyStatusAndRegisterMoneyComment modifyStatusAndRegisterMoneyComment);
 }

@@ -27,6 +27,7 @@ public class MoneyRecordListByIdQuery {
         MoneyrecordConverter converter = applicationContext.getBean(MoneyrecordConverter.class);
         List<MoneyrecordPo> pos = moneyrecordRepository.queryListById(id);
         List<MoneyrecordDto> dtos = converter.from(pos);
+        System.out.println(dtos);
         return new ResponseResult<>(dtos,"ok",2000);
     }
 }

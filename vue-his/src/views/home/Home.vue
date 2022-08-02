@@ -1,14 +1,11 @@
 <template>
   <el-container>
-    <el-header>
+    <el-header height="40px">
       <el-row>
-        <el-col :span="8" class="col_l"><img style="width: 234px" src="@/assets/logo.png" /></el-col>
-        <el-col :span="8">
-          <h1>his管理系统</h1>
-        </el-col>
-        <el-col :span="8" class="col_r">
-          <span style="color: blud">您好,{{ name }} !</span>&nbsp;&nbsp;
-          <el-button type="danger" size="small" @click="logout()">退出</el-button>
+        <el-col :span="8" class="col_l">&nbsp;</el-col>
+        <el-col :span="16" class="col_r">
+          {{ nowTime }}&nbsp;|&nbsp;当前用户:&nbsp;{{ name }} &nbsp;&nbsp;
+          <el-button type="primary" :plain="true" size="small" @click="logout()">退出</el-button>
         </el-col>
       </el-row>
     </el-header>
@@ -52,6 +49,9 @@ export default {
       name: '', //右上角显示的用户名字
       username: '', //用户当前登录的账号
       menuData: [],
+
+      timer: undefined, //定一个计时器
+      nowTime: new Date(),//当前时间
     };
   },
   methods: {
@@ -93,7 +93,18 @@ export default {
           console.log(res.data.msg);
         });
     });
+
+
+    this.timer = setInterval(() => {
+      this.nowTime = new Date().toLocaleString();
+    });
   },
+
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
 };
 </script>
 
@@ -101,6 +112,8 @@ export default {
 .el-header {
   background: #fff;
   padding: 0;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
 
   h1 {
     color: #515154;
@@ -112,7 +125,7 @@ export default {
   }
 
   .col_r {
-    line-height: 60px;
+    // line-height: 60px;
     text-align: right;
     padding-right: 30px;
   }

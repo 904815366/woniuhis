@@ -33,5 +33,7 @@ public class MoneyrecordDto implements Serializable {
 
     private Integer userid;
 
+    private String type;
+
 
 }

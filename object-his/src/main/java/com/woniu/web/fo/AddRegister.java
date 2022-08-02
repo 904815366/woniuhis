@@ -43,7 +43,7 @@ public class AddRegister {
         RegisterService registerService = applicationContext.getBean(RegisterService.class);
         RegisterPo po = RegisterPo.builder()
                 .patientid(patientid).name(name).sex(sex).age(age).phone(phone)
-                .card(card).area(area).diagnose(diagnose).money(money).chargeid(chargeid).status(status)
+                .card(card).area(area).diagnose(diagnose).money(money).chargeid(chargeid).status(status).used(0.0).refund(0.0)
                 .build();
         registerService.addRegister(po);
 

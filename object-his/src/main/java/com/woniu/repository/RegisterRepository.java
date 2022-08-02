@@ -10,6 +10,7 @@ import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.mapper.redis.RegisterRedis;
 import com.woniu.web.fo.InsertMoneyRecordComment;
 import com.woniu.web.fo.ModifyRegisterMoneyComment;
+import com.woniu.web.fo.ModifyStatusAndRegisterMoneyComment;
 import com.woniu.web.fo.OutSettlementComment;
 import io.minio.messages.ExistingObjectReplication;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +65,7 @@ public class RegisterRepository {
     public boolean addRegister(RegisterPo po) {
         QueryWrapper<RegisterPo> wrapper = new QueryWrapper<>();
         wrapper.eq("patientid", po.getPatientid())
-                .ne("status",4);
+                .ne("status",5);
 
         RegisterPo selectOne = registerMysqlDao.selectOne(wrapper);
         if (selectOne != null)
@@ -106,7 +107,9 @@ public class RegisterRepository {
         if (status == 3){
             wrapper.eq("status",status);
         }
-
+        if (status == 5){
+            wrapper.ne("status",status);
+        }
 
         RegisterPo po = registerMysqlDao.selectOne(wrapper);
             if (po == null){
@@ -136,5 +139,24 @@ public class RegisterRepository {
     public boolean modifyMoneyAndStatusById(OutSettlementComment outSettlementComment) {
         boolean modifyResult = registerMysqlDao.UpdateMoneyAndStatusById(outSettlementComment);
         return modifyResult;
+    }
+
+    /**
+     * 查询状态为住院中2/申请出院3/审核通过4的ID列表
+     * @return
+     */
+    public List<RegisterPo> queryStatus() {
+        QueryWrapper<RegisterPo> wrapper = new QueryWrapper();
+        wrapper.eq("status",2)
+                .or().eq("status",3)
+                .or().eq("status",4);
+        return registerMysqlDao.selectList(wrapper);
+    }
+
+    public void modifyRegisterMoneyAndUsed(ModifyStatusAndRegisterMoneyComment modifyStatusAndRegisterMoneyComment) {
+        Integer update = registerMysqlDao.updateRegisterMoneyAndUsed(modifyStatusAndRegisterMoneyComment);
+            if (update == 0){
+                throw new RuntimeException("updateRegisterMoneyAndUsed执行结果为0");
+            }
     }
 }
