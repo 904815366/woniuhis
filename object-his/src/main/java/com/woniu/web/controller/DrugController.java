@@ -4,20 +4,13 @@ package com.woniu.web.controller;
 import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.DrugDto;
-import com.woniu.entity.dto.PatientDto;
-import com.woniu.entity.dto.RegisterDto;
-import com.woniu.entity.dto.WarnDto;
-import com.woniu.service.DrugService;
 import com.woniu.web.fo.DrugAdd;
 import com.woniu.web.fo.DrugEdit;
 import com.woniu.web.fo.DrugList;
-import com.woniu.web.fo.DrugOutList;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
