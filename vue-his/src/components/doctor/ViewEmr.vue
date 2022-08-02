@@ -1,7 +1,7 @@
 <template>
-    <div class="my-tiny">
+    <el-dialog title="查看病历" :visible.sync="addDialogFormVisible" @close="cancelAdd">
         <editor v-model="myValue" :init="init" :disabled="disabled" @onClick="onClick" />
-    </div>
+    </el-dialog>
 </template>
 
 <script>
@@ -28,12 +28,10 @@ import 'tinymce/plugins/paste'
 import 'tinymce/plugins/fullscreen' // 全屏插件
 import 'tinymce/plugins/code' // 代码插件
 import '@/utils/zh_CN'
-
 export default {
     components: {
         Editor
-    },
-    props: {
+    }, props: {
         // supThis: {
         //   type: Object,
         //   required: true
@@ -62,8 +60,11 @@ export default {
             'default': null
         }
     },
+    props: ['lookEmr'],//接收父组件传来的属性值
     data() {
         return {
+            addDialogFormVisible: true,
+            formLabelWidth: '120px',
             // 初始化配置
             init: {
                 menu: {// 菜单栏项目点击后下拉的内容，items为下拉内容
@@ -116,14 +117,16 @@ export default {
                 //   this.supThis.insertTemplate()
                 // },
             },
-            myValue: ""
+            myValue: this.lookEmr
         }
+    },
+    created() {
     },
     watch: {
         value(newValue) {
             this.myValue = newValue
         },
-        myValue(newValue,oldVal) {
+        myValue(newValue, oldVal) {
             this.$bus.emit('input', newValue)
         }
     },
@@ -131,6 +134,16 @@ export default {
         tinymce.init({})
     },
     methods: {
+        cancelAdd() {
+            this.addDialogFormVisible = false;
+            //调用父组件传来的方法
+            this.$emit('func');
+        },
+        confirmAdd() {
+            this.addDialogFormVisible = false;
+            //调用父组件传来的方法
+            this.$emit('func');
+        },
         // 添加相关的事件，可用的事件参照文档=> https://github.com/tinymce/tinymce-vue => All available events
         // 需要什么事件可以自己增加
         onClick(e) {
@@ -145,10 +158,9 @@ export default {
         },
         handleSave() {
         }
-    },
-    created() {
     }
 }
 </script>
-<style scoped>
+
+<style>
 </style>

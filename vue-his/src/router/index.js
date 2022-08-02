@@ -7,6 +7,7 @@ import Cpoe from "../components/doctor/Cpoe.vue";
 import Emr from "../components/doctor/Emr.vue";
 import Notification from "../components/doctor/Notification.vue";
 import Consultation from "../components/doctor/Consultation.vue";
+import Medical from "../components/doctor/Medical.vue";
 import AddUser from '../components/user/AddUser.vue'
 import UserInfo from '../components/user/UserInfo.vue'
 import UserList from '../components/user/UserList.vue'
@@ -43,6 +44,7 @@ const routes = [
       { path: "/doctor/consultation", name: "consultation", component: Consultation }, //会诊管理
       { path: "/doctor/patient", name: "patient", component: Patient }, //患者列表
       { path: "/doctor/emr", name: "emr", component: Emr }, //入院记录
+      { path:"/doctor/medical",name:"medical",component:Medical},
       {
         path: "/doctor/notification",
         name: "notification",

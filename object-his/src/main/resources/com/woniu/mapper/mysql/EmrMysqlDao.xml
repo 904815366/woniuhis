@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.mapper.mysql.EmrMysqlDao">
+    <resultMap id="emrList" type="com.woniu.entity.dto.EmrDto">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="registerid" column="registerid"></result>
+        <result property="content" column="content"></result>
+        <result property="createdate" column="createdate"></result>
+        <result property="username" column="username"></result>
+    </resultMap>
+    <select id="getByRegisterIdList" resultMap="emrList">
+        SELECT a.*,b.username FROM emr a,user b where a.userid=b.id and a.registerid=#{registerid}
+    </select>
+
+    <insert id="createEmr">
+        INSERT INTO emr(name,registerid,content,createdate,userid)
+            VALUE(#{name},#{registerid},#{content},now(),#{userid})
+    </insert>
+</mapper>

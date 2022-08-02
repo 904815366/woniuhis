@@ -28,77 +28,51 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/warn")
-@Api( tags = {"医嘱管理"} )
+@Api(tags = {"医嘱管理"})
 public class WarnController {
     @Autowired
     private WarnService warnService;
+
     @GetMapping("/getWarnList")
-    @Operation( summary = "查询患者医嘱", description = "查询患者医嘱", tags = {"医嘱管理"} )
+    @Operation(summary = "查询患者医嘱", description = "查询患者医嘱", tags = {"医嘱管理"})
     public ResponseResult<PageInfo<WarnDto>> getWarnListById(@RequestParam(name = "patientid") Integer patientid,
                                                              @RequestParam(name = "pageNum") Integer pageNum,
                                                              @RequestParam(name = "pageSize") Integer pageSize) {
-        try {
-            PageHelper.startPage(pageNum, pageSize);
-            QueryWarnList queryWarnList = new QueryWarnList();
-            List<WarnDto> wsrnList = queryWarnList.getWsrnList(patientid);
-            PageInfo<WarnDto> pageInfo = new PageInfo<>(wsrnList);
-            return new ResponseResult<>(pageInfo, "SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+        PageHelper.startPage(pageNum, pageSize);
+        QueryWarnList queryWarnList = new QueryWarnList();
+        List<WarnDto> wsrnList = queryWarnList.getWsrnList(patientid);
+        PageInfo<WarnDto> pageInfo = new PageInfo<>(wsrnList);
+        return new ResponseResult<>(pageInfo, "SUCCESS", 200);
     }
 
     @PostMapping("/modifyCpoe")
-    @Operation( summary = "修改患者医嘱", description = "修改患者医嘱", tags = {"医嘱管理"} )
+    @Operation(summary = "修改患者医嘱", description = "修改患者医嘱", tags = {"医嘱管理"})
     public ResponseResult<Void> modifyCpoe(@RequestBody ModifyCpoe cpoe) {
-        try {
-            System.out.println(cpoe);
-            ModifyCpoe modifyCpoe = new ModifyCpoe();
-            modifyCpoe.modifyCpoe(cpoe);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+        ModifyCpoe modifyCpoe = new ModifyCpoe();
+        modifyCpoe.modifyCpoe(cpoe);
         return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
     @GetMapping("/delCpoeById")
-    @Operation( summary = "删除医嘱", description = "删除医嘱", tags = {"医嘱管理"} )
-    public ResponseResult<Void> removeCpoe(Integer id){
-        try {
-            warnService.deleteWarn(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    @Operation(summary = "删除医嘱", description = "删除医嘱", tags = {"医嘱管理"})
+    public ResponseResult<Void> removeCpoe(Integer id) {
+        warnService.deleteWarn(id);
         return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
     @GetMapping("/updateCpoeStatus")
-    @Operation( summary = "更新医嘱状态", description = "更新医嘱状态", tags = {"医嘱管理"} )
-    public ResponseResult<Void> updateCpoeStatus(String ids,Integer status){
-        try {
-            String[] idArr = ids.split(",");
-            warnService.updatestatus(idArr,status);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    @Operation(summary = "更新医嘱状态", description = "更新医嘱状态", tags = {"医嘱管理"})
+    public ResponseResult<Void> updateCpoeStatus(String ids, Integer status) {
+        String[] idArr = ids.split(",");
+        warnService.updatestatus(idArr, status);
         return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
     @PostMapping("/addCpoe")
-    @Operation( summary = "新增医嘱", description = "新增医嘱", tags = {"医嘱管理"} )
-    public ResponseResult<Void> addCpoe(@RequestBody AddCpoeFo addCpoeFo){
-        try {
-            System.out.println(addCpoeFo);
-            AddCpoeFo cpoeFo = new AddCpoeFo();
-            cpoeFo.addCpoe(addCpoeFo);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    @Operation(summary = "新增医嘱", description = "新增医嘱", tags = {"医嘱管理"})
+    public ResponseResult<Void> addCpoe(@RequestBody AddCpoeFo addCpoeFo) {
+        AddCpoeFo cpoeFo = new AddCpoeFo();
+        cpoeFo.addCpoe(addCpoeFo);
         return new ResponseResult<>(null, "SUCCESS", 200);
     }
 }

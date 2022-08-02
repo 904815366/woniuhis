@@ -1,7 +1,9 @@
 package com.woniu;
 
+import com.woniu.entity.dto.EmrDto;
 import com.woniu.entity.dto.WarnDto;
 import com.woniu.mapper.mysql.WarnMysqlDao;
+import com.woniu.web.fo.QueryEmrListByRegisterId;
 import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,10 @@ class ObjectHisApplicationTests {
 
     @Test
     void contextLoads() {
-        String s = "";
-        String[] split = s.split(",");
-
-            System.out.println(split.length);
-
+        List<EmrDto> emrDtos = new QueryEmrListByRegisterId().queryEmrList(1);
+        for (EmrDto emrDto : emrDtos) {
+            System.out.println(emrDto);
+        }
     }
 
 }

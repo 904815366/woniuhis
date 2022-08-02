@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author lh
@@ -26,47 +26,33 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/patient")
-@Api( tags = {"患者管理"} )
+@Api(tags = {"患者管理"})
 public class PatientController {
     @GetMapping("/list")
-    @Operation( summary = "查询在院患者", description = "查询在院患者", tags = {"患者管理"} )
-    public ResponseResult<PageInfo<PatientDto>> getPatientList(@RequestParam(name = "searchName",defaultValue = "")String name,
-                                                           @RequestParam(name = "familyid") Integer familyid,
-                                                           @RequestParam(name = "pageNum",defaultValue = "1")Integer pageNum,
-                                                           @RequestParam(name = "pageSize",defaultValue ="5")Integer pageSize){
-        try {
-            PageHelper.startPage(pageNum, pageSize);
-            List<PatientDto> patientList = new QueryPatientList().getPatientList(name,familyid);
-            PageInfo<PatientDto> pageInfo = new PageInfo<>(patientList);
-            return new ResponseResult<>(pageInfo,"SUCCESS",200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null,"Internal Server Error",500);
-        }
+    @Operation(summary = "查询在院患者", description = "查询在院患者", tags = {"患者管理"})
+    public ResponseResult<PageInfo<PatientDto>> getPatientList(@RequestParam(name = "searchName", defaultValue = "") String name,
+                                                               @RequestParam(name = "familyid") Integer familyid,
+                                                               @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
+                                                               @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<PatientDto> patientList = new QueryPatientList().getPatientList(name, familyid);
+        PageInfo<PatientDto> pageInfo = new PageInfo<>(patientList);
+        return new ResponseResult<>(pageInfo, "SUCCESS", 200);
     }
+
     @GetMapping("/listAll")
-    @Operation( summary = "查询在院患者不分页", description = "查询在院患者不分页", tags = {"患者管理"} )
-    public ResponseResult<List<PatientDto>> getPatientListAll(@RequestParam(name = "searchName",defaultValue = "")String name,
-                                                              @RequestParam(name = "familyid") Integer familyid){
-        try {
-            List<PatientDto> patientList = new QueryPatientList().getPatientList(name,familyid);
-            return new ResponseResult<>(patientList,"SUCCESS",200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null,"Internal Server Error",500);
-        }
+    @Operation(summary = "查询在院患者不分页", description = "查询在院患者不分页", tags = {"患者管理"})
+    public ResponseResult<List<PatientDto>> getPatientListAll(@RequestParam(name = "searchName", defaultValue = "") String name,
+                                                              @RequestParam(name = "familyid") Integer familyid) {
+        List<PatientDto> patientList = new QueryPatientList().getPatientList(name, familyid);
+        return new ResponseResult<>(patientList, "SUCCESS", 200);
     }
 
     @GetMapping("/getPatientById")
-    @Operation( summary = "根据id查询患者", description = "根据id查询患者", tags = {"患者管理"} )
-    public ResponseResult<PatientDto> getPatientById(Integer id){
-        try {
-            PatientDto patientById = new QueryPatientById().getPatientById(id);
-            return new ResponseResult<>(patientById,"SUCCESS",200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null,"Internal Server Error",500);
-        }
+    @Operation(summary = "根据id查询患者", description = "根据id查询患者", tags = {"患者管理"})
+    public ResponseResult<PatientDto> getPatientById(Integer id) {
+        PatientDto patientById = new QueryPatientById().getPatientById(id);
+        return new ResponseResult<>(patientById, "SUCCESS", 200);
     }
 
 }

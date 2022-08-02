@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author lh
@@ -26,73 +26,44 @@ public class ConsutantsController {
 
     @Autowired
     private ConsutantsService consutantsService;
+
     @GetMapping("/getByApplydeptidList")
-    public ResponseResult<List<ConsutantsDto>> getByApplydeptid(Integer deptId){
-        try {
-            QueryConsutatsListByApplydeptid queryConsutatsListByDepetId = new QueryConsutatsListByApplydeptid();
-            List<ConsutantsDto> dtoList = queryConsutatsListByDepetId.consultationByApplydeptid(deptId);
-            return new ResponseResult<>(dtoList,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    public ResponseResult<List<ConsutantsDto>> getByApplydeptid(Integer deptId) {
+        QueryConsutatsListByApplydeptid queryConsutatsListByDepetId = new QueryConsutatsListByApplydeptid();
+        List<ConsutantsDto> dtoList = queryConsutatsListByDepetId.consultationByApplydeptid(deptId);
+        return new ResponseResult<>(dtoList, "SUCCESS", 200);
     }
 
     @GetMapping("/getByReplydeptid")
-    public ResponseResult<List<ConsutantsDto>> getByReplydeptid(Integer deptId){
-        try {
-            QueryConsutatsListByReplydeptid queryConsutatsListByReplydeptid = new QueryConsutatsListByReplydeptid();
-            List<ConsutantsDto> dtoList = queryConsutatsListByReplydeptid.consultationByReplydeptid(deptId);
-            return new ResponseResult<>(dtoList,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    public ResponseResult<List<ConsutantsDto>> getByReplydeptid(Integer deptId) {
+        QueryConsutatsListByReplydeptid queryConsutatsListByReplydeptid = new QueryConsutatsListByReplydeptid();
+        List<ConsutantsDto> dtoList = queryConsutatsListByReplydeptid.consultationByReplydeptid(deptId);
+        return new ResponseResult<>(dtoList, "SUCCESS", 200);
     }
 
     @PostMapping("/addApplyConsultation")
-    public ResponseResult<Void> addApplyConsultation(@RequestBody AddApplyConsultation addApplyConsultation){
-        try {
-            System.out.println(addApplyConsultation);
-            addApplyConsultation.AddApplyConsultation();
-            return new ResponseResult<>(null,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    public ResponseResult<Void> addApplyConsultation(@RequestBody AddApplyConsultation addApplyConsultation) {
+        System.out.println(addApplyConsultation);
+        addApplyConsultation.AddApplyConsultation();
+        return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
     @PostMapping("/replyConsultation")
-    public ResponseResult<Void> replyConsultation(@RequestBody ModifyReplyConsultation modifyReplyConsultation){
-        try {
-            modifyReplyConsultation.replyConsultation();
-            return new ResponseResult<>(null,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    public ResponseResult<Void> replyConsultation(@RequestBody ModifyReplyConsultation modifyReplyConsultation) {
+        modifyReplyConsultation.replyConsultation();
+        return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
     @PostMapping("/modifyApplyConsultation")
-    public ResponseResult<Void> modifyApplyConsultation(@RequestBody ModifyApplyConsultation modifyApplyConsultation){
-        try {
-            modifyApplyConsultation.modifyApplyConsultation();
-            return new ResponseResult<>(null,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    public ResponseResult<Void> modifyApplyConsultation(@RequestBody ModifyApplyConsultation modifyApplyConsultation) {
+
+        modifyApplyConsultation.modifyApplyConsultation();
+        return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
     @GetMapping("/removeById")
-    public ResponseResult<Void> removeById(Integer id){
-        try {
-            consutantsService.removeById(id);
-            return new ResponseResult<>(null,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    public ResponseResult<Void> removeById(Integer id) {
+        consutantsService.removeById(id);
+        return new ResponseResult<>(null, "SUCCESS", 200);
     }
 }
-

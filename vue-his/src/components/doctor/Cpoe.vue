@@ -2,7 +2,8 @@
     <div>
         <el-descriptions class="margin-top" title="医嘱录入" :column="8" border>
             <template slot="extra">
-                <el-select v-model="pid" filterable placeholder="请选择患者" @change="changePatient()" style="margin-right: 10px;">
+                <el-select v-model="pid" filterable placeholder="请选择患者" @change="changePatient()"
+                    style="margin-right: 10px;">
                     <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                 </el-select>
@@ -138,7 +139,7 @@ export default {
             ids: [],
             options: [],
             value: '',
-            pid:''
+            pid: ''
         }
     }, components: {
         addCpoe, editCpoe
@@ -186,10 +187,10 @@ export default {
         //页码尺寸改变
         handleSizeChange(pSize) {
             let id;
-            if(this.$route.query.id==null){
-                id=this.pid;
-            }else{
-                id=this.$route.query.id;
+            if (this.$route.query.id == null) {
+                id = this.pid;
+            } else {
+                id = this.$route.query.id;
             }
             this.pageSize = pSize;
             this.pageNum = 1;//默认为第一页
@@ -198,10 +199,10 @@ export default {
         // 当前页码改变
         handleCurrentChange(pNo) {
             let id;
-            if(this.$route.query.id==null){
-                id=this.pid;
-            }else{
-                id=this.$route.query.id;
+            if (this.$route.query.id == null) {
+                id = this.pid;
+            } else {
+                id = this.$route.query.id;
             }
             this.pageNum = pNo;
             this.getWarnListById(id, pNo);//翻页
@@ -232,7 +233,7 @@ export default {
             })
         },
         handleSelectionChange(val) {
-            this.ids=[];
+            this.ids = [];
             for (let i = 0; i < val.length; i++) {
                 this.ids[i] = val[i].id;
             }
@@ -255,7 +256,7 @@ export default {
                 });
             } else {
                 let result = this.ids.join(",");
-                this.$axios.get("/api/warn/updateCpoeStatus?ids=" + result+"&status=1")
+                this.$axios.get("/api/warn/updateCpoeStatus?ids=" + result + "&status=1")
                     .then(res => {
                         if (res.data.status == 200) {
                             this.$message({
@@ -275,14 +276,14 @@ export default {
                     })
             }
         },
-        getPatientListAll(){
-            let deptid=window.sessionStorage.getItem("currentUserFamilyId");
-            this.$axios.get("/api/patient/listAll?familyid="+deptid).then(res=>{
+        getPatientListAll() {
+            let deptid = window.sessionStorage.getItem("currentUserFamilyId");
+            this.$axios.get("/api/patient/listAll?familyid=" + deptid).then(res => {
                 console.log(res.data)
-                this.options=res.data.data;
+                this.options = res.data.data;
             })
         },
-        changePatient(){
+        changePatient() {
             this.getPatientById(this.pid);
             this.getWarnListById(this.pid, 1);
         }
