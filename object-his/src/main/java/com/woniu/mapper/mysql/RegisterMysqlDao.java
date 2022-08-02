@@ -1,6 +1,8 @@
 package com.woniu.mapper.mysql;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.woniu.entity.dto.RegisterByFamilyDto;
+import com.woniu.entity.dto.RegisterByWarnidDto;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.po.RegisterPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -46,4 +48,10 @@ public interface RegisterMysqlDao extends BaseMapper<RegisterPo> {
 
     @Update("UPDATE register set money=money-#{consummoney},used=used+#{consummoney} WHERE id=#{registerid}")
     Integer updateRegisterMoneyAndUsed(ModifyStatusAndRegisterMoneyComment modifyStatusAndRegisterMoneyComment);
+
+    @Select("select id,name from register where familyid=#{familyid}")
+    List<RegisterByFamilyDto> queryRegiPByFarmiy(Integer familyid);
+
+    @Select("select w.id from warn w,register r where w.registerid=r.id and r.id=#{rid}")
+    List<RegisterByWarnidDto> queryByWarnid(Integer rid);
 }

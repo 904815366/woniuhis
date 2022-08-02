@@ -18,6 +18,6 @@ import java.util.List;
 @Mapper
 public interface NurserecordMysqlDao extends BaseMapper<NurserecordPo> {
 
-    List<NurserecordDto> querNurserecords();
+    List<NurserecordDto> querNurserecords(Integer rid);
 
 }

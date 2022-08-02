@@ -1,6 +1,7 @@
 package com.woniu.mapper.mysql;
 
 import com.woniu.entity.dto.NullArrUserDto;
+import com.woniu.entity.dto.UserByFamilyDto;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.po.UserPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -67,4 +68,8 @@ public interface UserMysqlDao extends BaseMapper<UserPo> {
 
     @Update("update user set password=#{password} where id = #{id}")
     Integer updSelf(@Param("id")Integer id,@Param("password")String password);
+
+//    xk根据科室查询当前科室所有医生
+    @Select("select id,name,familyid,roleid  from user where familyid=#{fid} and roleid=1 ")
+     List<UserByFamilyDto> queryUserFlyByFid(Integer fid);
 }

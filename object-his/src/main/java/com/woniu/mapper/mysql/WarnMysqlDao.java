@@ -5,6 +5,7 @@ import com.woniu.entity.po.WarnPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.Date;
 import java.util.List;
@@ -51,4 +52,8 @@ public interface WarnMysqlDao extends BaseMapper<WarnPo> {
      * @return
      */
     Integer createWarn(WarnPo warnPo);
+
+//    通过患者住院号查询该患者所有未执行的医嘱
+    @Select("select * from warn where registerid=#{registerid} and status=#{status}")
+    List<WarnDto> queryWarnsByRegisterid(@Param("registerid") Integer registerid,@Param("status") String status);
 }

@@ -29,9 +29,16 @@
        </el-form-item>
 
        <el-form-item label="选择床位">
-      <el-select v-model="bid"  placeholder="请选择床位">
+      <el-select v-model="bid" @change="showisof"  placeholder="请选择床位">
       <el-option v-for="bad in bvalue" :label="bad.id+'号床'" :value="bad.id"
        :key="bad.id"></el-option>
+        </el-select>
+       </el-form-item>
+
+       <el-form-item label="责任医生">
+       <el-select v-model="uid" @change="showison"  placeholder="请选择医生">
+       <el-option v-for="us in user" :label="us.name" :value="us.id"
+       :key="us.id"></el-option>
         </el-select>
        </el-form-item>
 
@@ -39,7 +46,7 @@
 
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancle">取 消</el-button>
-        <el-button type="primary" @click="commin">提交</el-button>
+        <el-button type="primary" @click="commin" :disabled="show">提交</el-button>
       </div>
 
     </el-dialog>
@@ -59,7 +66,12 @@ export default {
         children: [],
         fid: null,
         wid:'',
-        bid:''
+        bid:'',
+        user:[],
+        uid:'',
+        bf:false,
+        uf:false,
+        show:true
       }
    },
    created(){
@@ -72,6 +84,7 @@ export default {
      commin() {//提交方法
      this.bedpatient.familyid=this.fid;
      this.bedpatient.bedid=this.bid;
+      this.bedpatient.doctorid=this.uid;
     //  提交的同时修改床位 upbedstats
      this.$axios
         .get("/api/bed/upbedstats", {
@@ -89,7 +102,7 @@ export default {
       url:'/api/register/upregister',
       data:this.bedpatient,
     }).then((res) => {
-
+        console.log(res);
         });
       this.hidden = false;
       this.$emit("func"); //调用父类中的方法
@@ -129,6 +142,20 @@ export default {
              this.children=res.data;
         })
         .catch((e) => {console.log(e);});
+        // 根据科室查所有的责任医生
+         this.$axios
+        .get("/api/user/getUsers",{
+            params:{
+            fid:this.fid
+            }
+        })
+        .then((res) => {
+           this.user='';//清空医生
+           this.uid='';
+          // 给user赋值
+          this.user=res.data;
+        })
+        .catch((e) => {console.log(e);});
     },
     gotobeds(){//查询床位
         this.$axios
@@ -144,6 +171,19 @@ export default {
           }
         })
         .catch((e) => {console.log(e);});
+    }
+    ,
+    showisof(){
+      this.bf=true;
+      if(this.bf&&this.uf){
+         this.show=false;
+      }
+    },
+    showison(){
+      this.uf=true;
+       if(this.bf&&this.uf){
+         this.show=false;
+      }
     }
    }
 }

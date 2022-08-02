@@ -40,9 +40,10 @@ public class NurserecordController {
 
     @GetMapping("gotoNursers")//查看所有护理记录
     public PageInfo<NurserecordDto> getNurserecords(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
-                                @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize){
+                                @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize,
+                                                    @RequestParam(name = "rid")Integer rid){
         PageHelper.startPage(pageNum, pageSize);
-        List<NurserecordDto> nursercordDtos = nurserecordRepository.getNursercordDtos();
+        List<NurserecordDto> nursercordDtos = nurserecordRepository.getNursercordDtos(rid);
         return new PageInfo<>(nursercordDtos);
     }
 

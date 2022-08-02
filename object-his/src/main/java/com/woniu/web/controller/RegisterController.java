@@ -4,6 +4,8 @@ package com.woniu.web.controller;
 import com.github.pagehelper.PageInfo;
 import com.google.common.eventbus.EventBus;
 import com.woniu.config.ResponseResult;
+import com.woniu.entity.dto.RegisterByFamilyDto;
+import com.woniu.entity.dto.RegisterByWarnidDto;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.mapper.redis.RegisterRedis;
@@ -58,7 +60,11 @@ public class RegisterController {
         PageInfo<RegisterPo> registers = registerService.getRegisters(pageNum, pageSize,patientid);
         List<RegisterPo> list = registers.getList();
         List<RegisterDto> dtos = registerConverter.from(list);
-        return new PageInfo<>(dtos);
+        PageInfo<RegisterDto> pageInfodto = new PageInfo<>(dtos);
+        pageInfodto.setTotal(registers.getTotal());
+        pageInfodto.setPageNum(registers.getPageNum());
+        pageInfodto.setPageSize(registers.getPageSize());
+        return pageInfodto;
     }
 
 
@@ -176,6 +182,21 @@ public class RegisterController {
         return new ResponseResult<>(2000,"ok");
     }
 
+//   根据科室查询所有的患者，返回一个住院号就是regisid 和患者姓名
+    @GetMapping("/gotolistAll")
+    public List<RegisterByFamilyDto> gotoPatientList(Integer familyid){
+        List<RegisterByFamilyDto> registerBFamilyid = registerRepository.getRegisterBFamilyid(familyid);
+        return registerBFamilyid;
+    }
+
+    /**
+     * 简单的通过住院号查询所有医嘱
+     */
+    @GetMapping("/getWarnids/{rid}")
+    public List<RegisterByWarnidDto> getWarnids(@PathVariable("rid") Integer rid){
+        List<RegisterByWarnidDto> warnids = registerRepository.getWarnids(rid);
+        return warnids;
+    }
 
 }
 

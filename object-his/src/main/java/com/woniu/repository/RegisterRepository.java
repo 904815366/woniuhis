@@ -2,6 +2,8 @@ package com.woniu.repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.woniu.entity.dto.RegisterByFamilyDto;
+import com.woniu.entity.dto.RegisterByWarnidDto;
 import com.woniu.entity.po.AppointmentPo;
 import com.woniu.entity.dto.RegisterDto;
 import com.woniu.entity.po.RegisterPo;
@@ -33,9 +35,17 @@ public class RegisterRepository {
     private final RegisterRedis registerRedis;
 
 
-//    简单的增加办法
+//    简单的通过住院号查询患者的所有医嘱id
+    public List<RegisterByWarnidDto> getWarnids(Integer rid){
+        List<RegisterByWarnidDto> dtos = registerMysqlDao.queryByWarnid(rid);
+        return dtos;
+    }
 
-//    简单的删除方法
+//    简单的通过科室查患者方法
+    public List<RegisterByFamilyDto> getRegisterBFamilyid(Integer familyid){
+        List<RegisterByFamilyDto> registerByFamilyDtos = registerMysqlDao.queryRegiPByFarmiy(familyid);
+        return registerByFamilyDtos;
+    }
 
 //    简单的修改方法
     public void upRegisterByBed(RegisterDto registerDto){

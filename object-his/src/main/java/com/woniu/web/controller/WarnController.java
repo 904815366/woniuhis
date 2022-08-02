@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.WarnDto;
+import com.woniu.repository.WarnRepository;
 import com.woniu.service.WarnService;
 import com.woniu.web.fo.AddCpoeFo;
 import com.woniu.web.fo.ModifyCpoe;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -32,6 +34,9 @@ import java.util.List;
 public class WarnController {
     @Autowired
     private WarnService warnService;
+
+    @Autowired
+    private WarnRepository repository;
 
     @GetMapping("/getWarnList")
     @Operation(summary = "查询患者医嘱", description = "查询患者医嘱", tags = {"医嘱管理"})
@@ -74,6 +79,22 @@ public class WarnController {
         AddCpoeFo cpoeFo = new AddCpoeFo();
         cpoeFo.addCpoe(addCpoeFo);
         return new ResponseResult<>(null, "SUCCESS", 200);
+    }
+
+    /**
+     * 通过住院编号查询患者医嘱详情 xk
+     */
+    @GetMapping("/getWarnsByRid/{rid}/{status}")
+    @Operation(summary = "通过住院号码查询患者医嘱详情",description = "通过住院号码查询患者医嘱详情",
+               tags = "医嘱管理")
+    public PageInfo<WarnDto> getWarnsByRegisterid(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
+                                                  @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize,
+                                                  @PathVariable("rid") Integer registerid,
+                                                  @PathVariable("status") String status){
+        PageHelper.startPage(pageNum, pageSize);
+        List<WarnDto> dtos = repository.getWarnsByRegisterid(registerid, status);
+        PageInfo<WarnDto> pageInfo = new PageInfo<>(dtos);
+        return pageInfo;
     }
 }
 

@@ -3,14 +3,14 @@
   <el-form :model="nurser">
 
     <el-form-item label="护理类型">
-      <el-select v-model="nurser.nursetypeid"   placeholder="请选择记录类型">
+      <el-select v-model="nurser.nursetypeid" @change="gotochang" placeholder="请选择记录类型">
       <el-option v-for="nty in nurtypes" :label="nty.nursename" :value="nty.id"
       :key="nty.id"></el-option>
         </el-select>
        </el-form-item>
 
     <el-form-item label="住院号" :label-width="formLabelWidth">
-      <el-input v-model="nurser.registerid" autocomplete="off"></el-input> 
+      <el-input v-model="nurser.registerid" autocomplete="off" @change="gotochang"></el-input> 
     </el-form-item>
 
     <!-- <el-form-item label="护士" :label-width="formLabelWidth">
@@ -18,11 +18,11 @@
     </el-form-item> -->
 
      <el-form-item label="护理描述" :label-width="formLabelWidth">
-      <el-input v-model="nurser.nursetext" autocomplete="off"></el-input> 
+      <el-input v-model="nurser.nursetext" autocomplete="off" @change="gotochang"></el-input> 
     </el-form-item>
 
     <el-form-item label="护理时间" :label-width="formLabelWidth">
-     <el-time-picker placeholder="选择时间" v-model="nurser.nursetime" style="width: 100%;"></el-time-picker>
+     <el-time-picker placeholder="选择时间" v-model="nurser.nursetime" style="width: 100%;" @change="gotochang"></el-time-picker>
       </el-form-item>
 
      <el-form-item label="当前记录人" :label-width="formLabelWidth">
@@ -36,7 +36,7 @@
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="cancle">取 消</el-button>
-    <el-button type="primary" @click="commin">确 定</el-button>
+    <el-button type="primary" @click="commin" :disabled="show">确 定</el-button>
   </div>
 </el-dialog>
 </template>
@@ -49,7 +49,8 @@ export default {
             formLabelWidth: '120px' ,
             nurser:{},
             nurtypes:[],
-            username:''
+            username:'',
+            show:true
       }
    },
    created(){
@@ -85,6 +86,28 @@ export default {
          }
         })
         .catch((e) => {});
+    },
+    gotochang(){//输入框触发方法
+    let a=false;
+    let b=false;
+    let c=false;
+    let d=false;
+    if(this.nurser.nursetime!=null&&this.nurser.nursetime!=''){
+       a=true
+    };
+    if(this.nurser.nursetext!=null&&this.nurser.nursetext!=''){
+       b=true
+    };
+    if(this.nurser.nursetypeid!=null&&this.nurser.nursetypeid!=''){
+       c=true
+    };
+    if(this.nurser.registerid!=null&&this.nurser.registerid!=''){
+       d=true
+    };
+      if(a&&b&&c&&d){
+          this.show=false;
+      }  
+
     },
     // 查询所有的课程
      gotosubjlist(){

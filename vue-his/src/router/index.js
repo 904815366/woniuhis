@@ -105,6 +105,12 @@ const routes = [
         '../components/nurse/Nurserecord.vue')
       },
       {
+        path:'/nurse/manage',//医生嘱路由
+        name:'nurse/manage',
+        component: ()=> import(//不需要先导入，注册时导入，新语法
+        '../components/nurse/Ndoctor.vue')
+      },
+      {
         path:'/drug/list',
         name:'drugList',
         component:DrugList,

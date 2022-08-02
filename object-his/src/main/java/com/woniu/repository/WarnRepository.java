@@ -1,5 +1,6 @@
 package com.woniu.repository;
 
+import com.woniu.entity.dto.WarnDto;
 import com.woniu.entity.po.WarnPo;
 import com.woniu.entity.po.WarndetailsPo;
 import com.woniu.mapper.mysql.WarnMysqlDao;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -64,5 +66,16 @@ public class WarnRepository {
         warndetailsPo.setDirections(addCpoeFo.getDirections());
         warndetailsPo.setWarnid(warnPo.getId());
         warndetailsMysqlDao.createWarndetails(warndetailsPo);
+    }
+
+
+    /**
+     * 通过患者住院号查询患者医嘱详情列表
+     * @param registerid 患者住院号码
+     * @param status 医嘱状态
+     */
+    public List<WarnDto> getWarnsByRegisterid(Integer registerid, String status){
+        List<WarnDto> warnDtos = warnMysqlDao.queryWarnsByRegisterid(registerid, status);
+        return warnDtos;
     }
 }

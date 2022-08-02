@@ -1,6 +1,7 @@
 package com.woniu.repository;
 
 import com.woniu.entity.converter.UserConverter;
+import com.woniu.entity.dto.UserByFamilyDto;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.entity.po.UserPo;
 import com.woniu.mapper.mysql.UserMysqlDao;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Objects;
 import java.util.Optional;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -96,4 +99,11 @@ public class UserRepository {
         }
         return integer;
     }
+
+//   xk 根据科室查当前科室所有医生
+    public List<UserByFamilyDto> getUserByfls(Integer fid){
+        List<UserByFamilyDto> dtos = userMysqlDao.queryUserFlyByFid(fid);
+        return dtos;
+    }
+
 }

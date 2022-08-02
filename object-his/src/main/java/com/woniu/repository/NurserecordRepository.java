@@ -22,8 +22,8 @@ public class NurserecordRepository {
     }
 
 //    查询所有的护理记录表
-    public List<NurserecordDto> getNursercordDtos(){
-        List<NurserecordDto> nurserecordDtos = nurserecordMysqlDao.querNurserecords();
+    public List<NurserecordDto> getNursercordDtos(Integer rid){
+        List<NurserecordDto> nurserecordDtos = nurserecordMysqlDao.querNurserecords(rid);
         return nurserecordDtos;
     }
 

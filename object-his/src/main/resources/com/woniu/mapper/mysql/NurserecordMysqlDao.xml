@@ -7,6 +7,9 @@
     <select id="querNurserecords" resultType="com.woniu.entity.dto.NurserecordDto">
         select d.id id,d.nursetext,d.nursetime,d.registerid,t.nursename,u.name,d.status
          from nurserecord d,nursetype t,user u where d.nursetypeid=t.id and d.userid=u.id
+            <if test="rid!=null and rid!=''">
+             and  d.registerid=#{rid}
+            </if>
     </select>
 
 </mapper>

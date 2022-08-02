@@ -5,17 +5,20 @@ import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.ArrangeDto;
 import com.woniu.entity.dto.NullArrUserDto;
+import com.woniu.entity.dto.UserByFamilyDto;
 import com.woniu.entity.dto.UserDto;
 import com.woniu.web.fo.*;
+import com.woniu.repository.UserRepository;
+import com.woniu.web.fo.AddUser;
+import com.woniu.web.fo.QueryUserByUsername;
+import com.woniu.web.fo.UserList;
 import com.woniu.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 import java.util.List;
 
@@ -41,6 +44,9 @@ public class UserController {
         UserDto userById = userService.getUserById(id);
         return new ResponseResult<>(userById, "OK", 200);
     }
+    @Autowired
+    private UserRepository userRepository;
+
     /**
      * 用户列表分页(用名字模糊查询)
      * @param userList
@@ -146,5 +152,16 @@ public class UserController {
         }
         return responseResult;
     }
+    /**
+     *xk
+     * @return当前科室所有医生
+     */
+    @GetMapping("getUsers")
+    @Operation( summary = "用户录入", description = "用户录入", tags = {"用户管理"} )
+    public List<UserByFamilyDto> getUserByfals(Integer fid){
+        List<UserByFamilyDto> dtos = userRepository.getUserByfls(fid);
+        return dtos;
+    }
+
 }
 

@@ -14,7 +14,7 @@
 
     <update id="upRegister">
         update register set familyid=#{familyid},bedid=#{bedid}
-                            ,entertime=#{entertime},status=#{status}
+                            ,entertime=#{entertime},status=#{status},doctorid=#{doctorid}
                   <if test="outtime!=null">
                             ,outtime=#{outtime}
                   </if>
