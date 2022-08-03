@@ -1,34 +1,34 @@
 <template>
   <el-dialog title="添加药品" :visible.sync="addDrugDialogFormVisible" @close="cancelAdd">
-    <el-form :model="drug">
-      <el-form-item label="药品名:" :label-width="formLabelWidth">
+    <el-form :model="drug" :inline="true">
+      <el-form-item label="药品名:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.name" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="类型:" :label-width="formLabelWidth">
+      <el-form-item label="类型:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.type" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="价格:" :label-width="formLabelWidth">
+      <el-form-item label="价格:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.price" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="数量:" :label-width="formLabelWidth">
+      <el-form-item label="数量:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.num" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="报警库存:" :label-width="formLabelWidth">
+      <el-form-item label="报警库存:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.alarmnum" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="批次:" :label-width="formLabelWidth">
+      <el-form-item label="批次:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.batch" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="厂商:" :label-width="formLabelWidth">
+      <el-form-item label="厂商:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.producer" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="产地:" :label-width="formLabelWidth">
+      <el-form-item label="产地:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.producing" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="功效:" :label-width="formLabelWidth">
+      <el-form-item label="功效:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.mdfunction" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="有效期" :label-width="formLabelWidth">
+      <el-form-item label="有效期" :label-width="formLabelWidth" size="small">
         <el-col :span="7">
           <el-date-picker
             type="date"
@@ -47,7 +47,7 @@
           ></el-date-picker>
         </el-col>
       </el-form-item>
-      <el-form-item label="备注:" :label-width="formLabelWidth" prop="memo">
+      <el-form-item label="备注:" :label-width="formLabelWidth" prop="memo" size="small">
         <el-input v-model="drug.memo" autocomplete="off"></el-input>
       </el-form-item>
     </el-form>

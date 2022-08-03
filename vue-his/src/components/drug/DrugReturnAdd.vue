@@ -33,7 +33,7 @@
         width="80"
         align="center"
       ></el-table-column>
-      <el-table-column prop="registerid" label="住院编号" width="80" align="center">
+      <el-table-column prop="registerid" label="住院编号" width="100" align="center">
       </el-table-column>
       <el-table-column label="患者姓名" width="120" align="center">
         <template slot-scope="scope">
@@ -42,27 +42,27 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="科室" width="100" align="center">
+      <el-table-column label="科室" width="110" align="center">
         <template slot-scope="scope">
           <span v-for="family in familyList" :key="family.id">
             <span v-if="family.id == scope.row.familyid">{{ family.familyname }}</span>
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="执行护士" width="120" align="center">
+      <el-table-column label="执行护士" width="130" align="center">
         <template slot-scope="scope">
           <span v-for="user in userList" :key="user.id">
             <span v-if="user.id == scope.row.nurseid">{{ user.name }}</span>
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="开立时间" width="180" align="center">
+      <el-table-column label="开立时间" width="200" align="center">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span style="margin-left: 10px">{{ scope.row.warntime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="药品名" width="122" align="center">
+      <el-table-column label="药品名" width="130" align="center">
         <template slot-scope="scope">
           <span v-for="detail in detailList" :key="detail.id">
             <span v-if="detail.warnid == scope.row.id">
@@ -75,7 +75,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column label="数量" width="80" align="center">
+      <el-table-column label="数量" width="119" align="center">
         <template slot-scope="scope">
           <span v-for="detail in detailList" :key="detail.id">
             <span v-if="detail.warnid == scope.row.id">
