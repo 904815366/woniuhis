@@ -81,6 +81,7 @@
 
 <script>
 export default {
+  inject: ["reload"],
   props: ["week", "userid"],
   data() {
     return {
@@ -127,6 +128,7 @@ export default {
             let timer = setTimeout(() => {
               this.addDoUserDialogFormVisible = false;
               this.$emit("openCt");
+              this.reload();
             }, 1000);
           } else {
             this.$message({

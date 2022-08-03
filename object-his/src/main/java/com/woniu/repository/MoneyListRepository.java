@@ -88,7 +88,7 @@ public class MoneyListRepository {
             //添加费用记录
             MoneylistPo moneylistPo = new MoneylistPo();
             moneylistPo.setRegisterid(warnPo.getRegisterid());
-            moneylistPo.setConsumtime(new Date());
+//            moneylistPo.setConsumtime(new Date());
             moneylistPo.setStatus("0");
             //查询药品列表
             DrugPo drugPo = drugMysqlDao.selectById(warndetailsPo.getDrugid());

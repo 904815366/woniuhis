@@ -152,6 +152,7 @@ prev 上—页next下一页pager导航页码sizes每页记录数:total设置总�
 //导入子组件
 import UpdateUser from "./UpdateUser.vue";
 export default {
+  inject: ["reload"],
   components: {
     UpdateUser,
   },
@@ -178,6 +179,7 @@ export default {
     handleShow() {
       this.comName = "";
       this.finduserList(this.currentPage);
+      this.reload();
     },
     //处理编辑
     handleEdit(index, row) {

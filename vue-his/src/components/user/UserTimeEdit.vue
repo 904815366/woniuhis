@@ -79,6 +79,7 @@
 
 <script>
 export default {
+  inject: ["reload"],
   data() {
     return {
       editUserDialogFormVisible: true,
@@ -105,7 +106,7 @@ export default {
     cancelEdit() {
       this.editUserDialogFormVisible = false;
       //调用父组件传来的方法
-      this.$emit("func");
+      // this.$emit("func");
     },
     confirmEdit() {
       let week = this.week1;
@@ -138,7 +139,8 @@ export default {
             //成功后,关闭窗口
             let timer = setTimeout(() => {
               this.editUserDialogFormVisible = false;
-              // this.$emit("openCt");
+              this.$emit("func");
+              this.reload();
             }, 1000);
           } else {
             this.$message({

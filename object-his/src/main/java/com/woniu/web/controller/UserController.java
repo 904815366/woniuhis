@@ -186,6 +186,9 @@ public class UserController {
             System.out.println(id);
             UserPo po = userService.getById(id);
             String avatar = po.getAvatar();
+            if (avatar.isEmpty()){
+                return new ResponseResult<>(null, "erorr", 4000);
+            }
             String url = minioUtils.getObjectUrl("avatar", avatar, 7, TimeUnit.DAYS);
             return new ResponseResult<>(url, "ok", 2000);
         } catch (Exception e) {

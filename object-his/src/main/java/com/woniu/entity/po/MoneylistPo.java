@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -26,6 +24,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @TableName("moneylist")
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MoneylistPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
