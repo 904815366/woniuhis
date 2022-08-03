@@ -2,7 +2,8 @@
     <div>
         <el-descriptions class="margin-top" title="医嘱处理" :column="8" border>
             <template slot="extra">
-                <el-select v-model="pid" filterable placeholder="请选择患者" @change="getRegister()" style="margin-right: 10px;">
+                <el-select v-model="pid" filterable placeholder="请选择患者" @change="getRegister()"
+                    style="margin-right: 10px;">
                     <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                 </el-select>
@@ -48,7 +49,7 @@
                 {{ patient.area }}
             </el-descriptions-item>
             <el-descriptions-item>
-            
+
                 <template slot="label">
                     <i class="el-icon-date"></i>
                     入院时间
@@ -86,48 +87,46 @@
                     <el-tag type="success" v-if="scope.row.status == '2'">
                         已执行
                     </el-tag>
+                    <el-tag type="success" v-if="scope.row.status == '3'">
+                        已发药
+                    </el-tag>
+                    <el-tag type="success" v-if="scope.row.status == '4'">
+                        已出院历史
+                    </el-tag>
                 </template>
             </el-table-column>
             <el-table-column prop="doctorname" label="开立医生" width="100">
             </el-table-column>
             <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
-                    <el-button type="primary"  @click="comName = 'editCpoe', upDoctor(scope.row.id)"
-                        circle v-if="scope.row.status == '1'">执行</el-button>
+                    <el-button type="primary" @click="comName = 'editCpoe', upDoctor(scope.row.id)" circle
+                        v-if="scope.row.status == '1'">执行</el-button>
                 </template>
             </el-table-column>
         </el-table>
-         <!-- 分页组件 
+        <!-- 分页组件 
      :background 表示背景颜色开启不开启 默认是false
      layout 表示分页组件的显示布局 
       prev上一页   pager导航页码   next下一页   sizes 每页记录数 
        total 设置总记录数字 jumper前往第几页
     -->
-          <el-pagination
-           @current-change="changepagebynum"
-            @size-change="sizepageSize"
-             :background="true" 
-             layout="prev, pager, next,sizes,jumper"
-             prev-text="上一页"
-             next-text="下一页"
-             :page-sizes="[5,10,15,20,25,30]"
-             :page-size="pageSize"
-             :current-page="pageNum"
-             :total="total">
-            </el-pagination>
+        <el-pagination @current-change="changepagebynum" @size-change="sizepageSize" :background="true"
+            layout="prev, pager, next,sizes,jumper" prev-text="上一页" next-text="下一页"
+            :page-sizes="[5, 10, 15, 20, 25, 30]" :page-size="pageSize" :current-page="pageNum" :total="total">
+        </el-pagination>
     </div>
 </template>
 
 <script>
 export default {
-   data() {
-      return {
-    patient: {},//患者信息
+    data() {
+        return {
+            patient: {},//患者信息
             tableData: [],//医嘱列表数据
-             pageNum:1,
-            pageSize:5,
-            pageInfo:null,
-            total:null,
+            pageNum: 1,
+            pageSize: 5,
+            pageInfo: null,
+            total: null,
             totalCount: 0,
             pageSizes: [5, 10, 15, 20],
             comName: '',
@@ -135,45 +134,45 @@ export default {
             ids: [],
             options: [],
             value: '',
-            pid:''
-      }
-   },
-   created(){
+            pid: ''
+        }
+    },
+    created() {
         this.getPatientListAll();
-   },
-   methods:{
-    upDoctor(x){//单条修改状态
-     this.$axios.get("/api/warn/updateCpoeStatus?ids=" + x+"&status=2")
-                    .then(res => {
-                        if (res.data.status == 200) {
-                            this.$message({
-                                showClose: true,
-                                message: "提交成功",
-                                type: "success",
-                                center: true,
-                            });
-                            this.gotoWarnByRid();
-                        } else {
-                            this.$message({
-                                showClose: true,
-                                message: '服务异常!',
-                                type: 'error',
-                                duration: 1000  //显示的时间,ms
-                            });
-                        }
-                    })
+    },
+    methods: {
+        upDoctor(x) {//单条修改状态
+            this.$axios.get("/api/warn/updateCpoeStatus?ids=" + x + "&status=2")
+                .then(res => {
+                    if (res.data.status == 200) {
+                        this.$message({
+                            showClose: true,
+                            message: "提交成功",
+                            type: "success",
+                            center: true,
+                        });
+                        this.gotoWarnByRid();
+                    } else {
+                        this.$message({
+                            showClose: true,
+                            message: '服务异常!',
+                            type: 'error',
+                            duration: 1000  //显示的时间,ms
+                        });
+                    }
+                })
 
-    },
-          changepagebynum(pageNum){
-          this.pageNum=pageNum
-          this.gotoWarnByRid();
-       
-    },
-    sizepageSize(pageSize){
-          this.pageSize=pageSizee;
-          this.gotoWarnByRid();
-    },
-   updateStatus() {//批量修改状态的方法
+        },
+        changepagebynum(pageNum) {
+            this.pageNum = pageNum
+            this.gotoWarnByRid();
+
+        },
+        sizepageSize(pageSize) {
+            this.pageSize = pageSizee;
+            this.gotoWarnByRid();
+        },
+        updateStatus() {//批量修改状态的方法
             if (this.ids == null) {
                 this.$message({
                     showClose: true,
@@ -183,7 +182,7 @@ export default {
                 });
             } else {
                 let result = this.ids.join(",");
-                this.$axios.get("/api/warn/updateCpoeStatus?ids="+ result+"&status=2")
+                this.$axios.get("/api/warn/updateCpoeStatus?ids=" + result + "&status=2")
                     .then(res => {
                         if (res.data.status == 200) {
                             this.$message({
@@ -204,53 +203,53 @@ export default {
                     })
             }
         },
-         handleSelectionChange(val) {//批量修改复选框
+        handleSelectionChange(val) {//批量修改复选框
             for (let i = 0; i < val.length; i++) {
                 this.ids[i] = val[i].id;
             }
             console.log(this.ids);
         },
-        getPatientListAll(){//查看所有的患者，根据用户科室id
-            let deptid=window.sessionStorage.getItem("currentUserFamilyId");
-            this.$axios.get("/api/register/gotolistAll?familyid="+deptid).then(res=>{
+        getPatientListAll() {//查看所有的患者，根据用户科室id
+            let deptid = window.sessionStorage.getItem("currentUserFamilyId");
+            this.$axios.get("/api/register/gotolistAll?familyid=" + deptid).then(res => {
                 console.log(res.data);
-                this.options=res.data;
+                this.options = res.data;
             })
         },
-        
-    getRegister(){//查看单个患者
-        this.$axios
-        .get("/api/register/gotoRegisters", {
-            params:{
-            pageNum: this.pageNum,
-            pageSize: this.pageSize,
-            patientid: this.pid
-            }
-        })
-        .then((res) => {
-          this.patient=res.data.list[0];
-           this.gotoWarnByRid();
-        })
-        .catch((e) => {console.log(e);});
-      },
-       gotoWarnByRid(){//tableData  通过患者ID查询患者医嘱
-         this.$axios.get("/api/warn/getWarnList/",{
-            params:{
-            pageNum: this.pageNum,
-            pageSize: this.pageSize,
-            patientid:this.patient.patientid
-            }
-        })
-        .then((res) => {
-          this.tableData=res.data.data.list;
-            this.pageInfo = res.data.data;
-          this.pageNum = res.data.data.pageNum;
-          // this.pageSize=res.data.pageSize;
-          this.total = res.data.data.total;
-        })
-        .catch((e) => {console.log(e);});
+
+        getRegister() {//查看单个患者
+            this.$axios
+                .get("/api/register/gotoRegisters", {
+                    params: {
+                        pageNum: this.pageNum,
+                        pageSize: this.pageSize,
+                        patientid: this.pid
+                    }
+                })
+                .then((res) => {
+                    this.patient = res.data.list[0];
+                    this.gotoWarnByRid();
+                })
+                .catch((e) => { console.log(e); });
         },
-         selectHandle(row) {//复选框的方法
+        gotoWarnByRid() {//tableData  通过患者ID查询患者医嘱
+            this.$axios.get("/api/warn/getWarnList/", {
+                params: {
+                    pageNum: this.pageNum,
+                    pageSize: this.pageSize,
+                    patientid: this.patient.patientid
+                }
+            })
+                .then((res) => {
+                    this.tableData = res.data.data.list;
+                    this.pageInfo = res.data.data;
+                    this.pageNum = res.data.data.pageNum;
+                    // this.pageSize=res.data.pageSize;
+                    this.total = res.data.data.total;
+                })
+                .catch((e) => { console.log(e); });
+        },
+        selectHandle(row) {//复选框的方法
             if (row.status != '1') {
                 return false
             } else {
@@ -258,10 +257,9 @@ export default {
             }
         },
 
-   }
+    }
 }
 </script>
 
 <style>
-
 </style>

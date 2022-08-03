@@ -70,9 +70,13 @@ public class RegisterDto implements Serializable {
     private Integer chargeid;
 
     @Schema(name = "entertime", description = "入院时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime entertime;
 
     @Schema(name = "outtime", description = "出院时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime outtime;
 
     @Schema(name = "status", description = "状态")

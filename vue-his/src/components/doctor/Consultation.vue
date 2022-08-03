@@ -143,7 +143,8 @@
             </el-tab-pane>
         </el-tabs>
         <!-- 指定显示名称的子组件并传值 -->
-        <component :is="comName" @func="handleShow" :replyobj="replyobj" :applyobj="applyobj"></component>
+        <component :is="comName" @func="handleShow" :replyobj="replyobj" :applyobj="applyobj" :patient="patient">
+        </component>
     </div>
 </template>
 
@@ -220,7 +221,7 @@ export default {
             this.applyobj = obj;
         },
         handleDelete(id) {
-            this.$axios.get("/api/consutants/removeById?id=" + id).then(res=>{
+            this.$axios.get("/api/consutants/removeById?id=" + id).then(res => {
                 if (res.data.status == 200) {
                     this.$message({
                         showClose: true,

@@ -14,19 +14,11 @@
       <el-col :span="8">
         <el-input v-model="searchName" placeholder="请输入内容">
           <!-- 放大镜按钮 -->
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="finduserList(1)"
-          ></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="finduserList(1)"></el-button>
         </el-input>
       </el-col>
       <el-col :span="8">
-        <el-select
-          @change="searchStatusChange"
-          v-model="searchStatus"
-          placeholder="请选择状态"
-        >
+        <el-select @change="searchStatusChange" v-model="searchStatus" placeholder="请选择状态">
           <el-option label="不限" value=""></el-option>
           <el-option label="在职" value="0"></el-option>
           <el-option label="离职" value="1"></el-option>
@@ -35,43 +27,12 @@
     </el-row>
     <!-- 数据表格 -->
     <el-table :data="userData" style="width: 100%; margin-top: 10px">
-      <el-table-column
-        type="index"
-        :index="indexMethod"
-        label="序号"
-        width="50"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="70"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="sex"
-        label="性别"
-        width="50"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="age"
-        label="年龄"
-        width="70"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="card"
-        label="身份证号"
-        width="150"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="phone"
-        label="联系电话"
-        width="110"
-        align="center"
-      ></el-table-column>
+      <el-table-column type="index" :index="indexMethod" label="序号" width="50" align="center"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="70" align="center"></el-table-column>
+      <el-table-column prop="sex" label="性别" width="50" align="center"></el-table-column>
+      <el-table-column prop="age" label="年龄" width="70" align="center"></el-table-column>
+      <el-table-column prop="card" label="身份证号" width="150" align="center"></el-table-column>
+      <el-table-column prop="phone" label="联系电话" width="110" align="center"></el-table-column>
       <el-table-column label="岗位" width="120" align="center">
         <template slot-scope="scope">
           <span v-for="role in roleData" :key="role.id">
@@ -86,12 +47,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column
-        prop="level"
-        label="级别"
-        width="90"
-        align="center"
-      ></el-table-column>
+      <el-table-column prop="level" label="级别" width="90" align="center"></el-table-column>
       <el-table-column label="在职状态" width="80" align="center">
         <template slot-scope="scope">
           <el-tag :type="scope.row.status == '0' ? 'success' : 'danger'">
@@ -101,20 +57,10 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="180">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="handleEdit(scope.$index, scope.row)"
-            icon="el-icon-edit"
-            >编辑</el-button
-          >
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)"
-            icon="el-icon-delete"
-            >删除</el-button
-          >
+          <el-button size="mini" type="primary" @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit">编辑
+          </el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)" icon="el-icon-delete">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -123,28 +69,14 @@
 background是否显示背景色layout表示显示分页的布局组件
 prev 上—页next下一页pager导航页码sizes每页记录数:total设置总记录数
 : page-size每页记录数: current-page当前页码-->
-    <el-pagination
-      :background="true"
-      layout="prev,pager,next,sizes,jumper,->,total"
-      prev-text="上一页"
-      next-text="下一页"
-      :page-sizes="[5, 10, 15, 20]"
-      :page-size="pageSize"
-      :current-page="currentPage"
-      :total="total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    >
+    <el-pagination :background="true" layout="prev,pager,next,sizes,jumper,->,total" prev-text="上一页" next-text="下一页"
+      :page-sizes="[5, 10, 15, 20]" :page-size="pageSize" :current-page="currentPage" :total="total"
+      @size-change="handleSizeChange" @current-change="handleCurrentChange">
     </el-pagination>
 
     <!-- 切换方式显示子组件 -->
-    <component
-      :is="comName"
-      :roleData="roleData"
-      :familyData="familyData"
-      :objuser="user"
-      @func="handleShow"
-    ></component>
+    <component :is="comName" :roleData="roleData" :familyData="familyData" :objuser="user" @func="handleShow">
+    </component>
   </div>
 </template>
 
@@ -207,7 +139,7 @@ export default {
                   offset: 300,
                   duration: 1000,
                 });
-                this.finduserList(this.currentPage);
+                this.finduserList(1);
               } else {
                 this.$message({
                   type: "error",
@@ -217,9 +149,9 @@ export default {
                 });
               }
             })
-            .catch(() => {});
+            .catch(() => { });
         })
-        .catch(() => {});
+        .catch(() => { });
     },
     //获取用户列表数据
     finduserList(pno) {
