@@ -12,46 +12,19 @@
       </el-col>
       <el-col :span="6">
         <el-input placeholder="请输入患者姓名" v-model="searchName">
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="getDrugOutList(1)"
-          ></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="getDrugOutList(1)"></el-button>
         </el-input>
       </el-col>
-      <el-button type="success" round @click="updateStatus" style="float: right"
-        >发药</el-button
-      >
+      <el-button type="success" round @click="updateStatus" style="float: right">发药</el-button>
     </el-row>
-    <el-table
-      :data="tableData"
-      style="width: 100%; margin-top: 10px"
-      max-height="100%"
-      stripe
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column
-        type="selection"
-        width="55"
-        :selectable="selectHandle"
-        align="center"
-      >
+    <el-table :data="tableData" style="width: 100%; margin-top: 10px" max-height="100%" stripe
+      @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="55" :selectable="selectHandle" align="center">
       </el-table-column>
-      <el-table-column
-        type="index"
-        :index="indexMethod"
-        label="序号"
-        width="80"
-        align="center"
-      ></el-table-column>
+      <el-table-column type="index" :index="indexMethod" label="序号" width="80" align="center"></el-table-column>
       <el-table-column prop="registerid" label="住院编号" width="80" align="center">
       </el-table-column>
-      <el-table-column label="患者姓名" width="120" align="center">
-        <template slot-scope="scope">
-          <span v-for="register in registerList" :key="register.id">
-            <span v-if="register.id == scope.row.registerid">{{ register.name }}</span>
-          </span>
-        </template>
+      <el-table-column prop="patientname" label="患者姓名" width="120" align="center">
       </el-table-column>
       <el-table-column label="科室" width="100" align="center">
         <template slot-scope="scope">
@@ -110,19 +83,9 @@
     <!--background是否显示背景色,layout显示分特的布局组件,prev上一下next下一页pager导航页码sizes每页记录数
             total设置总记录数,page-size梅特记录数,current-page当前页码
           -->
-    <el-pagination
-      :background="true"
-      layout="prev, pager, next,sizes,jumper,->,total"
-      prev-text="上一页"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      next-text="下一页"
-      :page-sizes="pageSizes"
-      :page-size="pageSize"
-      :current-page="pageNum"
-      :total="totalCount"
-      style="margin-top: 10px"
-    >
+    <el-pagination :background="true" layout="prev, pager, next,sizes,jumper,->,total" prev-text="上一页"
+      @size-change="handleSizeChange" @current-change="handleCurrentChange" next-text="下一页" :page-sizes="pageSizes"
+      :page-size="pageSize" :current-page="pageNum" :total="totalCount" style="margin-top: 10px">
     </el-pagination>
   </div>
 </template>
@@ -183,11 +146,11 @@ export default {
         this.$axios
           .get(
             "/api/drugout/updateCpoeStatus?ids=" +
-              result +
-              "&status=3" +
-              "&type=0" +
-              "&userid=" +
-              this.userid
+            result +
+            "&status=3" +
+            "&type=0" +
+            "&userid=" +
+            this.userid
           )
           .then((res) => {
             if (res.data.status == 200) {
@@ -344,4 +307,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

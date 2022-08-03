@@ -86,4 +86,9 @@ public class MoneylistServiceImpl extends ServiceImpl<MoneylistMysqlDao, Moneyli
     public void addDrugList(String[] idArr) {
         moneyListRepository.addDrugList(idArr);
     }
+
+    @Override
+    public void addDrugReturnList(String[] idArr) {
+        moneyListRepository.addDrugReturnList(idArr);
+    }
 }

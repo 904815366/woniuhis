@@ -27,7 +27,8 @@ public class MoneyListRepository {
     private final WarnMysqlDao warnMysqlDao;
     private final WarndetailsMysqlDao warndetailsMysqlDao;
     private final DrugMysqlDao drugMysqlDao;
-
+    private final DrugrecordMysqlDao drugrecordMysqlDao;
+    private final DrugReturnMysqlDao drugReturnMysqlDao;
     public List<MoneylistPo> MoneyListByRegisterIdAndStatusQuery(Integer registerId, Integer status, String consumtime) {
         QueryWrapper<MoneylistPo> wrapper = new QueryWrapper();
         wrapper.eq("registerid", registerId).orderByAsc("consumtime");
@@ -88,12 +89,27 @@ public class MoneyListRepository {
             //添加费用记录
             MoneylistPo moneylistPo = new MoneylistPo();
             moneylistPo.setRegisterid(warnPo.getRegisterid());
-//            moneylistPo.setConsumtime(new Date());
+//            moneylistPo.setConsumtime(new localdatetime);
             moneylistPo.setStatus("0");
             //查询药品列表
             DrugPo drugPo = drugMysqlDao.selectById(warndetailsPo.getDrugid());
             moneylistPo.setConsumpart("药品:" + drugPo.getName() + " 数量:" + warndetailsPo.getNum());
             double money = warndetailsPo.getNum() * drugPo.getPrice();
+            moneylistPo.setConsummoney(new BigDecimal(Double.toString(money)));
+            moneylistMysqlDao.insert(moneylistPo);
+        }
+    }
+
+    public void addDrugReturnList(String[] idArr) {
+        for (String id : idArr) {
+            DrugReturnPo drugReturnPo = drugReturnMysqlDao.selectById(id);
+            DrugPo drugPo = drugMysqlDao.selectById(drugReturnPo.getDrugid());
+            //添加费用记录
+            MoneylistPo moneylistPo = new MoneylistPo();
+            moneylistPo.setRegisterid(drugReturnPo.getRegisterid());
+            moneylistPo.setConsumpart("药品:" + drugPo.getName() + " 数量:" + drugReturnPo.getNum());
+            moneylistPo.setStatus("2");
+            double money = drugReturnPo.getNum() * drugPo.getPrice();
             moneylistPo.setConsummoney(new BigDecimal(Double.toString(money)));
             moneylistMysqlDao.insert(moneylistPo);
         }

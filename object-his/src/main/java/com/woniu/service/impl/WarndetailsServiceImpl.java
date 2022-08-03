@@ -25,4 +25,9 @@ public class WarndetailsServiceImpl extends ServiceImpl<WarndetailsMysqlDao, War
     public void updateNum(Integer id, Integer returnnum) {
         warndetailsRepository.updateNum(id,returnnum);
     }
+
+    @Override
+    public void updateReturnNum(String[] idArr) {
+        warndetailsRepository.updateReturnNum(idArr);
+    }
 }

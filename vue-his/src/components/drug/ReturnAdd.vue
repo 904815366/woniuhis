@@ -6,15 +6,14 @@
       </el-form-item>
       <el-form-item label="药品名称:" :label-width="formLabelWidth">
         <span v-for="detail in detailList" :key="detail.id">
-          <span v-if="detail.warnid == warn.id" >
-          <span v-model="warndetail.id">
+          <span v-if="detail.warnid == warn.id">
             <span v-for="drug in drugList" :key="drug.id">
               <span v-if="drug.id == detail.drugid">
                 {{ drug.name }}
               </span>
             </span>
-            </span>
           </span>
+        </span>
         </span>
       </el-form-item>
       <el-form-item label="开立时间:" :label-width="formLabelWidth">
@@ -24,23 +23,27 @@
       <el-form-item label="开药数量:" :label-width="formLabelWidth">
         <span v-for="detail in detailList" :key="detail.id">
           <span v-if="detail.warnid == warn.id">
-            <span v-for="drug in drugList" :key="drug.id">
-              <span v-if="drug.id == detail.drugid" >
-                {{ detail.num }}
-              </span>
-            </span>
+            {{ detail.num }}
           </span>
         </span>
       </el-form-item>
       <el-form-item label="退药数量:" :label-width="formLabelWidth">
-                <el-input v-model="returnnum" autocomplete="off"></el-input>
-        </span>
+        <el-input v-model="returnnum" autocomplete="off"></el-input>
       </el-form-item>
+
+      <el-form-item :label-width="formLabelWidth">
+
+        <span v-for="detail in detailList" :key="detail.id">
+          <span v-if="detail.warnid == warn.id">
+            <el-button @click="cancelAdd">取 消</el-button>
+            <el-button type="primary" @click="confirmEdit(detail.num)">确 定</el-button>
+          </span>
+        </span>
+
+      </el-form-item>
+
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="cancelAdd">取 消</el-button>
-      <el-button type="primary" @click="confirmEdit(detail.num)">确 定</el-button>
-    </div>
+
   </el-dialog>
 </template>
 
@@ -51,9 +54,8 @@ export default {
       addDrugDialogFormVisible: true,
       formLabelWidth: "120px",
       warn: {},
-      returnnum:"",
-      warndetail:{},
-      detailnum:""
+      returnnum: "",
+      warndetail: {},
     };
   },
   props: ["objWarn", "registerList", "familyList", "userList", "drugList", "detailList"],
@@ -64,22 +66,22 @@ export default {
       this.$emit("func");
     },
     confirmEdit(num) {
-      console.log(num+"-"+this.returnnum);
-      if(this.detailnum<this.returnnum){
+      console.log(num + "-" + this.returnnum);
+      if (num < this.returnnum) {
         this.$message({
-              type: "danger",
-              message: "申请数量应小于开药数量!",
-              offset: 300,
-              duration: 1000, //显示的时间,ms
-            });
+          type: "danger",
+          message: "申请数量应小于开药数量!",
+          offset: 300,
+          duration: 1000, //显示的时间,ms
+        });
         return;
       }
       //发送 axios请求
       this.$axios
         .get("/api/drugreturn/edit", {
-          params:{
-            id:this.warn.id,
-            returnnum:this.returnnum,
+          params: {
+            id: this.warn.id,
+            returnnum: this.returnnum,
           }
         })
         .then((res) => {
@@ -123,4 +125,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

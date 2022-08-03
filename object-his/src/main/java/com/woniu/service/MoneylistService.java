@@ -28,4 +28,6 @@ public interface MoneylistService extends IService<MoneylistPo> {
 
 
     void addDrugList(String[] idArr);
+
+    void addDrugReturnList(String[] idArr);
 }

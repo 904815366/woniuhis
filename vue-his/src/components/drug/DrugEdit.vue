@@ -36,7 +36,7 @@ export default {
       rules: {
         alarmnum: [
           { required: true, message: "请输入报警库存", trigger: "blur" },
-          { pattern: /^[1-9][\d]{1,}$/, message: "金额格式错误", trigger: "blur" },
+          { pattern: /^[1-9][\d]{1,}$/, message: "格式错误", trigger: "blur" },
         ],
       },
     };
@@ -93,4 +93,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

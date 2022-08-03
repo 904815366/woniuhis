@@ -12,35 +12,15 @@
       </el-col>
       <el-col :span="6">
         <el-input placeholder="请输入患者姓名" v-model="searchName">
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="getDrugOutList(1)"
-          ></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="getDrugOutList(1)"></el-button>
         </el-input>
       </el-col>
     </el-row>
-    <el-table
-      :data="tableData"
-      style="width: 100%; margin-top: 10px"
-      max-height="100%"
-      stripe
-    >
-      <el-table-column
-        type="index"
-        :index="indexMethod"
-        label="序号"
-        width="80"
-        align="center"
-      ></el-table-column>
+    <el-table :data="tableData" style="width: 100%; margin-top: 10px" max-height="100%" stripe>
+      <el-table-column type="index" :index="indexMethod" label="序号" width="80" align="center"></el-table-column>
       <el-table-column prop="registerid" label="住院编号" width="100" align="center">
       </el-table-column>
-      <el-table-column label="患者姓名" width="120" align="center">
-        <template slot-scope="scope">
-          <span v-for="register in registerList" :key="register.id">
-            <span v-if="register.id == scope.row.registerid">{{ register.name }}</span>
-          </span>
-        </template>
+      <el-table-column prop="patientname" label="患者姓名" width="120" align="center">
       </el-table-column>
       <el-table-column label="科室" width="110" align="center">
         <template slot-scope="scope">
@@ -79,54 +59,29 @@
         <template slot-scope="scope">
           <span v-for="detail in detailList" :key="detail.id">
             <span v-if="detail.warnid == scope.row.id">
-              <span v-for="drug in drugList" :key="drug.id">
-                <span v-if="drug.id == detail.drugid">
-                  {{ detail.num }}
-                </span>
-              </span>
+              {{ detail.num }}
             </span>
           </span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="120">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleEdit(scope.row)"
-            >退药</el-button
-          >
+          <el-button size="mini" type="primary" @click="handleEdit(scope.row)">退药</el-button>
         </template>
       </el-table-column>
     </el-table>
     <!--background是否显示背景色,layout显示分特的布局组件,prev上一下next下一页pager导航页码sizes每页记录数
             total设置总记录数,page-size梅特记录数,current-page当前页码
           -->
-    <el-pagination
-      :background="true"
-      layout="prev, pager, next,sizes,jumper,->,total"
-      prev-text="上一页"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      next-text="下一页"
-      :page-sizes="pageSizes"
-      :page-size="pageSize"
-      :current-page="pageNum"
-      :total="totalCount"
-      style="margin-top: 10px"
-    >
+    <el-pagination :background="true" layout="prev, pager, next,sizes,jumper,->,total" prev-text="上一页"
+      @size-change="handleSizeChange" @current-change="handleCurrentChange" next-text="下一页" :page-sizes="pageSizes"
+      :page-size="pageSize" :current-page="pageNum" :total="totalCount" style="margin-top: 10px">
     </el-pagination>
 
     <!-- 显示子组件 -->
-    <component
-      :is="comName"
-      :objWarn="warn"
-      @func="handleShow"
-      @reload="reload"
-      :pageNum="pageNum"
-      :registerList="registerList"
-      :familyList="familyList"
-      :userList="userList"
-      :drugList="drugList"
-      :detailList="detailList"
-    ></component>
+    <component :is="comName" :objWarn="warn" @func="handleShow" @reload="reload" :pageNum="pageNum"
+      :registerList="registerList" :familyList="familyList" :userList="userList" :drugList="drugList"
+      :detailList="detailList"></component>
   </div>
 </template>
 <script>
@@ -190,8 +145,7 @@ export default {
     },
     getDrugOutList(pNum) {
       console.log("发送查询drugoutlist请求");
-      //this.userid = window.sessionStorage.getItem("currentUserId", this.nameAndId[1]);
-      this.userid = 1;
+      this.userid = window.sessionStorage.getItem("currentUserId", this.nameAndId[1]);
       this.$axios
         .get("/api/drugout/list", {
           params: {
@@ -322,4 +276,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

@@ -25,4 +25,9 @@ public class DrugServiceImpl extends ServiceImpl<DrugMysqlDao, DrugPo> implement
     public void updateStock(String[] idArr) {
         drugRepository.updateStock(idArr);
     }
+
+    @Override
+    public void updateReturnStock(String[] idArr) {
+        drugRepository.updateReturnStock(idArr);
+    }
 }

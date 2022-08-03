@@ -31,6 +31,8 @@ public class DrugrecordServiceImpl extends ServiceImpl<DrugrecordMysqlDao, Drugr
     private DrugService drugService;
     @Autowired
     private DrugReturnService drugReturnService;
+    @Autowired
+    private WarndetailsService warndetailsService;
 
     @Override
     public void addDrugrecord(String[] idArr,Integer userid,Integer status,String type) {
@@ -43,11 +45,15 @@ public class DrugrecordServiceImpl extends ServiceImpl<DrugrecordMysqlDao, Drugr
     @Override
     public void addDrugReturnrecord(String[] idArr, Integer userid) {
         drugrecordRepository.addReturnRecord(idArr,userid);
+        moneylistService.addDrugReturnList(idArr);
+        drugService.updateReturnStock(idArr);
         drugReturnService.deleteById(idArr);
+
     }
 
     @Override
     public void addDrugRefuserecord(String[] idArr) {
+        warndetailsService.updateReturnNum(idArr);
         drugReturnService.deleteById(idArr);
     }
 }

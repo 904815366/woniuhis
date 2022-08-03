@@ -77,4 +77,7 @@ public class WarnDto implements Serializable {
 
     @Schema(name = "familyid", description = "科室id")
     private Integer familyid;
+
+    @Schema(name = "patientname", description = "患者姓名")
+    private String patientname;
 }
