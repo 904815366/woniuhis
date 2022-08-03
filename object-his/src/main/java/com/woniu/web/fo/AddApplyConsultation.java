@@ -1,6 +1,6 @@
 package com.woniu.web.fo;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.util.BEncoderStream;
+
 import com.woniu.entity.po.ConsutantsPo;
 import com.woniu.service.ConsutantsService;
 import com.woniu.util.ApplicationContextHolder;
@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 @Data
 @AllArgsConstructor
