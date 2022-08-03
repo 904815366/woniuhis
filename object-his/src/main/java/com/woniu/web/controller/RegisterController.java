@@ -198,6 +198,7 @@ public class RegisterController {
 
 //   根据科室查询所有的患者，返回一个住院号就是regisid 和患者姓名
     @GetMapping("/gotolistAll")
+    @Operation( summary = "根据科室查询患者", description = "根据科室查询患者", tags = {"入院管理"} )
     public List<RegisterByFamilyDto> gotoPatientList(Integer familyid){
         List<RegisterByFamilyDto> registerBFamilyid = registerRepository.getRegisterBFamilyid(familyid);
         return registerBFamilyid;
@@ -207,6 +208,7 @@ public class RegisterController {
      * 简单的通过住院号查询所有医嘱
      */
     @GetMapping("/getWarnids/{rid}")
+    @Operation( summary = "根据住院号查所有医嘱", description = "根据住院号查所有医嘱", tags = {"入院管理"} )
     public List<RegisterByWarnidDto> getWarnids(@PathVariable("rid") Integer rid){
         List<RegisterByWarnidDto> warnids = registerRepository.getWarnids(rid);
         return warnids;

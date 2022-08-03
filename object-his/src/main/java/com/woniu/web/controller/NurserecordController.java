@@ -10,6 +10,8 @@ import com.woniu.entity.po.NurserecordPo;
 import com.woniu.mapper.mysql.NursetypeMysqlDao;
 import com.woniu.repository.NurserecordRepository;
 import com.woniu.service.NurserecordService;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/nurserecord")
+@Api( tags = {"护理记录管理"} )
 public class NurserecordController {
 
     @Autowired
@@ -39,6 +42,7 @@ public class NurserecordController {
     private NurserecordService nurserecordService;
 
     @GetMapping("gotoNursers")//查看所有护理记录
+    @Operation( summary = "查看所有护理记录", description = "查看所有护理记录", tags = {"护理记录管理"} )
     public PageInfo<NurserecordDto> getNurserecords(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
                                 @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize,
                                                     @RequestParam(name = "rid")Integer rid){
@@ -48,6 +52,7 @@ public class NurserecordController {
     }
 
     @GetMapping("/getNutypes")
+    @Operation( summary = "查看所有护理类型供添加使用", description = "查看所有护理类型供添加使用", tags = {"护理记录管理"} )
     public List<NursetypeDto> getNusrtypes(){
         List<NursetypeDto> nursetypeDtos = nursetypeMysqlDao.queryNuresetype();
         return nursetypeDtos;
@@ -57,6 +62,7 @@ public class NurserecordController {
      * xk添加护理记录表
      */
     @PostMapping("/addNureser")
+    @Operation( summary = "添加护理记录", description = "添加护理记录", tags = {"护理记录管理"} )
     public ResponseResult addNurserecord(@RequestBody NurserecordPo nurserecordPo){
         nurserecordPo.setStatus("0");
         boolean save = nurserecordService.save(nurserecordPo);
@@ -72,6 +78,7 @@ public class NurserecordController {
      * 根据Id删除护理记录
      */
     @GetMapping("/delNur")
+    @Operation( summary = "根据id删除护理记录", description = "根据id删除护理记录", tags = {"护理记录管理"} )
     public ResponseResult dltNurserBYId(Integer id){
         boolean delt = nurserecordService.removeById(id);
         if (delt){
