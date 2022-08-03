@@ -120,22 +120,14 @@ public class UserController {
         return responseResult;
     }
 
-    @RequestMapping("/nullArrUserThis")
-    @Operation(summary = "查询本周无安排的人员", description = "查询本周无安排的人员", tags = {"用户管理"})
-    public ResponseResult<List<NullArrUserDto>> nullArrUserListThis(NullArrUserList nullArrUserList) {
-        List<NullArrUserDto> thisList = nullArrUserList.getThisList();
+    @RequestMapping("/nullArrUser")
+    @Operation( summary = "查询无安排的人员", description = "查询无安排的人员", tags = {"用户管理"} )
+    public ResponseResult<List<NullArrUserDto>> nullArrUserListThis(NullArrUserList nullArrUserList){
+        List<NullArrUserDto> thisList = nullArrUserList.getList();
         System.out.println(thisList);
         return new ResponseResult<>(thisList, "OK", 200);
     }
-
-    @RequestMapping("/nullArrUserNext")
-    @Operation(summary = "查询下周无安排的人员", description = "查询下周无安排的人员", tags = {"用户管理"})
-    public ResponseResult<List<NullArrUserDto>> nullArrUserListNext(NullArrUserList nullArrUserList) {
-        List<NullArrUserDto> nextList = nullArrUserList.getNextList();
-        System.out.println(nextList);
-        return new ResponseResult<>(nextList, "OK", 200);
-    }
-
+    
     @RequestMapping("/updSelf")
     @Operation(summary = "修改个人密码", description = "修改个人密码", tags = {"用户管理"})
     public ResponseResult<Void> updSelf(@RequestParam("id") Integer id, @RequestParam("password") String password) {

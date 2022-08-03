@@ -6,7 +6,6 @@
     :before-close="cancelAdd"
     size="60%"
   >
-    {{ week }},{{ arrangeData }}
     <el-row style="margin-top: 10px">
       <el-col :span="6">
         <el-input v-model="searchName" placeholder="请输入员工姓名">
@@ -151,36 +150,20 @@ export default {
     },
     //查出未排班的员工信息
     findNullArrUserList() {
-      let week = this.week;
-      if (week == "thisWeek") {
-        this.$axios
-          .get("/api/user/nullArrUserThis", {
-            params: {
-              searchName: this.searchName,
-              searchRoleid: this.searchRoleid,
-              searchFamilyid: this.searchFamilyid,
-            },
-          })
-          .then((res) => {
-            console.log(res.data.data);
-            this.arrangeData = res.data.data;
-          })
-          .catch(() => {});
-      } else if ((week = "nextWeek")) {
-        this.$axios
-          .get("/api/user/nullArrUserNext", {
-            params: {
-              searchName: this.searchName,
-              searchRoleid: this.searchRoleid,
-              searchFamilyid: this.searchFamilyid,
-            },
-          })
-          .then((res) => {
-            console.log(res.data.data);
-            this.arrangeData = res.data.data;
-          })
-          .catch(() => {});
-      }
+      this.$axios
+        .get("/api/user/nullArrUser", {
+          params: {
+            searchName: this.searchName,
+            searchRoleid: this.searchRoleid,
+            searchFamilyid: this.searchFamilyid,
+            week: this.week,
+          },
+        })
+        .then((res) => {
+          console.log(res.data.data);
+          this.arrangeData = res.data.data;
+        })
+        .catch(() => {});
     },
   },
 };

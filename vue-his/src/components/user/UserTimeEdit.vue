@@ -5,7 +5,6 @@
       :visible.sync="editUserDialogFormVisible"
       @close="cancelEdit"
     >
-      {{ objuserid }},{{ objuser }}
       <div style="margin-left: 130px" v-if="week == 'thisWeek'">
         <el-checkbox-group v-model="checkList">
           <el-checkbox
