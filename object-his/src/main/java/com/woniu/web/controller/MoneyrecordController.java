@@ -9,6 +9,8 @@ import com.woniu.web.anon.IdempotentToken;
 import com.woniu.web.fo.InsertMoneyRecordComment;
 import com.woniu.web.fo.MoneyRecordListByIdQuery;
 import com.woniu.web.fo.RegisterByIdQuery;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/moneyrecord")
+@Api( tags = {"缴费管理"} )
 public class MoneyrecordController {
 
     @Resource
@@ -38,6 +41,7 @@ public class MoneyrecordController {
      * @return
      */
     @GetMapping("/ListById/{id}")
+    @Operation( summary = "根据ID查询缴费列表", description = "根据ID查询缴费列表", tags = {"缴费管理"} )
     public ResponseResult<List<MoneyrecordDto>> queryByIdRegister(@PathVariable("id") Integer id ){
         return new MoneyRecordListByIdQuery(id).exec();
     }
@@ -50,6 +54,7 @@ public class MoneyrecordController {
      */
     @PostMapping("/insertOne")
     @IdempotentToken
+    @Operation( summary = "添加缴费信息", description = "添加缴费信息", tags = {"缴费管理"} )
     public ResponseResult<Void> addMoneyrecord(@RequestBody InsertMoneyRecordComment insertMoneyRecordComment){
         bus.post(insertMoneyRecordComment);
         return new ResponseResult<>(2000,"ok");

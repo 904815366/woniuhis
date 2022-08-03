@@ -3,33 +3,21 @@
     <!-- 面包屑导航 -->
     <el-breadcrumb separator="/">
       <el-breadcrumb-item :to="{ path: '/user/homeContent' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><router-link to="#">人员管理</router-link></el-breadcrumb-item>
+      <el-breadcrumb-item>
+        <router-link to="#">人员管理</router-link>
+      </el-breadcrumb-item>
       <el-breadcrumb-item>人员录入</el-breadcrumb-item>
     </el-breadcrumb>
     <el-row style="margin-top: 15px">
       <el-form :model="user" status-icon :rules="rules" ref="addForm">
         <el-form-item label="用户名" prop="username" :label-width="formLabelWidth">
-          <el-input
-            v-model="user.username"
-            :style="inputWidth"
-            autocomplete="off"
-          ></el-input>
+          <el-input v-model="user.username" :style="inputWidth" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password" :label-width="formLabelWidth">
-          <el-input
-            type="password"
-            v-model="user.password"
-            :style="inputWidth"
-            autocomplete="off"
-          ></el-input>
+          <el-input type="password" v-model="user.password" :style="inputWidth" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="核对密码" prop="repassword" :label-width="formLabelWidth">
-          <el-input
-            type="password"
-            v-model="rpassword"
-            :style="inputWidth"
-            autocomplete="off"
-          ></el-input>
+          <el-input type="password" v-model="rpassword" :style="inputWidth" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="name" :label-width="formLabelWidth">
           <el-input v-model="user.name" :style="inputWidth" autocomplete="off"></el-input>
@@ -47,30 +35,17 @@
           <el-input v-model="user.card" :style="inputWidth" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="联系电话" prop="phone" :label-width="formLabelWidth">
-          <el-input
-            v-model="user.phone"
-            :style="inputWidth"
-            autocomplete="off"
-          ></el-input>
+          <el-input v-model="user.phone" :style="inputWidth" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="岗位" prop="roleid" :label-width="formLabelWidth">
           <el-select v-model="user.roleid" placeholder="请选择岗位" :style="inputWidth">
-            <el-option
-              v-for="role in roleData"
-              :key="role.id"
-              :label="role.name"
-              :value="role.id"
-            ></el-option>
+            <el-option v-for="role in roleData" :key="role.id" :label="role.name" :value="role.id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="科室" prop="familyid" :label-width="formLabelWidth">
           <el-select v-model="user.familyid" placeholder="请选择科室" :style="inputWidth">
-            <el-option
-              v-for="family in familyData"
-              :key="family.id"
-              :label="family.familyname"
-              :value="family.id"
-            ></el-option>
+            <el-option v-for="family in familyData" :key="family.id" :label="family.familyname" :value="family.id">
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="级别" prop="level" :label-width="formLabelWidth">
@@ -89,6 +64,15 @@
             <el-option label="离职" value="1"></el-option>
           </el-select>
         </el-form-item>
+
+        <el-form-item label="上传头像" prop="avatar" :label-width="formLabelWidth">
+          <el-upload class="upload-demo" action="#" accept=".jpg, .png" :auto-upload="false" :limit="1">
+            <el-button size="small" type="primary">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+          </el-upload>
+        </el-form-item>
+
+
         <el-form-item label="" prop="status" label-width="450px">
           <el-button type="warning" @click="cancelAdd">重 置</el-button>
           <el-button type="primary" @click="confirmAdd">确 定</el-button>

@@ -16,6 +16,8 @@ import com.woniu.entity.po.RegisterPo;
 import com.woniu.repository.RegisterRepository;
 import com.woniu.service.RegisterService;
 import com.woniu.entity.converter.RegisterConverter;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/register")
+@Api( tags = {"入院管理"} )
 public class RegisterController {
 
     @Autowired
@@ -54,6 +57,7 @@ public class RegisterController {
 
 //    分页查询所有
     @GetMapping("/gotoRegisters")
+    @Operation( summary = "许珂:分页查询入院信息列表", description = "分页查询入院信息列表", tags = {"入院管理"} )
     public PageInfo<RegisterDto> getRegisters(@RequestParam(name = "pageNum",defaultValue = "1") Integer pageNum,
                                               @RequestParam(name = "pageSize",defaultValue = "5") Integer pageSize,
                                               @RequestParam(name = "patientid",defaultValue = "") Integer patientid){
@@ -73,6 +77,7 @@ public class RegisterController {
      * @return 入院登记表列表
      */
     @GetMapping("/queryPageInfo")
+    @Operation( summary = "罗虎:分页查询入院信息列表", description = "分页查询入院信息列表", tags = {"入院管理"} )
     public ResponseResult<PageInfo<RegisterDto>> queryPageInfo(QueryPageInfo queryPageInfo){
         PageInfo<RegisterDto> dtoPageInfo = queryPageInfo.exec();
         return new ResponseResult<>(dtoPageInfo,"ok",2000);
@@ -84,6 +89,7 @@ public class RegisterController {
      * @return 角色ID为收费人员的用户列表
      */
     @GetMapping("/queryUserListByRoleId")
+    @Operation( summary = "根据角色ID查询入院信息列表", description = "根据角色ID查询入院信息列表", tags = {"入院管理"} )
     public ResponseResult<List<UserDto>> queryUserListByRoleId(){
         List<UserDto> dtos = new QueryUserListByRoleId().exec();
         return new ResponseResult<>(dtos,"ok",2000);
@@ -97,6 +103,7 @@ public class RegisterController {
      */
     @PostMapping("/publish")
     @IdempotentToken
+    @Operation( summary = "添加入院信息", description = "添加入院信息,传入对象", tags = {"入院管理"} )
     public ResponseResult<Void> addRegister(@RequestBody AddRegister addRegister , HttpServletRequest request ){
         return addRegister.exec();
     }
@@ -109,11 +116,13 @@ public class RegisterController {
      */
     @PostMapping("/modify")
     @IdempotentToken
+    @Operation( summary = "修改入院信息", description = "修改入院信息 , 传入对象", tags = {"入院管理"} )
     public ResponseResult<Void> modifyRegister(@RequestBody ModifyRegister modifyRegister , HttpServletRequest request ){
         return modifyRegister.exec();
     }
 
     @PostMapping("/upregister")//修改床位的方法
+    @Operation( summary = "修改床位的方法", description = "修改床位的方法", tags = {"入院管理"} )
     public ResponseResult<Void> upRegisterbyBad(@RequestBody RegisterDto registerDto){
         try {
             registerService.upRegisterbyBad(registerDto);
@@ -125,6 +134,7 @@ public class RegisterController {
     }
 
     @GetMapping("/upstatusc")
+    @Operation( summary = "许珂:修改入院状态", description = "修改入院状态", tags = {"入院管理"} )
     public ResponseResult upRegisterBytatus(Integer id,String status){
         Boolean f = registerService.upRegisterByStatus(id,status);
         if (f){
@@ -135,6 +145,7 @@ public class RegisterController {
     }
 
     @PostMapping("/gotoOut")//修改出院状态的
+    @Operation( summary = "许珂:修改出院状态的", description = "修改出院状态的", tags = {"入院管理"} )
     public ResponseResult<Void> gotoregitOut(@RequestBody RegisterDto registerDto){
         //出院的同时修改床位状态
         bedService.dowBedByidStatus(registerDto.getBedid());
@@ -153,6 +164,7 @@ public class RegisterController {
      * @return
      */
     @PostMapping("/remove/{id}")
+    @Operation( summary = "根据ID删除入院信息", description = "根据ID删除入院信息", tags = {"入院管理"} )
     public ResponseResult<Boolean> removeRegister(@PathVariable("id") Integer id ){
         boolean remove = registerService.removeById(id);
         registerRedis.deleteById(id);
@@ -161,10 +173,11 @@ public class RegisterController {
 
     /**
      * 罗虎
-     * 根据ID查询单个入院信息
+     * 根据住院号和状态查询单个入院信息
      * @return
      */
     @GetMapping("/queryById/{id}/{status}")
+    @Operation( summary = "根据住院号和状态查询单个入院信息", description = "根据住院号和状态查询单个入院信息", tags = {"入院管理"} )
     public ResponseResult<RegisterDto> queryByIdRegister(@PathVariable("id") Integer id ,@PathVariable("status") Integer status){
         return new RegisterByIdQuery(id,status).exec();
     }
@@ -177,6 +190,7 @@ public class RegisterController {
      */
     @PostMapping("/settlement")
     @IdempotentToken
+    @Operation( summary = "出院结算", description = "出院结算", tags = {"入院管理"} )
     public ResponseResult<Void> modifyRegisterAndMoneyList(@RequestBody OutSettlementComment outSettlementComment){
         bus.post(outSettlementComment);
         return new ResponseResult<>(2000,"ok");

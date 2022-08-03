@@ -1,6 +1,7 @@
 package com.woniu;
 
 import com.google.common.eventbus.EventBus;
+import com.woniu.util.MinioUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,4 +29,9 @@ public class ObjectHisApplication {
 //    void started(){
 //        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 //    }
+
+    @Bean
+    public MinioUtils minioUtils() {
+        return new MinioUtils("http://127.0.0.1:9000", "minioadmin", "minioadmin");
+    }
 }

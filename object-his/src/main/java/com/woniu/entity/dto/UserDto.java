@@ -46,5 +46,5 @@ public class UserDto implements Serializable {
 
     private String status;
 
-
+    private String avatar;
 }

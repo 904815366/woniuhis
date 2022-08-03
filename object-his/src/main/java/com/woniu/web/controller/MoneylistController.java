@@ -11,6 +11,8 @@ import com.woniu.service.MoneylistService;
 import com.woniu.web.fo.ModifyStatusAndRegisterMoneyComment;
 import com.woniu.web.fo.ModifyStatusAndRegisterMoneysComment;
 import com.woniu.web.fo.MoneyListByRegisterIdAndStatusQuery;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/moneylist")
+@Api( tags = {"消费详情管理"} )
 public class MoneylistController {
 
     @Autowired
@@ -39,6 +42,7 @@ public class MoneylistController {
 
 //    查询所有的费用清单
     @GetMapping("/getMoneylists")
+    @Operation( summary = "查询所有的费用清单", description = "查询所有的费用清单", tags = {"消费详情管理"} )
     public List<MoneylistDto> gotoMoneylist(Integer mid){
 //        创建条件对象
         QueryWrapper<MoneylistPo> objectQueryWrapper = new QueryWrapper<>();
@@ -54,6 +58,7 @@ public class MoneylistController {
 
 
     @GetMapping("query/registerIdAndStatus")
+    @Operation( summary = "根据住院号和状态查询消费列表", description = "根据住院号和状态查询消费列表", tags = {"消费详情管理"} )
     public ResponseResult<List<MoneylistDto>> queryMoneyListByRegisterIdAndStatus(
             MoneyListByRegisterIdAndStatusQuery moneyListByRegisterIdAndStatusQuery){
         return moneyListByRegisterIdAndStatusQuery.exec();
@@ -66,6 +71,7 @@ public class MoneylistController {
      * @return
      */
     @PostMapping("/modifyStatusAndRegisterMoney")
+    @Operation( summary = "日结列表,结算单个消费订单", description = "修改消费详情状态为已结算,并且根据住院号减去账户的余额", tags = {"消费详情管理"} )
     public ResponseResult<Void> modifyStatusAndRegisterMoney(
             @RequestBody ModifyStatusAndRegisterMoneyComment modifyStatusAndRegisterMoneyComment){
         bus.post(modifyStatusAndRegisterMoneyComment);
@@ -79,6 +85,7 @@ public class MoneylistController {
      * @return
      */
     @PostMapping("/modifyStatusAndRegisterMoneys")
+    @Operation( summary = "日结列表,批量结算消费订单", description = "批量修改消费详情状态为已结算,并且根据住院号减去账户的余额", tags = {"消费详情管理"} )
     public ResponseResult<Void> modifyStatusAndRegisterMoneys(
             @RequestBody ModifyStatusAndRegisterMoneysComment modifyStatusAndRegistersMoneyComment){
         bus.post(modifyStatusAndRegistersMoneyComment);

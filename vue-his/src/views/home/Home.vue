@@ -4,8 +4,16 @@
       <el-row>
         <el-col :span="8" class="col_l">&nbsp;</el-col>
         <el-col :span="16" class="col_r">
-          {{ nowTime }}&nbsp;|&nbsp;当前用户:&nbsp;{{ name }} &nbsp;&nbsp;
-          <el-button type="primary" :plain="true" size="small" @click="logout()">退出</el-button>
+          <span> {{ nowTime }}&nbsp;|&nbsp;当前用户:&nbsp;{{ name }}
+
+            <el-avatar v-if="avatar != null" shape="square" :size="38" :src="avatar" style="dispay:inline;">
+            </el-avatar>
+            <el-avatar v-if="avatar == null" shape="square" :size="38" style="dispay:inline;"
+              src="https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png"></el-avatar>
+            &nbsp;&nbsp;
+            <el-button style="float:right; margin-top: 5px;" type="primary" :plain="true" size="small"
+              @click="logout()">退出</el-button>
+          </span>
         </el-col>
       </el-row>
     </el-header>
@@ -38,13 +46,19 @@
         <router-view></router-view>
       </el-main>
     </el-container>
+
   </el-container>
 </template>
 
 <script>
+import userInfo from "../../components/user/UserInfo.vue";
 export default {
   name: "Home",
+  components: {
+    userInfo,
+  },
   data() {
+
     return {
       name: '', //右上角显示的用户名字
       username: '', //用户当前登录的账号
@@ -52,9 +66,21 @@ export default {
 
       timer: undefined, //定一个计时器
       nowTime: new Date(),//当前时间
+
+      avatar: null,
     };
   },
   methods: {
+
+    queryUserAvatar() {
+      this.$axios.get("api/user/queryUserAvatar/"
+        + window.sessionStorage.getItem("currentUserId")).then(res => {
+          console.log(res.data.data);
+          this.avatar = res.data.data;
+          this.$bus.emit("avatarURL", this.avatar);
+        })
+      console.log("执行了");
+    },
     logout() {
       this.$confirm("此操作将退出系统, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -81,6 +107,7 @@ export default {
   created() {
     this.name = window.sessionStorage.getItem('currentUser');
     this.username = window.sessionStorage.getItem("username");
+    this.queryUserAvatar();
     this.$nextTick(() => {
       this.$axios
         .get("/api/perms/menu?username=" + this.username)
@@ -114,6 +141,8 @@ export default {
   padding: 0;
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  text-align: center;
+  line-height: 40px;
 
   h1 {
     color: #515154;

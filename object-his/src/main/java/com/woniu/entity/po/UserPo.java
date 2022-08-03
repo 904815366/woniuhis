@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -22,6 +21,9 @@ import org.springframework.data.redis.core.RedisHash;
 @EqualsAndHashCode(callSuper = false)
 @TableName("user")
 @RedisHash("userpo")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserPo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,4 +53,6 @@ public class UserPo implements Serializable {
     private String level;
 
     private String status;
+
+    private String avatar;
 }

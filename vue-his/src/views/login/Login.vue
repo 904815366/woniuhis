@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       nameAndId: [],
+
       user: {
         username: "",
         password: "",
@@ -64,6 +65,8 @@ export default {
 
   created() {},
   methods: {
+
+
     submitForm() {
       this.$refs["loginForm"].validate((valid) => {
         if (valid) {
