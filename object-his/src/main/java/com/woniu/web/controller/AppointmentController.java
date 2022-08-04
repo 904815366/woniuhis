@@ -45,7 +45,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/queryListByName")
-    @Operation(summary = "根据姓名查列表", description = "根据姓名查列表", tags = {"入院通知单"})
+    @Operation(summary = "根据姓名查列表", description = "根据姓名查列表", tags = {"预约管理"})
     public ResponseResult<PageInfo<AppointmentDto>> queryAppByName(@RequestParam(name = "searchName", defaultValue = "") String name,
                                                                    @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
                                                                    @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize) {
@@ -56,14 +56,14 @@ public class AppointmentController {
     }
 
     @PostMapping("/addAppointment")
-    @Operation(summary = "新增住院通知单", description = "新增住院通知单", tags = {"入院通知单"})
+    @Operation(summary = "新增住院通知单", description = "新增住院通知单", tags = {"预约管理"})
     public ResponseResult<Void> addAppointment(@RequestBody AddAppointment addAppointment) {
         addAppointment.addAppointment();
         return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
     @GetMapping("/delAppointment")
-    @Operation(summary = "撤销住院通知单", description = "撤销住院通知单", tags = {"入院通知单"})
+    @Operation(summary = "撤销住院通知单", description = "撤销住院通知单", tags = {"预约管理"})
     public ResponseResult<Void> delAppointment(Integer id) {
         new RemoveAppointmentById().removeAppointment(id);
         return new ResponseResult<>(null, "SUCCESS", 200);
