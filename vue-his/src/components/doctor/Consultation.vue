@@ -143,8 +143,7 @@
             </el-tab-pane>
         </el-tabs>
         <!-- 指定显示名称的子组件并传值 -->
-        <component :is="comName" @func="handleShow" :replyobj="replyobj" :applyobj="applyobj" :patient="patient">
-        </component>
+        <component :is="comName" @func="handleShow" :replyobj="replyobj" :applyobj="applyobj" :patient="patient"></component>
     </div>
 </template>
 

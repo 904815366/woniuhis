@@ -86,6 +86,8 @@ export default {
         },
         getDeptList() {
             this.$axios.get("/api/family/list").then(res => {
+                console.log("..............");
+                console.log(res.data.data);
                 this.options = res.data.data;
             })
         }

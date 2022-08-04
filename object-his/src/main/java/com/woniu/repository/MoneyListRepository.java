@@ -93,10 +93,10 @@ public class MoneyListRepository {
             moneylistPo.setStatus("0");
             //查询药品列表
             DrugPo drugPo = drugMysqlDao.selectById(warndetailsPo.getDrugid());
-            moneylistPo.setConsumpart("药品:" + drugPo.getName() + " 数量:" + warndetailsPo.getNum());
-            double money = warndetailsPo.getNum() * drugPo.getPrice();
-            moneylistPo.setConsummoney(new BigDecimal(Double.toString(money)));
-            moneylistMysqlDao.insert(moneylistPo);
+//            moneylistPo.setConsumpart("药品:" + drugPo.getName() + " 数量:" + warndetailsPo.getNum());
+//            double money = warndetailsPo.getNum() * drugPo.getPrice();
+//            moneylistPo.setConsummoney(new BigDecimal(Double.toString(money)));
+//            moneylistMysqlDao.insert(moneylistPo);
         }
     }
 
