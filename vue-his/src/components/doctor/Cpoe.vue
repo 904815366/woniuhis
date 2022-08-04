@@ -126,6 +126,7 @@
 import addCpoe from '../doctor/AddCpoe.vue'
 import editCpoe from '../doctor/EditCpoe.vue'
 export default {
+    inject: ["reload"],
     data() {
         return {
             patient: {},//患者信息
@@ -222,6 +223,7 @@ export default {
                         type: "success",
                         center: true,
                     });
+                    this.reload();
                 } else {
                     this.$message({
                         showClose: true,
@@ -265,6 +267,7 @@ export default {
                                 type: "success",
                                 center: true,
                             });
+                            this.reload();
                         } else {
                             this.$message({
                                 showClose: true,

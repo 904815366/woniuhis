@@ -33,6 +33,7 @@
 
 <script>
 export default {
+    inject: ["reload"],
     data() {
         return {
             editDialogFormVisible: true,
@@ -65,6 +66,7 @@ export default {
                         type: "success",
                         center: true,
                     });
+                    this.reload();
                 } else {
                     this.$message({
                         showClose: true,

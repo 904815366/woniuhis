@@ -133,7 +133,7 @@ export default {
                 this.patient = res.data.data;
             });
             this.$axios.get("/api/emr/getEmrListById?registerid=" + id).then(res => {
-                console.log(res.data);
+                console.log(res.data.data);
                 this.tableData = res.data.data;
             })
         },

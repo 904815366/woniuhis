@@ -77,6 +77,7 @@
 //引入子组件
 import addNotification from '../doctor/AddNotification.vue'
 export default {
+    inject: ["reload"],
     data() {
         return {
             tableData: [],
@@ -118,6 +119,7 @@ export default {
             console.log(id);
             this.$axios.get("/api/appointment/delAppointment?id="+id).then(res=>{
                 console.log(res.data);
+                this.reload();
             })
         }
     },

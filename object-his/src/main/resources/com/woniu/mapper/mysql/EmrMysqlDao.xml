@@ -12,11 +12,17 @@
         <result property="username" column="username"></result>
     </resultMap>
     <select id="getByRegisterIdList" resultMap="emrList">
-        SELECT a.*,b.username FROM emr a,user b where a.userid=b.id and a.registerid=#{registerid}
+        select a.*, c.username
+        from emr a,
+             register b,
+             user c
+        where a.registerid = b.id
+          and c.id = a.userid
+          and a.registerid = #{registerid}
     </select>
 
     <insert id="createEmr">
-        INSERT INTO emr(name,registerid,content,createdate,userid)
-            VALUE(#{name},#{registerid},#{content},now(),#{userid})
+        INSERT INTO emr(name, registerid, content, createdate, userid)
+            VALUE (#{name},#{registerid},#{content},now(),#{userid})
     </insert>
 </mapper>

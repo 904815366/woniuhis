@@ -17,7 +17,7 @@ public class EmrController {
     @GetMapping("/getEmrListById")
     @Operation(summary = "查询入院记录", description = "查询入院记录", tags = {"入院记录"})
     public ResponseResult<List<EmrDto>> getEmrListById(Integer registerid) {
-        List<EmrDto> emrDtos = new QueryEmrListByRegisterId().queryEmrList(1);
+        List<EmrDto> emrDtos = new QueryEmrListByRegisterId().queryEmrList(registerid);
         return new ResponseResult<>(emrDtos, "SUCCESS", 200);
     }
 
