@@ -3,6 +3,7 @@ package com.woniu.web.fo;
 import com.woniu.entity.dto.PatientDto;
 import com.woniu.mapper.mysql.PatientMysqlDao;
 import com.woniu.util.ApplicationContextHolder;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QueryPatientList {
+    @Schema(name = "name",description = "患者姓名")
     private String name;
 
     /**

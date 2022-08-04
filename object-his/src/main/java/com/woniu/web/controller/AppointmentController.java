@@ -45,43 +45,28 @@ public class AppointmentController {
     }
 
     @GetMapping("/queryListByName")
-    @Operation( summary = "模糊分页查询列表", description = "模糊分页查询列表", tags = {"预约管理"} )
-    public ResponseResult<PageInfo<AppointmentDto>> queryAppByName(@RequestParam(name = "searchName",defaultValue = "")String name,
-                                                               @RequestParam(name = "pageNum",defaultValue = "1")Integer pageNum,
-                                                               @RequestParam(name = "pageSize",defaultValue ="5")Integer pageSize){
-        try {
-            PageHelper.startPage(pageNum, pageSize);
-            List<AppointmentDto> appointmentListByName = appointmentMysqlDao.getAppointmentListByName(name);
-            PageInfo<AppointmentDto> pageInfo = new PageInfo<>(appointmentListByName);
-            return new ResponseResult<>(pageInfo,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    @Operation(summary = "根据姓名查列表", description = "根据姓名查列表", tags = {"入院通知单"})
+    public ResponseResult<PageInfo<AppointmentDto>> queryAppByName(@RequestParam(name = "searchName", defaultValue = "") String name,
+                                                                   @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
+                                                                   @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<AppointmentDto> appointmentListByName = appointmentMysqlDao.getAppointmentListByName(name);
+        PageInfo<AppointmentDto> pageInfo = new PageInfo<>(appointmentListByName);
+        return new ResponseResult<>(pageInfo, "SUCCESS", 200);
     }
 
     @PostMapping("/addAppointment")
-    @Operation( summary = "添加预约信息", description = "添加预约信息", tags = {"预约管理"} )
-    public ResponseResult<Void> addAppointment(@RequestBody AddAppointment addAppointment){
-        try {
-            addAppointment.addAppointment();
-            return new ResponseResult<>(null,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    @Operation(summary = "新增住院通知单", description = "新增住院通知单", tags = {"入院通知单"})
+    public ResponseResult<Void> addAppointment(@RequestBody AddAppointment addAppointment) {
+        addAppointment.addAppointment();
+        return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
     @GetMapping("/delAppointment")
-    @Operation( summary = "根据ID删除预约信息", description = "根据ID删除预约信息", tags = {"预约管理"} )
-    public ResponseResult<Void> delAppointment(Integer id){
-        try {
-            new RemoveAppointmentById().removeAppointment(id);
-            return new ResponseResult<>(null,"SUCCESS", 200);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseResult<>(null, "Internal Server Error", 500);
-        }
+    @Operation(summary = "撤销住院通知单", description = "撤销住院通知单", tags = {"入院通知单"})
+    public ResponseResult<Void> delAppointment(Integer id) {
+        new RemoveAppointmentById().removeAppointment(id);
+        return new ResponseResult<>(null, "SUCCESS", 200);
     }
 
 

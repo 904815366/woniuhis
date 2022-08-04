@@ -34,8 +34,8 @@
         </where>
     </select>
     <insert id="createAppointment">
-        INSERT INTO appointment(name, sex, age, phone, card, diagnose, entertime, familyid, status)
-            VALUE (#{name},#{sex},#{age},#{phone},#{card},#{diagnose},#{entertime},#{familyid},0)
+        INSERT INTO appointment(patientid,name, sex, age, phone, card, diagnose, entertime, familyid, status)
+            VALUE (#{patientid},#{name},#{sex},#{age},#{phone},#{card},#{diagnose},#{entertime},#{familyid},0)
     </insert>
     <delete id="removeAppointment">
         DELETE from appointment where id=#{id}

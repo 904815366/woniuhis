@@ -4,6 +4,7 @@ import com.woniu.entity.dto.EmrDto;
 import com.woniu.mapper.mysql.EmrMysqlDao;
 import com.woniu.util.ApplicationContextHolder;
 import io.swagger.models.auth.In;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QueryEmrListByRegisterId {
+    @Schema(name = "registerid",description = "患者id")
     private Integer registerid;
 
     public List<EmrDto> queryEmrList(Integer registerid){

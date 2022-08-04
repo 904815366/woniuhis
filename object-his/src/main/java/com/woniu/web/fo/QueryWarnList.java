@@ -4,6 +4,7 @@ import com.woniu.entity.dto.WarnDto;
 import com.woniu.mapper.mysql.WardMysqlDao;
 import com.woniu.mapper.mysql.WarnMysqlDao;
 import com.woniu.util.ApplicationContextHolder;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QueryWarnList {
+    @Schema(name = "patientid",description = "患者id")
     private Integer patientid;
 
     /**

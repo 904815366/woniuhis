@@ -1,6 +1,9 @@
 <template>
     <el-dialog title="住院申请单开具" :visible.sync="addDialogFormVisible" @close="cancelAdd">
         <el-form :model="notification" label-position="right" label-width="100px">
+            <el-form-item label="患者编号:">
+                <el-input v-model="notification.patientid" style="width:220px" placeholder="请输入内容"></el-input>
+            </el-form-item>
             <el-form-item label="姓名:">
                 <el-input v-model="notification.name" style="width:220px" placeholder="请输入内容"></el-input>
             </el-form-item>

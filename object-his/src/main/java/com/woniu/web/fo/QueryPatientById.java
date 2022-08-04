@@ -3,6 +3,7 @@ package com.woniu.web.fo;
 import com.woniu.entity.dto.PatientDto;
 import com.woniu.service.PatientService;
 import com.woniu.util.ApplicationContextHolder;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QueryPatientById {
+    @Schema(name = "id",description = "患者id")
     private Integer id;
 
     /**

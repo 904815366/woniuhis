@@ -16,6 +16,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddAppointment {
+    @Schema(name = "patientid",description = "住院id")
+    private  Integer patientid;
     @Schema(name = "name", description = "患者姓名")
     private String name;
     @Schema(name = "sex", description = "性别")
@@ -36,6 +38,7 @@ public class AddAppointment {
 
     public void addAppointment() {
         AppointmentPo appointmentPO = new AppointmentPo();
+        appointmentPO.setPatientid(patientid);
         appointmentPO.setName(name);
         appointmentPO.setSex(sex);
         appointmentPO.setAge(age);
