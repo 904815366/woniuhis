@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="编辑药品" :visible.sync="addDrugDialogFormVisible" @close="cancelAdd">
-    <el-form :model="drug" :rules="rules">
+    <el-form :model="drug" :rules="rules" ref="checkform">
       <el-form-item label="药品id:" :label-width="formLabelWidth">
         <span>{{ drug.id }}</span>
       </el-form-item>
@@ -36,7 +36,7 @@ export default {
       rules: {
         alarmnum: [
           { required: true, message: "请输入报警库存", trigger: "blur" },
-          { pattern: /^[1-9][\d]{1,}$/, message: "格式错误", trigger: "blur" },
+          { pattern: /^[1-9][\d]{0,}$/, message: "格式错误", trigger: "blur" },
         ],
       },
     };
@@ -49,34 +49,39 @@ export default {
       this.$emit("func");
     },
     confirmEdit() {
-      // 发送 axios请求
-      this.$axios
-        .post("/api/drug/edit", this.drug)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.status == 200) {
-            this.$message({
-              type: "success",
-              message: "编辑药品成功!",
-              offset: 300,
-              duration: 1000, //显示的时间,ms
+      this.$refs["checkform"].validate((valid) => {
+        if (!valid) {
+          return;
+        } else {
+          this.$axios
+            .post("/api/drug/edit", this.drug)
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.status == 200) {
+                this.$message({
+                  type: "success",
+                  message: "编辑药品成功!",
+                  offset: 300,
+                  duration: 1000, //显示的时间,ms
+                });
+              } else {
+                this.$message({
+                  type: "danger",
+                  message: "编辑药品失败!",
+                  offset: 300,
+                  duration: 1000, //显示的时间,ms
+                });
+              }
+            })
+            .catch(() => {
+              alert("error");
             });
-          } else {
-            this.$message({
-              type: "danger",
-              message: "编辑药品失败!",
-              offset: 300,
-              duration: 1000, //显示的时间,ms
-            });
-          }
-        })
-        .catch(() => {
-          alert("error");
-        });
-      this.addDrugdialogFormVisible = false;
-      //调用父组件传来的方法
-      this.$emit("func");
-      this.$emit("reload");
+          this.addDrugdialogFormVisible = false;
+          //调用父组件传来的方法
+          this.$emit("func");
+          this.$emit("reload");
+        }
+      });
     },
   },
   created() {
@@ -93,5 +98,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -43,7 +43,7 @@ public class DrugrecordDto implements Serializable {
 
     @Schema(name = "time", description = "操作时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date time;
+    private LocalDateTime time;
 
     @Schema(name = "userid", description = "用户id")
     private Integer userid;

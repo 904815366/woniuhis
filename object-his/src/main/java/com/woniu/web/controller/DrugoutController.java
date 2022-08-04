@@ -40,18 +40,7 @@ public class DrugoutController {
         }
     }
 
-    @GetMapping("/registerlist")
-    @Operation( summary = "住院患者列表", description = "不带分页查询(状态值为2)", tags = {"发药管理"} )
-    public ResponseResult<List<RegisterDto>> RegisterList(DrugOutList drugOutList){
-        try {
-            List<RegisterDto> registerList = drugOutList.getRegisterList();
-            System.out.println(registerList);
-            return new ResponseResult<>(registerList,"OK",200);
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+
     @GetMapping("/userlist")
     @Operation( summary = "用户列表", description = "不带分页查询", tags = {"发药管理"} )
     public ResponseResult<List<UserDto>> UserList(DrugOutUserList drugOutUserList){

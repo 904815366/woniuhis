@@ -34,7 +34,7 @@ public class DrugrecordRepository {
             drugrecordPo.setNum(warndetailsPo.getNum());
             System.out.println(type);
             drugrecordPo.setType(type);
-            drugrecordPo.setTime(new Date());
+            //drugrecordPo.setTime(new Date());
             drugrecordPo.setUserid(userid);
             drugrecordPo.setName(drugPo.getName());
             drugrecordPo.setWarndetailsid(warndetailsPo.getId());
@@ -54,7 +54,7 @@ public class DrugrecordRepository {
             drugrecordPo.setDrugid(drugReturnPo.getDrugid());
             drugrecordPo.setNum(drugReturnPo.getNum());
             drugrecordPo.setType("2");
-            drugrecordPo.setTime(new Date());
+            //drugrecordPo.setTime(new Date());
             drugrecordPo.setUserid(userid);
             drugrecordPo.setName(drugPo.getName());
             drugrecordPo.setDrugreturnid(drugReturnPo.getId());

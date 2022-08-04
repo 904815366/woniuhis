@@ -38,7 +38,7 @@ public class DrugrecordPo implements Serializable {
     private String type;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date time;
+    private LocalDateTime time;
 
     private Integer userid;
 

@@ -1,6 +1,7 @@
 <template>
   <el-dialog title="编辑退药" :visible.sync="addDrugDialogFormVisible" @close="cancelAdd">
-    <el-form :model="warn">
+    <el-form :model="warn" :rules="rules" ref="checkform">
+
       <el-form-item label="住院编号:" :label-width="formLabelWidth">
         <span>{{ warn.id }}</span>
       </el-form-item>
@@ -27,8 +28,8 @@
           </span>
         </span>
       </el-form-item>
-      <el-form-item label="退药数量:" :label-width="formLabelWidth">
-        <el-input v-model="returnnum" autocomplete="off"></el-input>
+      <el-form-item label="退药数量:"  :label-width="formLabelWidth" prop="rnum">
+        <el-input v-model="warn.rnum" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item :label-width="formLabelWidth">
@@ -54,11 +55,16 @@ export default {
       addDrugDialogFormVisible: true,
       formLabelWidth: "120px",
       warn: {},
-      returnnum: "",
       warndetail: {},
+      rules: {
+        rnum: [
+          { required: true, message: "请输入退药数量", trigger: "blur" },
+          { pattern: /^[1-9][\d]{0,}$/, message: "格式错误", trigger: "blur" },
+        ],
+      },
     };
   },
-  props: ["objWarn", "registerList", "familyList", "userList", "drugList", "detailList"],
+  props: ["objWarn", "familyList", "userList", "drugList", "detailList"],
   methods: {
     cancelAdd() {
       this.addDrugDialogFormVisible = false;
@@ -66,6 +72,7 @@ export default {
       this.$emit("func");
     },
     confirmEdit(num) {
+      this.returnnum=this.warn.rnum;
       console.log(num + "-" + this.returnnum);
       if (num < this.returnnum) {
         this.$message({
@@ -76,7 +83,12 @@ export default {
         });
         return;
       }
-      //发送 axios请求
+
+this.$refs["checkform"].validate((valid) => {
+        if (!valid) {
+          return;
+        } else {
+          //发送 axios请求
       this.$axios
         .get("/api/drugreturn/edit", {
           params: {
@@ -108,7 +120,9 @@ export default {
       this.addDrugdialogFormVisible = false;
       //调用父组件传来的方法
       this.$emit("func");
-      this.$emit("reload");
+      this.$emit("funreload");
+        }
+      });
     },
   },
   created() {

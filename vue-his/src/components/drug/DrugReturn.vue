@@ -118,7 +118,6 @@ export default {
       pageSizes: [5, 10, 15, 20],
       searchStatus: "",
       drug: {}, //用于存放要编辑的drug
-      registerList: [], //用于存放在院患者
       familyList: [], //用于存放科室列表
       userList: [], //用于存放用户列表
       drugList: [], //用于存放药品列表
@@ -267,23 +266,6 @@ export default {
         .get("/api/drug/druglist")
         .then((res) => {
           this.drugList = res.data.data;
-        })
-        .catch((e) => {
-          this.$message({
-            showClose: true,
-            message: "服务器跑不见了!",
-            type: "error",
-            offset: 550,
-            duration: 1000, //显示的时间,ms
-          });
-        });
-    },
-    //查询住院患者列表
-    queryRegisterList() {
-      this.$axios
-        .get("/api/drugout/registerlist")
-        .then((res) => {
-          this.registerList = res.data.data;
         })
         .catch((e) => {
           this.$message({

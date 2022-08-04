@@ -3,7 +3,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>
-        <router-link to="/drug/drugoutlist">发药列表</router-link>
+        <router-link to="/drug/drugoutlist">退药申请</router-link>
       </el-breadcrumb-item>
     </el-breadcrumb>
     <el-row style="margin-top: 20px">
@@ -15,7 +15,7 @@
           <el-button
             slot="append"
             icon="el-icon-search"
-            @click="getDrugOutList(1)"
+            @click="getDrugReturnList(1)"
           ></el-button>
         </el-input>
       </el-col>
@@ -74,16 +74,27 @@
         <template slot-scope="scope">
           <span v-for="detail in detailList" :key="detail.id">
             <span v-if="detail.warnid == scope.row.id">
-              {{ detail.num }}
+              <span v-if="detail.num != 0">
+                {{ detail.num }}
+              </span>
             </span>
           </span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="120">
         <template slot-scope="scope">
-          <el-button size="mini" type="primary" @click="handleEdit(scope.row)"
-            >退药</el-button
-          >
+          <span v-for="detail in detailList" :key="detail.id">
+            <span v-if="detail.warnid == scope.row.id">
+              <span v-if="detail.num != 0">
+                <el-button size="mini" type="primary" @click="handleEdit(scope.row)"
+                  >退药
+                </el-button>
+              </span>
+              <span v-if="detail.num == 0">
+                <el-tag> 已退完 </el-tag>
+              </span>
+            </span>
+          </span>
         </template>
       </el-table-column>
     </el-table>
@@ -110,9 +121,8 @@
       :is="comName"
       :objWarn="warn"
       @func="handleShow"
-      @reload="reload"
+      @funreload="handlereload"
       :pageNum="pageNum"
-      :registerList="registerList"
       :familyList="familyList"
       :userList="userList"
       :drugList="drugList"
@@ -124,6 +134,7 @@
 //导入子组件
 import ReturnAdd from "./ReturnAdd.vue";
 export default {
+  inject: ["reload"],
   components: {
     //注册子组件
     ReturnAdd,
@@ -139,7 +150,6 @@ export default {
       pageSizes: [5, 10, 15, 20],
       searchStatus: 2,
       drug: {}, //用于存放要编辑的drug
-      registerList: [], //用于存放在院患者
       familyList: [], //用于存放科室列表
       userList: [], //用于存放用户列表
       drugList: [], //用于存放药品列表
@@ -153,18 +163,15 @@ export default {
   },
   created() {
     this.getDrugReturnList(1);
-    this.queryRegisterList();
     this.queryFamilyList();
     this.queryUserList();
     this.queryDrugList();
     this.queryDetailList();
   },
   methods: {
-    reload() {
+    handlereload() {
       console.log("执行reload");
-      this.queryDetailList();
-      this.queryDrugList();
-      this.getDrugOutList(this.pageNum);
+      this.reload();
     },
     handleShow() {
       console.log("执行handleShow");
@@ -180,7 +187,6 @@ export default {
       return index + 1 + this.pageSize * (this.pageInfo.pageNum - 1);
     },
     getDrugReturnList(pNum) {
-      console.log("发送查询drugoutlist请求");
       this.userid = window.sessionStorage.getItem("currentUserId", this.nameAndId[1]);
       this.$axios
         .get("/api/drugreturn/list", {
@@ -252,23 +258,6 @@ export default {
         .get("/api/drug/druglist")
         .then((res) => {
           this.drugList = res.data.data;
-        })
-        .catch((e) => {
-          this.$message({
-            showClose: true,
-            message: "服务器跑不见了!",
-            type: "error",
-            offset: 550,
-            duration: 1000, //显示的时间,ms
-          });
-        });
-    },
-    //查询住院患者列表
-    queryRegisterList() {
-      this.$axios
-        .get("/api/drugout/registerlist")
-        .then((res) => {
-          this.registerList = res.data.data;
         })
         .catch((e) => {
           this.$message({

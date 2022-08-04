@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="添加药品" :visible.sync="addDrugDialogFormVisible" @close="cancelAdd">
-    <el-form :model="drug" :inline="true">
+    <el-form :model="drug" :inline="true" ref="checkform" :rules="rules">
       <el-form-item label="药品名:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.name" autocomplete="off"></el-input>
       </el-form-item>
@@ -10,15 +10,17 @@
       <el-form-item label="价格:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.price" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="数量:" :label-width="formLabelWidth" size="small">
+      <el-form-item label="数量:" :label-width="formLabelWidth" size="small" prop="num">
         <el-input v-model="drug.num" autocomplete="off"></el-input>
       </el-form-item>
+      <font color="red" size="2">*</font>
       <el-form-item label="报警库存:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.alarmnum" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="批次:" :label-width="formLabelWidth" size="small">
+      <el-form-item label="批次:" :label-width="formLabelWidth" size="small" prop="batch">
         <el-input v-model="drug.batch" autocomplete="off"></el-input>
       </el-form-item>
+      <font color="red" size="2">*</font>
       <el-form-item label="厂商:" :label-width="formLabelWidth" size="small">
         <el-input v-model="drug.producer" autocomplete="off"></el-input>
       </el-form-item>
@@ -55,6 +57,11 @@
       <el-button @click="cancelAdd">取 消</el-button>
       <el-button type="primary" @click="confirmAdd">确 定</el-button>
     </div>
+    <div align="center">
+      <font color="red" size="2"
+        >注:有同批次则只需添加库存,若无该批次则除备注外都为必填!</font
+      >
+    </div>
   </el-dialog>
 </template>
 
@@ -65,6 +72,13 @@ export default {
       addDrugDialogFormVisible: true,
       formLabelWidth: "120px",
       drug: {},
+      rules: {
+        num: [
+          { required: true, message: "请输入数量", trigger: "blur" },
+          { pattern: /^[1-9][\d]{0,}$/, message: "格式错误", trigger: "blur" },
+        ],
+        batch: [{ required: true, message: "请输入批次", trigger: "blur" }],
+      },
     };
   },
   props: ["objDrug"],
@@ -75,34 +89,41 @@ export default {
       this.$emit("func");
     },
     confirmAdd() {
-      // 发送 axios请求
-      this.$axios
-        .post("/api/drug/add", this.drug)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.status == 200) {
-            this.$message({
-              type: "success",
-              message: "添加药品成功!",
-              offset: 300,
-              duration: 1000, //显示的时间,ms
+      this.$refs["checkform"].validate((valid) => {
+        if (!valid) {
+          return;
+        } else {
+          // 发送 axios请求
+          console.log(this.drug.protime);
+          this.$axios
+            .post("/api/drug/add", this.drug)
+            .then((res) => {
+              console.log(res.data);
+              if (res.data.status == 200) {
+                this.$message({
+                  type: "success",
+                  message: "添加药品成功!",
+                  offset: 300,
+                  duration: 1000, //显示的时间,ms
+                });
+              } else {
+                this.$message({
+                  type: "danger",
+                  message: "添加药品失败!",
+                  offset: 300,
+                  duration: 1000, //显示的时间,ms
+                });
+              }
+            })
+            .catch(() => {
+              alert("error");
             });
-          } else {
-            this.$message({
-              type: "danger",
-              message: "添加药品失败!",
-              offset: 300,
-              duration: 1000, //显示的时间,ms
-            });
-          }
-        })
-        .catch(() => {
-          alert("error");
-        });
-      this.addDrugdialogFormVisible = false;
-      //调用父组件传来的方法
-      this.$emit("func");
-      this.$emit("reload");
+          this.addDrugdialogFormVisible = false;
+          //调用父组件传来的方法
+          this.$emit("func");
+          this.$emit("reload");
+        }
+      });
     },
   },
   created() {},
