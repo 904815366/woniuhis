@@ -37,7 +37,6 @@ public class DrugReturnRepository {
             drugReturnPo.setDrugid(warndetailsPo.getDrugid());
             drugReturnPo.setNum(returnnum);
             drugReturnPo.setWarnid(id);
-            drugReturnPo.setStatus("0");
             drugReturnPo.setApplytime(new Date());
             drugReturnPo.setDoctorid(warnPo.getDoctorid());
             drugReturnPo.setNurseid(warnPo.getNurseid());

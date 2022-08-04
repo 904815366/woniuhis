@@ -24,8 +24,6 @@ public class DrugReturnPo implements Serializable {
 
     private Integer warnid;
 
-
-
     private Date applytime;
 
     private Integer doctorid;

@@ -25,7 +25,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @RedisHash("drug")
-@Schema(description = "药品库存表")
+@Schema(description = "药品表")
 public class DrugDto implements Serializable {
 
     private static final long serialVersionUID = 1L;

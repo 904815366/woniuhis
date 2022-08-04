@@ -3,8 +3,10 @@ package com.woniu.web.controller;
 import com.github.pagehelper.PageInfo;
 import com.woniu.config.ResponseResult;
 import com.woniu.entity.dto.DrugReturnDto;
+import com.woniu.entity.dto.WarnDto;
 import com.woniu.service.DrugReturnService;
 import com.woniu.service.DrugrecordService;
+import com.woniu.web.fo.DrugOutList;
 import com.woniu.web.fo.DrugReturnInfo;
 import com.woniu.web.fo.DrugReturnList;
 import io.swagger.annotations.Api;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/drugreturn")
-@Api( tags = {"发药管理"} )
+@Api( tags = {"退药管理"} )
 public class DrugReturnController {
     @Autowired
     private DrugReturnService drugReturnService;
@@ -86,5 +88,19 @@ public class DrugReturnController {
             return new ResponseResult<>(null, "Internal Server Error", 500);
         }
         return new ResponseResult<>(null, "SUCCESS", 200);
+    }
+
+    @GetMapping("/list")
+    @Operation( summary = "申请退药列表", description = "条件查询(关联查询医嘱)", tags = {"退药管理"} )
+    public ResponseResult<PageInfo> drugReturnList(DrugOutList drugOutList){
+        try {
+            System.out.println("到达drugoutlist");
+            PageInfo<WarnDto> pageInfo = drugOutList.exac();
+            System.out.println(pageInfo);
+            return new ResponseResult<>(pageInfo,"OK",200);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }
