@@ -73,6 +73,13 @@ public class NurserecordController {
         }
     }
 
+
+    /**
+     *
+     */
+    public void getRegist(){
+
+    }
     /**
      * xk
      * 根据Id删除护理记录

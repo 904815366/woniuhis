@@ -3,8 +3,7 @@
     <div>
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item
-          ><router-link to="/techer">入院登记</router-link></el-breadcrumb-item
+        <el-breadcrumb-item></el-breadcrumb-item
         >
         <el-breadcrumb-item>预约病人列表</el-breadcrumb-item>
       </el-breadcrumb>
@@ -116,6 +115,7 @@
 import Bed from "../nurse/Bed.vue";
 import Money from "../nurse/Money.vue";
 export default {
+  inject: ["reload"],
   components: {
     Bed,
     Money,
@@ -132,7 +132,8 @@ export default {
       patient: null,
       wids: [],
       ids: [],
-      result:''
+      result:'',
+      
     };
   },
   created() {
@@ -188,8 +189,6 @@ export default {
             offset: 175,
           });
           this.getWarnids(x.id);
-          console.log("*****************");
-          console.log(x);
           this.gotoRegisters();
         } else {
           this.$message({
@@ -243,6 +242,7 @@ export default {
       this.comname = "";
       // 再次调查询方法刷新页面
       this.gotoRegisters();
+      this.reload();
     },
     getRegister() {
       //查看单个患者

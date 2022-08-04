@@ -38,8 +38,8 @@ public class MoneylistDto implements Serializable {
     @Schema(name = "consummoney", description = "消费金额")
     private BigDecimal consummoney;//消费金额
 
-    //    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @Schema(name = "consumtime", description = "消费时间")
     private LocalDateTime consumtime;//消费时间
 
