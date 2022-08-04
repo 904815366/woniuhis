@@ -484,7 +484,7 @@ export default {
     //预约列表点击选择
     optionAppointment(obj) {
       obj.status = '';
-      obj.patientid = obj.id;
+      // obj.patientid = obj.id;
       this.addregister = obj;
       this.innerDrawer = false;
     },

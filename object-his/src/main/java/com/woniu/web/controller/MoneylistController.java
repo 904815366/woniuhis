@@ -58,7 +58,7 @@ public class MoneylistController {
 
 
     @GetMapping("query/registerIdAndStatus")
-    @Operation( summary = "根据住院号和状态查询消费列表", description = "根据住院号和状态查询消费列表", tags = {"消费详情管理"} )
+    @Operation( summary = "根据住院号和状态查询消费列表", description = "参数:住院号 状态", tags = {"消费详情管理"} )
     public ResponseResult<List<MoneylistDto>> queryMoneyListByRegisterIdAndStatus(
             MoneyListByRegisterIdAndStatusQuery moneyListByRegisterIdAndStatusQuery){
         return moneyListByRegisterIdAndStatusQuery.exec();
