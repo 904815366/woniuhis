@@ -136,6 +136,10 @@ export default {
 </script>
 
 <style scoped lang="less">
+.el-container {
+  height: 100%;
+}
+
 .el-header {
   background: #fff;
   padding: 0;

@@ -11,12 +11,13 @@
     <div class="demo-input-suffix">
       <el-col :span="6" style="margin-top:5px">
         <el-input placeholder="请输入姓名关键字内容" v-model="searchName" :width="100">
-          <el-button slot="append" icon="el-icon-search" @click="queryPageInfo(1)"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="queryPageInfo(1)">
+          </el-button>
           <el-button slot="append" icon="el-icon-delete" @click="searchName = ''"></el-button>
         </el-input>
       </el-col>
 
-      <el-col :span="6" style="margin-top:5px;margin-left: 10px;">
+      <el-col :span="10" style="margin-top:5px;margin-left: 10px;">
         <el-select v-model="searchStatus" placeholder="选择状态进行查询" @change="queryPageInfo(1)">
           <el-option value="查询所有">查询所有</el-option>
           <el-option value="未缴费">未缴费</el-option>
@@ -46,7 +47,7 @@
         <!-- 预约列表框 -->
         <el-drawer title="病人预约列表" :append-to-body="true" :before-close="handleClose" :visible.sync="innerDrawer">
           <el-table :data="appointmentList" :fit="false">
-            <el-table-column prop="id" label="编号" width="80" align="center">
+            <el-table-column prop="patientid" label="编号" width="80" align="center">
             </el-table-column>
 
             <el-table-column prop="name" label="姓名" width="80" align="center">
@@ -64,7 +65,7 @@
         <el-form ref="addregister" :model="addregister" label-width="100px" :rules="rules"
           :hide-required-asterisk="false">
           <el-form-item label="病人编号:">
-            <el-input :disabled="true" v-model="addregister.id" autocomplete="off" style="width: 50px;">
+            <el-input :disabled="true" v-model="addregister.patientid" autocomplete="off" style="width: 50px;">
             </el-input>
 
           </el-form-item>

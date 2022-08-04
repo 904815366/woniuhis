@@ -32,6 +32,6 @@ public class ObjectHisApplication {
 
     @Bean
     public MinioUtils minioUtils() {
-        return new MinioUtils("http://127.0.0.1:9000", "minioadmin", "minioadmin");
+        return new MinioUtils("http://192.172.0.201:9001", "minioadmin", "minioadmin");
     }
 }
