@@ -23,7 +23,7 @@ public class DrugReturnDto {
 
     private Integer warnid;
 
-    private String status;
+
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date applytime;
