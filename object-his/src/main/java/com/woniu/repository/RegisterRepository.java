@@ -87,7 +87,7 @@ public class RegisterRepository {
 
         AppointmentPo appointmentPo = AppointmentPo.builder().status("1").build();
         UpdateWrapper updateWrapper = new UpdateWrapper();
-        updateWrapper.eq("id",po.getPatientid());
+        updateWrapper.eq("patientid",po.getPatientid());
         int updateById = appointmentMysqlDao.update(appointmentPo,updateWrapper);
 
         if (updateById == 0)
@@ -168,5 +168,13 @@ public class RegisterRepository {
             if (update == 0){
                 throw new RuntimeException("updateRegisterMoneyAndUsed执行结果为0");
             }
+//        RegisterPo registerPo = registerMysqlDao.selectById(modifyStatusAndRegisterMoneyComment.getRegisterid());
+
+//            if (registerPo.getMoney() <= 0){
+//                registerPo.setStatus("0");
+//            }else{
+//                registerPo.setStatus("1");
+//            }
+//        registerMysqlDao.updateById(registerPo);
     }
 }

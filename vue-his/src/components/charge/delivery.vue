@@ -74,7 +74,7 @@
         <el-descriptions-item label="门诊诊断">{{ register.diagnose }}</el-descriptions-item>
         <el-descriptions-item label="病房编号">{{ register.wardid }}</el-descriptions-item>
         <el-descriptions-item label="床位编号">{{ register.bedid }}</el-descriptions-item>
-        <el-descriptions-item label="预交缴费">{{ register.money }}</el-descriptions-item>
+        <el-descriptions-item label="余额">{{ register.money }}</el-descriptions-item>
         <el-descriptions-item label="已用">{{ register.used }}</el-descriptions-item>
         <el-descriptions-item label="退款">{{ register.refund }}</el-descriptions-item>
         <el-descriptions-item label="状态">{{ register.status }}</el-descriptions-item>
@@ -142,7 +142,7 @@ export default {
       rules: {
         prepaymoney: [
           { required: true, message: '请输入缴费金额', trigger: 'blur' },
-          { pattern: /^[1-9][\d]{1,}$/, message: '金额格式错误', trigger: 'blur' },
+          { pattern: /^[1-9][\d]{0,}$/, message: '金额格式错误', trigger: 'blur' },
         ],
         type: [
           { required: true, message: '请选择付款方式', trigger: 'blur' },
@@ -203,7 +203,7 @@ export default {
       } else if (obj == 0) {
         searchStatus = '未缴费'
       } else if (obj == 1) {
-        searchStatus = '已缴费'
+        searchStatus = '申请住院'
       } else if (obj == 2) {
         searchStatus = '住院中'
       } else if (obj == 3) {

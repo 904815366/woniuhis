@@ -21,7 +21,7 @@
         <el-select v-model="searchStatus" placeholder="选择状态进行查询" @change="queryPageInfo(1)">
           <el-option value="查询所有">查询所有</el-option>
           <el-option value="未缴费">未缴费</el-option>
-          <el-option value="已缴费">已缴费</el-option>
+          <el-option value="申请住院">申请住院</el-option>
           <el-option value="住院中">住院中</el-option>
           <el-option value="申请出院">申请出院</el-option>
           <el-option value="审核通过">审核通过</el-option>
@@ -115,16 +115,14 @@
             </el-input>
           </el-form-item>
 
-          <el-form-item label="状态:" prop="status">
+          <!-- <el-form-item label="状态:" prop="status">
             <el-select style="width: 300px; " v-model="addregister.status" placeholder="请输入状态">
               <el-option value="未缴费">未缴费</el-option>
-              <el-option value="已缴费">已缴费</el-option>
-              <!-- <el-option value="已入院">已入院</el-option> -->
+              <el-option value="申请住院">申请住院</el-option>
             </el-select>
+          </el-form-item> -->
 
 
-
-          </el-form-item>
           <el-popover placement="top" width="160" v-model="visible">
             <p>确定要添加登录信息码？</p>
             <div style="text-align: right; margin: 0">
@@ -197,12 +195,12 @@
 
           <el-form-item label="状态:">
             <el-select style="width: 300px; " v-model="modifyregister.status" placeholder="请输入状态">
-              <el-option value="未缴费">未缴费</el-option>
-              <el-option value="已缴费">已缴费</el-option>
-              <el-option value="住院中">住院中</el-option>
-              <el-option value="申请出院">申请出院</el-option>
-              <el-option value="审核通过">审核通过</el-option>
-              <el-option value="已出院">已出院</el-option>
+              <el-option value="未缴费" disabled>未缴费</el-option>
+              <el-option value="申请住院" disabled>申请住院</el-option>
+              <el-option value="住院中" disabled>住院中</el-option>
+              <el-option value="申请出院" disabled>申请出院</el-option>
+              <el-option value="审核通过" disabled>审核通过</el-option>
+              <el-option value="已出院" disabled>已出院</el-option>
 
             </el-select>
 
@@ -261,7 +259,7 @@
             <el-tag type="danger">未缴费</el-tag>
           </span>
           <span v-if="scope.row.status == 1">
-            <el-tag type="success">已缴费</el-tag>
+            <el-tag type="success">申请住院</el-tag>
           </span>
           <span v-if="scope.row.status == 2">
             <el-tag type="info">住院中</el-tag>
@@ -294,10 +292,12 @@
 </template>
 
 <script>
+
+
 export default {
   data() {
     return {
-      // 分页属性
+      // 分页属性y
       pageNum: 1,
       pageSize: 5,
       searchName: '',
@@ -356,8 +356,8 @@ export default {
           { required: true, message: '请选择状态', trigger: 'blur' },
         ],
         money: [
-          { required: false, message: '请输入缴费金额', trigger: 'blur' },
-          { pattern: /^[1-9][\d]{1,}$/, message: '金额格式错误', trigger: 'blur' },
+          { required: true, message: '请输入缴费金额', trigger: 'blur' },
+          { pattern: /^[1-9][\d]{3,}$/, message: '预缴金额必须大于等于1000', trigger: 'blur' },
         ],
       }
     }
@@ -407,11 +407,17 @@ export default {
         return;
       };
 
+
+      // if (this.addregister.money > 0) {
+      //   this.addregister.status = 1;
+      // }
+
       this.$refs["addregister"].validate((valid) => {
         if (!valid) {
           return;
         } else {
-          this.addregister.status = this.statusStringFormNumber(this.addregister.status);
+          // this.addregister.status = this.statusStringFormNumber(this.addregister.status);
+          this.addregister.status = 1;
           this.addregister.chargeid = window.sessionStorage.getItem('currentUserId');
           this.$axios({
             url: '/api/register/publish',
@@ -586,7 +592,7 @@ export default {
         searchStatus = -1
       } else if (obj == '未缴费') {
         searchStatus = 0
-      } else if (obj == '已缴费') {
+      } else if (obj == '申请住院') {
         searchStatus = 1
       } else if (obj == '住院中') {
         searchStatus = 2
@@ -607,7 +613,7 @@ export default {
       } else if (obj == 0) {
         searchStatus = '未缴费'
       } else if (obj == 1) {
-        searchStatus = '已缴费'
+        searchStatus = '申请住院'
       } else if (obj == 2) {
         searchStatus = '住院中'
       } else if (obj == 3) {
