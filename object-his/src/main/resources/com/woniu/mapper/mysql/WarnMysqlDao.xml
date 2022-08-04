@@ -17,28 +17,29 @@
     </resultMap>
     <!--查询患者医嘱-->
     <select id="selectAllByPatientId" resultMap="wardList">
-        SELECT c.id,
-               a.id   as patientid,
-               c.warntime,
-               f.name as doctorname,
-               c.status,
-               e.name as drugname,
-               d.num,
-               d.measure,
-               d.drugid,
-               d.directions
-        FROM register a,
-             patient b,
-             warn c,
-             warndetails d,
-             drug e,
-             user f
-        WHERE a.patientid = b.id
-          AND a.id = c.registerid
-          AND c.id = d.warnid
-          AND d.drugid = e.id
-          and f.id = c.doctorid
-          and a.patientid = #{id}
+        SELECT
+            b.id,
+            a.id as  patientid,
+            b.warntime,
+            d.name as doctorname,
+            b.status,
+            e.name as drugname,
+            c.num,
+            c.measure,
+            c.drugid,
+            c.directions
+        FROM
+            register a,
+            warn b,
+            warndetails c,
+            USER d ,
+            drug e
+        WHERE
+            a.id = b.registerid
+          AND b.id = c.warnid
+          AND b.doctorid = d.id
+          and e.id=c.drugid
+          and a.id = #{id}
     </select>
     <!--修改医嘱-->
     <update id="updateWarnById">
