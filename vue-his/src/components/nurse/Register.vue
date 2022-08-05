@@ -242,7 +242,6 @@ export default {
       this.comname = "";
       // 再次调查询方法刷新页面
       this.gotoRegisters();
-      this.reload();
     },
     getRegister() {
       //查看单个患者
