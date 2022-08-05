@@ -102,7 +102,7 @@
       :is="comName"
       :objDrug="drug"
       @func="handleShow"
-      @reload="reload"
+      @funreload="handlereload"
       :pageNum="pageNum"
     ></component>
   </div>
@@ -113,6 +113,7 @@
 import DrugEdit from "./DrugEdit.vue";
 import DrugAdd from "./DrugAdd.vue";
 export default {
+  inject: ["reload"],
   components: {
     //注册子组件
     DrugEdit,
@@ -135,9 +136,11 @@ export default {
     this.getDrugList(1);
   },
   methods: {
-    reload() {
-      console.log("执行reload");
-      this.getDrugList(this.pageNum);
+    handlereload() {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.getDrugList(this.pageNum);
+      }, 500);
     },
     handleShow() {
       console.log("执行handleShow");

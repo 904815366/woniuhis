@@ -128,7 +128,6 @@ export default {
   },
   created() {
     this.getDrugReturnList(1);
-    this.queryRegisterList();
     this.queryFamilyList();
     this.queryUserList();
     this.queryDrugList();

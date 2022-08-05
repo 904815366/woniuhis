@@ -121,7 +121,7 @@ export default {
           this.addDrugdialogFormVisible = false;
           //调用父组件传来的方法
           this.$emit("func");
-          this.$emit("reload");
+          this.$emit("funreload");
         }
       });
     },

@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -30,7 +31,7 @@ public class DrugReturnDto {
 
     @Schema(name = "applytime", description = "申请时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date applytime;
+    private LocalDateTime applytime;
 
     @Schema(name = "doctorid", description = "医生ID")
     private Integer doctorid;

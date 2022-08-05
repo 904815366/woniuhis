@@ -170,8 +170,10 @@ export default {
   },
   methods: {
     handlereload() {
-      console.log("执行reload");
-      this.reload();
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.queryDetailList();
+      }, 500);
     },
     handleShow() {
       console.log("执行handleShow");

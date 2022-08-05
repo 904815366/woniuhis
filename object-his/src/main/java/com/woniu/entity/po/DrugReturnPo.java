@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -24,7 +25,7 @@ public class DrugReturnPo implements Serializable {
 
     private Integer warnid;
 
-    private Date applytime;
+    private LocalDateTime applytime;
 
     private Integer doctorid;
 
