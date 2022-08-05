@@ -26,7 +26,7 @@ public interface ArrangeMysqlDao extends BaseMapper<ArrangePo> {
             "role.name rolename , family.familyname " +
             "from arrange , user , role ,family " +
             "where user.roleid = role.id and user.familyid = family.id " +
-            "and user.id = arrange.dutyuserid " +
+            "and user.id = arrange.dutyuserid  and user.status = 0 " +
             "and createtime <![CDATA[ <= ]]> (date_sub(curdate(),interval weekday(curdate()) - 6 DAY)) " +
             "and createtime <![CDATA[ >= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + 0 DAY)) " +
             "and user.name like concat('%',#{name},'%') " +
@@ -46,7 +46,7 @@ public interface ArrangeMysqlDao extends BaseMapper<ArrangePo> {
             "role.name rolename , family.familyname " +
             "from arrange , user , role ,family " +
             "where user.roleid = role.id and user.familyid = family.id " +
-            "and user.id = arrange.dutyuserid " +
+            "and user.id = arrange.dutyuserid and user.status = 0 " +
             "and createtime <![CDATA[ <= ]]> (date_sub(curdate(),interval weekday(curdate()) - 13 DAY)) " +
             "and createtime <![CDATA[ >= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 7 DAY)) " +
             "and user.name like concat('%',#{name},'%') " +

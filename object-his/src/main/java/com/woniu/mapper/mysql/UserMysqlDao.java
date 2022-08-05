@@ -43,7 +43,7 @@ public interface UserMysqlDao extends BaseMapper<UserPo> {
             "(select distinct dutyuserid from arrange " +
             "where createtime <![CDATA[ <= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 6 DAY)) " +
             "and createtime <![CDATA[ >= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) + 0 DAY))) " +
-            "and name like concat('%',#{name},'%') " +
+            "and name like concat('%',#{name},'%') and user.status = 0 " +
             "<if test='roleid != null and roleid !=\"\"'>" +
             "and roleid=#{roleid} " +
             "</if>" +
@@ -57,7 +57,7 @@ public interface UserMysqlDao extends BaseMapper<UserPo> {
             "(select distinct dutyuserid from arrange " +
             "where createtime <![CDATA[ <= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 13 DAY)) " +
             "and createtime <![CDATA[ >= ]]> (date_sub(curdate(),INTERVAL WEEKDAY(curdate()) - 7 DAY))) " +
-            "and name like concat('%',#{name},'%') " +
+            "and name like concat('%',#{name},'%') and user.status = 0 " +
             "<if test='roleid != null and roleid !=\"\"'>" +
             "and roleid=#{roleid} " +
             "</if>" +

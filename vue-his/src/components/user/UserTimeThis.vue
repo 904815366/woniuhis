@@ -2,16 +2,6 @@
   <div>
     <!-- 搜索栏 -->
     <el-row style="margin-top: 10px">
-      <el-col :span="6">
-        <el-input v-model="searchName" placeholder="请输入员工姓名">
-          <!-- 放大镜按钮 -->
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="findArrangeList"
-          ></el-button>
-        </el-input>
-      </el-col>
       <el-col :span="4">
         <el-select @change="searchFamilyChange" v-model="searchFamilyid">
           <el-option label="科室不限" value=""></el-option>
@@ -33,6 +23,16 @@
             :value="role.id"
           ></el-option>
         </el-select>
+      </el-col>
+      <el-col :span="6">
+        <el-input v-model="searchName" placeholder="请输入员工姓名">
+          <!-- 放大镜按钮 -->
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="findArrangeList"
+          ></el-button>
+        </el-input>
       </el-col>
       <el-col :span="4">
         <el-button type="warning" plain @click="addUserTime">新增人员排班</el-button>

@@ -32,7 +32,7 @@
             register a,
             warn b,
             warndetails c,
-            USER d ,
+            user d ,
             drug e
         WHERE
             a.id = b.registerid
