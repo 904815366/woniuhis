@@ -33,6 +33,7 @@
                a.age,
                a.area,
                b.familyname,
+               a.diagnose,
                a.entertime
         from register a
                  INNER JOIN family b on a.familyid = b.id and a.id = #{id}
