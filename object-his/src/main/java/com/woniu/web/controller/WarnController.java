@@ -67,9 +67,9 @@ public class WarnController {
 
     @GetMapping("/updateCpoeStatus")
     @Operation(summary = "更新医嘱状态", description = "更新医嘱状态", tags = {"医嘱管理"})
-    public ResponseResult<Void> updateCpoeStatus(String ids, Integer status) {
+    public ResponseResult<Void> updateCpoeStatus(String ids, Integer status,Integer nurseid) {
         String[] idArr = ids.split(",");
-        warnService.updatestatus(idArr, status);
+        warnService.updatestatus(idArr, status,nurseid);
         return new ResponseResult<>(null, "SUCCESS", 200);
     }
 

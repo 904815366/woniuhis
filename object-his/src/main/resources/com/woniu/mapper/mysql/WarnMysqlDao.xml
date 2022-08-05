@@ -55,7 +55,11 @@
     </delete>
     <!--更新医嘱状态-->
     <update id="updateWarnStatus">
-        update warn set status=#{status} where id in
+        update warn set status=#{status}
+                        <if test="nurseid!=null and nurseid!=''">
+                            ,nurseid=#{nurseid}
+                        </if>
+                        where id in
         <foreach collection="ids" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>

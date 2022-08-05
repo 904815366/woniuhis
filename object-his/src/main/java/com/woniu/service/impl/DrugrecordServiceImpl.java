@@ -35,8 +35,8 @@ public class DrugrecordServiceImpl extends ServiceImpl<DrugrecordMysqlDao, Drugr
     private WarndetailsService warndetailsService;
 
     @Override
-    public void addDrugrecord(String[] idArr,Integer userid,Integer status,String type) {
-        warnService.updatestatus(idArr,status);
+    public void addDrugrecord(String[] idArr,Integer userid,Integer status,String type,Integer nurseid) {
+        warnService.updatestatus(idArr,status,null);
         drugrecordRepository.addRecord(idArr,userid,type);
         moneylistService.addDrugList(idArr);
         drugService.updateStock(idArr);

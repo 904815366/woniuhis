@@ -147,9 +147,11 @@ export default {
     this.getPatientListAll();
   },
   methods: {
+    
     upDoctor(x) {
+      let uid=window.sessionStorage.getItem("currentUserId");
       //单条修改状态
-      this.$axios.get("/api/warn/updateCpoeStatus?ids=" + x + "&status=2").then((res) => {
+      this.$axios.get("/api/warn/updateCpoeStatus?ids=" + x + "&status=2"+"&nurseid="+uid).then((res) => {
         if (res.data.status == 200) {
           this.$message({
             showClose: true,
@@ -178,6 +180,8 @@ export default {
     },
     updateStatus() {
       //批量修改状态的方法
+      let uid=window.sessionStorage.getItem("currentUserId");
+      alert(uid);
       if (this.ids == null) {
         this.$message({
           showClose: true,
@@ -188,7 +192,7 @@ export default {
       } else {
         let result = this.ids.join(",");
         this.$axios
-          .get("/api/warn/updateCpoeStatus?ids=" + result + "&status=2")
+          .get("/api/warn/updateCpoeStatus?ids=" + result + "&status=2"+"&nurseid="+uid)
           .then((res) => {
             if (res.data.status == 200) {
               this.$message({
@@ -226,6 +230,7 @@ export default {
     },
 
     getRegister() {
+      console.log(this.pid);
       //查看单个患者
       this.$axios
         .get("/api/register/gotoRegisters", {
@@ -237,6 +242,8 @@ export default {
         })
         .then((res) => {
           this.patient = res.data.list[0];
+          console.log("************.........");
+          console.log(res.data);
           this.gotoWarnByRid();
         })
         .catch((e) => {
@@ -250,7 +257,7 @@ export default {
           params: {
             pageNum: this.pageNum,
             pageSize: this.pageSize,
-            patientid: this.patient.patientid,
+            patientid: this.patient.id,
           },
         })
         .then((res) => {

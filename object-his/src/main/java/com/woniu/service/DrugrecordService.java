@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface DrugrecordService extends IService<DrugrecordPo> {
 
 
-    void addDrugrecord(String[] idArr, Integer userid, Integer status,String type);
+    void addDrugrecord(String[] idArr, Integer userid, Integer status,String type,Integer nurseid);
 
     void addDrugReturnrecord(String[] idArr, Integer userid);
 

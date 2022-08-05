@@ -7,7 +7,7 @@
         select * from register
         <where>
             <if test="pid!='' and pid!=null">
-               and patientid=#{pid}
+               and id=#{pid}
             </if>
         </where>
     </select>

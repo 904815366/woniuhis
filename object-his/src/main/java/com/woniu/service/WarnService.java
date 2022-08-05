@@ -21,7 +21,7 @@ public interface WarnService extends IService<WarnPo> {
 
     void deleteWarn(Integer id);
 
-    void updatestatus(String[] ids,Integer status);
+    void updatestatus(String[] ids,Integer status,Integer nurseid);
 
     void addCpoe(AddCpoeFo addCpoeFo);
 

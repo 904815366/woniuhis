@@ -12,10 +12,9 @@ import com.woniu.web.fo.DrugOutList;
 import com.woniu.web.fo.DrugOutUserList;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -68,10 +67,10 @@ public class DrugoutController {
 
     @GetMapping("/updateCpoeStatus")
     @Operation( summary = "发药", description = "更新医嘱状态,添加发药记录,添加费用清单", tags = {"发药管理"} )
-    public ResponseResult<Void> updateCpoeStatus(String ids,Integer status,Integer userid,String type){
+    public ResponseResult<Void> updateCpoeStatus(String ids,Integer status,Integer userid,String type,@RequestParam(name = "nurseid",defaultValue = "") Integer nurseid){
         try {
             String[] idArr = ids.split(",");
-            drugrecordService.addDrugrecord(idArr,userid,status,type);
+            drugrecordService.addDrugrecord(idArr,userid,status,type,nurseid);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseResult<>(null, "Internal Server Error", 500);
