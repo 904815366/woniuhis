@@ -101,17 +101,20 @@
           </el-form-item>
 
           <el-form-item label="住址:" style="display:inline-block" prop="area">
-            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.area" placeholder="请输入住址">
+            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.area" placeholder="请输入住址"
+              maxlength="25">
             </el-input>
           </el-form-item>
 
           <el-form-item label="门诊诊断:" style="display:inline-block" prop="diagnose">
-            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.diagnose" placeholder="请输入门诊诊断">
+            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.diagnose" placeholder="请输入门诊诊断"
+              maxlength="25">
             </el-input>
           </el-form-item>
 
           <el-form-item label="预缴金额:" style="display:inline-block" prop="money">
-            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.money" placeholder="请输入预缴金额">
+            <el-input autocomplete="off" style="width: 300px; " v-model="addregister.money" placeholder="请输入预缴金额"
+              maxlength="8">
             </el-input>
           </el-form-item>
 
@@ -152,7 +155,8 @@
           </el-form-item>
 
           <el-form-item label="姓名:" style="display:inline-block" prop="name">
-            <el-input v-model="modifyregister.name" autocomplete="off" style="width: 300px" placeholder="请输入姓名">
+            <el-input v-model="modifyregister.name" autocomplete="off" style="width: 300px" placeholder="请输入姓名"
+              maxlength="10">
             </el-input>
           </el-form-item>
 
@@ -162,34 +166,40 @@
           </el-form-item>
 
           <el-form-item label="联系方式:" style="display:inline-block" prop="phone">
-            <el-input autocomplete="off" style="width: 300px;" v-model="modifyregister.phone" placeholder="请输入联系方式">
+            <el-input autocomplete="off" style="width: 300px;" v-model="modifyregister.phone" placeholder="请输入联系方式"
+              maxlength="11">
             </el-input>
           </el-form-item>
 
           <el-form-item label="年龄:" style="display:inline-block" prop="age">
-            <el-input autocomplete="off" style="width: 120px;" v-model.number="modifyregister.age" placeholder="请输入年龄">
+            <el-input autocomplete="off" style="width: 120px;" v-model.number="modifyregister.age" placeholder="请输入年龄"
+              maxlength="3">
             </el-input>
           </el-form-item>
 
 
 
           <el-form-item label="身份证号码:" style="display:inline-block" prop="card">
-            <el-input autocomplete="off" style="width: 300px;" v-model="modifyregister.card" placeholder="请输入身份证号码">
+            <el-input autocomplete="off" style="width: 300px;" v-model="modifyregister.card" placeholder="请输入身份证号码"
+              maxlength="18">
             </el-input>
           </el-form-item>
 
           <el-form-item label="住址:" style="display:inline-block" prop="area">
-            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.area" placeholder="请输入住址">
+            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.area" placeholder="请输入住址"
+              maxlength="25">
             </el-input>
           </el-form-item>
 
           <el-form-item label="门诊诊断:" style="display:inline-block" prop="diagnose">
-            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.diagnose" placeholder="请输入门诊诊断">
+            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.diagnose" placeholder="请输入门诊诊断"
+              maxlength="25">
             </el-input>
           </el-form-item>
 
           <el-form-item label="预缴金额:" style="display:inline-block" prop="money">
-            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.money" placeholder="请输入预缴金额">
+            <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.money" placeholder="请输入预缴金额"
+              maxlength="8">
             </el-input>
           </el-form-item>
 
@@ -572,12 +582,15 @@ export default {
                 message: '修改失败',
                 type: 'error'
               });
+              this.modifyregister.status = this.statusNumberFormString(this.modifyregister.status);
             }
           }).catch(e => {
             this.$message({
               message: e.message,
               type: 'error'
             });
+            this.modifyregister.status = this.statusNumberFormString(this.modifyregister.status);
+
           });
         }
       });
