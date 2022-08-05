@@ -60,6 +60,12 @@ public class MoneyrecordController {
         return new ResponseResult<>(2000,"ok");
     }
 
+    @PostMapping("/paid")
+    public ResponseResult<Void> paid(){
+        System.out.println("尽力啊了!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        return new ResponseResult<>(2000,"ok");
+    }
+
 
 }
 

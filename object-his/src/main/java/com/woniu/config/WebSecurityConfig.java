@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //需要放行的url在这里配置,必须要放行/login和/login.html,不然会报错
-        http.authorizeRequests().antMatchers("/login", "/login.html","/swagger-ui/index.html")
+        http.authorizeRequests().antMatchers("/login", "/login.html","/swagger-ui/index.html","/order/no")
                 .permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()

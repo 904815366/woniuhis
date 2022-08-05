@@ -45,7 +45,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addFormVisible = false, moneyrecord = {}">取 消</el-button>
-          <el-button type="primary" @click="addMoneyrecord()">确 定</el-button>
+          <el-button type="primary" @click="submit()">确 定</el-button>
         </div>
       </el-dialog>
 
@@ -249,41 +249,83 @@ export default {
     },
 
 
+    submit() {
+
+
+      let userid = window.sessionStorage.getItem("currentUserId");
+      //       data: this.moneyrecord,
+
+      axios.post(
+        "/api/order/alipay?outTradeNo=" +
+        Math.floor(Math.random() * 100000) +
+        "&subject=病人缴费" +
+        "&totalAmount=" +
+        this.moneyrecord.prepaymoney +
+        "&body=缴费人:" +
+        this.register.name +
+        "&registerid=" +
+        this.register.id +
+        "&userid=" +
+        userid +
+        "&prepaymoney=" +
+        this.moneyrecord.prepaymoney +
+        "&type=" +
+        this.moneyrecord.type
+      )
+        .then((resp) => {
+          // 添加之前先删除一下，如果单页面，页面不刷新，添加进去的内容会一直保留在页面中，二次调用form表单会出错
+          const divForm = document.getElementsByTagName("div");
+          if (divForm.length) {
+            document.body.removeChild(divForm[0]);
+          }
+          const div = document.createElement("div");
+          div.innerHTML = resp.data; // data就是接口返回的form 表单字符串
+          document.body.appendChild(div);
+          document.forms[0].setAttribute("target", "_blank"); // 新开窗口跳转
+          document.forms[0].submit();
+          // console.log(resp);
+          // alert(resp);
+
+        });
+    },
+
+
+
+
     //  添加缴费信息
     addMoneyrecord() {
+      // this.$refs["addmoneyrecord"].validate((valid) => {
+      //   if (!valid) {
+      //     return;
+      //   } else {
+      //     this.moneyrecord.registerid = this.register.id;
+      //     this.moneyrecord.userid = window.sessionStorage.getItem("currentUserId");
+      //     this.$axios({
+      //       url: "/api/moneyrecord/insertOne",
+      //       method: 'post',
+      //       headers: { addMoneyrecord: this.idempotentToken },
+      //       data: this.moneyrecord,
+      //     }).then(res => {
+      //       if (res.data.status === 2000) {
+      //         this.$message({
+      //           message: '添加成功',
+      //           type: 'success'
+      //         });
+      //         this.addFormVisible = false;
+      //         this.queryregisterByIdAndqueryMoneyrecordList();
+      //         this.moneyrecord = {};
+      //       }
+      //     }).catch(e => {
+      //       console.log(res);
+      //       this.$message({
+      //         message: '服务器跑不见了.....',
+      //         type: 'error'
+      //       });
+      //     })
+      //   }
+      // });
 
-      this.$refs["addmoneyrecord"].validate((valid) => {
-        if (!valid) {
-          return;
-        } else {
-          this.moneyrecord.registerid = this.register.id;
-          this.moneyrecord.userid = window.sessionStorage.getItem("currentUserId");
-          this.$axios({
-            url: "/api/moneyrecord/insertOne",
-            method: 'post',
-            headers: { addMoneyrecord: this.idempotentToken },
-            data: this.moneyrecord,
-          }).then(res => {
-            if (res.data.status === 2000) {
-              this.$message({
-                message: '添加成功',
-                type: 'success'
-              });
-              this.addFormVisible = false;
-              this.queryregisterByIdAndqueryMoneyrecordList();
-              this.moneyrecord = {};
-            }
-          }).catch(e => {
-            console.log(res);
-            this.$message({
-              message: '服务器跑不见了.....',
-              type: 'error'
-            });
-          })
-        }
-      });
-
-    }
+    },
 
   }
 }

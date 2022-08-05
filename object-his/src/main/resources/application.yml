@@ -9,7 +9,7 @@ spring:
   datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         password: 123456
-        url: jdbc:mysql://192.172.0.201:3306/his?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+        url: jdbc:mysql://127.0.0.1:3306/his?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
         username: root
   jackson:
     time-zone: GMT+8
@@ -19,3 +19,13 @@ logging:
     com:
       woniu:
         mapper: debug
+alipay:
+  appId: 2021000120618658
+  privateKey: MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCYQzFZStirnEAhmXCw+Ot/k62jN5HLjtE5bD0slqZQh1gNXE86qYcqw8ybj0lgAKPx96RxKlS7SmNv0Wq4/uJ/rEpVUQpgOK0nxYZ4+b3zcM3G8Q/DR6lthiyUNNafBFzGO7p42kpUbDJ715KWK29bH5uMd+fHp6Ry+eEJnGi4F6fP1M6Ib1+soUvz/cVV4IV1ruRxmXhdYjYIuNzUogOqvxStqUs40xrZE+GS07+VDlfSpiwC3t61WygY3WXXTo1SGOp2jJEvKC7AIPfWRJvjnHl/tDRy4TnMwaTh7JR/wB1AKPa+pstrNMlmjcXqnYsrUJsv/BDdo0vh8NpxhoRlAgMBAAECggEAPj+SKEgyJo6dpV7etGs/lAui/ExWnZrIrKo0pEr+uYNrmyK2/WubZ/9eYeaFf+sjG2Q75UwCEgPKfUdnUzRZEwsz5IdaL5ZcLBtT65dmceUXK5MX96UPfkhRZ1HmwGH/L8fxZ0EPDE6joP+z3RLq1p0ocZf/uR8vWxYPS2eXZFMajmv9jUVeCTXKjv/JBbCEpG4K116tsX1Gxcazso4ICC4Z0c342NPbBJ+MHnqCkq0dJiU/RQyR117iqrgde9RCav8g8n1BDe+pm8rIHbb/qB3ZHS3N6dZFp6t82OpUmIjCKmxPMdSnyeQq/12sxIsZHZs23zGKHtVWFSwjthzgzQKBgQDy4qEuBhxLgaHi+WsLu3c5bWlMshiBdiURpKLFCU8nacTIFIxOSGdeCm79XxSEGcVminNscciafZUudwHGB4aJ1oYuTp7yJOhJFHlfoxlkSJSLefw5+CIiz9/HB4MoXR889mQTE4eueklwnpoaro4YaW+Yi5gQVxVu9z1gC9E1QwKBgQCge+V6pCO2iR0NEuVuOxtzj40AlCOwx4vLUjvIJy97rp32Vr9/kFdeSYWrQ+XmXcEV3VgG49eRwU6KY+g3KL91spMWy7uPDZsjwLqK3cR7LPIwx/BDtdwcxNyMmvxcGo0hHYQ+4tsRX+hUHP36J5X4/p/yk6WVLySgvutOutDxNwKBgQCA1o7BJySjOORyzfNmic64e707nc05/z2ymi5tbn66XXSw3ZV/gRCz5bzyUhlD6Ze4yQBpKgJLUQptV1ttfFh1jYIn1jSiJcnB2kZ34MB7XbTON6r/5QvWg4YkwWtlYeBMKjbzl4yFlQCX6Mm+FZHyiRtVQ9cp88e+0Q+RfzM+mQKBgAGJDen9dgYCC9AbNSy3zgxt/ChcQncngZPhZocEsPSa+BHqRIzA4cUaKPg5fxKUJQvDgVsXhPF1Cv5R9F/KuQI0Qin+qv20YJ6X8nDvrDiNdoe28fqD2+Y+j+mcdfufmWgOszwyyWvCIiPj3x4skMfAD+GvPe9OcyhCi1fGe8dDAoGBAKXZiCxY9Me4L3g2JwqOroPRBHjVEkAkBXN2wAQDNl7MDV3m1JjURzk8eAbjXpnj7q55KvWMsFRarcaRkElmw1PQreQVAT7Gann74HhelR+g0egmdhv1PtM3/GlxhtLiH38z1TJtCLRC1q5tsGtVDuSCJh2ZikD/gf1/ANYpZA+A
+  publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmEMxWUrYq5xAIZlwsPjrf5OtozeRy47ROWw9LJamUIdYDVxPOqmHKsPMm49JYACj8fekcSpUu0pjb9FquP7if6xKVVEKYDitJ8WGePm983DNxvEPw0epbYYslDTWnwRcxju6eNpKVGwye9eSlitvWx+bjHfnx6ekcvnhCZxouBenz9TOiG9frKFL8/3FVeCFda7kcZl4XWI2CLjc1KIDqr8UralLONMa2RPhktO/lQ5X0qYsAt7etVsoGN1l106NUhjqdoyRLyguwCD31kSb45x5f7Q0cuE5zMGk4eyUf8AdQCj2vqbLazTJZo3F6p2LK1CbL/wQ3aNL4fDacYaEZQIDAQAB
+  notifyUrl: http://127.0.0.1:8080/order/no
+  returnUrl: http://127.0.0.1:8080
+  signType: RSA2
+  charset: utf-8
+  gatewayUrl: https://openapi.alipaydev.com/gateway.do
+  logPath: "D:\\"

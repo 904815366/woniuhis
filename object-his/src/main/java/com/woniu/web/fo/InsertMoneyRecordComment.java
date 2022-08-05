@@ -7,6 +7,7 @@ import com.woniu.mapper.mysql.RegisterMysqlDao;
 import com.woniu.service.MoneyrecordService;
 import com.woniu.util.ApplicationContextHolder;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -17,6 +18,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class InsertMoneyRecordComment {
 
     private Integer id;
