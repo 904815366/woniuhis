@@ -112,11 +112,11 @@
             </el-input>
           </el-form-item>
 
-          <el-form-item label="预缴金额:" style="display:inline-block" prop="money">
+          <!-- <el-form-item label="预缴金额:" style="display:inline-block" prop="money">
             <el-input autocomplete="off" style="width: 300px; " v-model="addregister.money" placeholder="请输入预缴金额"
               maxlength="8">
             </el-input>
-          </el-form-item>
+          </el-form-item> -->
 
           <!-- <el-form-item label="状态:" prop="status">
             <el-select style="width: 300px; " v-model="addregister.status" placeholder="请输入状态">
@@ -197,11 +197,11 @@
             </el-input>
           </el-form-item>
 
-          <el-form-item label="预缴金额:" style="display:inline-block" prop="money">
+          <!-- <el-form-item label="预缴金额:" style="display:inline-block" prop="money">
             <el-input autocomplete="off" style="width: 300px; " v-model="modifyregister.money" placeholder="请输入预缴金额"
               maxlength="8">
             </el-input>
-          </el-form-item>
+          </el-form-item> -->
 
           <el-form-item label="状态:">
             <el-select style="width: 300px; " v-model="modifyregister.status" placeholder="请输入状态">
