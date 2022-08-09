@@ -10,6 +10,7 @@ import com.woniu.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
  * @since 2022-07-23
  */
 @Service
+@Transactional
 public class DrugrecordServiceImpl extends ServiceImpl<DrugrecordMysqlDao, DrugrecordPo> implements DrugrecordService {
     @Autowired
     private MoneylistService moneylistService;

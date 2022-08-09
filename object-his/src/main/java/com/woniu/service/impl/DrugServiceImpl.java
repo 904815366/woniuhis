@@ -8,6 +8,7 @@ import com.woniu.service.DrugService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
  * @since 2022-07-23
  */
 @Service
+@Transactional
 public class DrugServiceImpl extends ServiceImpl<DrugMysqlDao, DrugPo> implements DrugService {
     @Autowired
     private DrugRepository drugRepository;
